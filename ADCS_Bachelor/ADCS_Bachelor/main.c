@@ -22,7 +22,7 @@ int main(void)
 	spiInit();
 	
     while (1) {
-		uint8_t G_X_L = spiRead(PINB1, OUT_X_H_XL);
+		uint8_t G_X_L = spiRead(PINB1, OUT_X_L_G);
 		printString("\r\nRecieved byte: ");	//Print out start
 		printByte(G_X_L);					//?????
 		printString("");					//print out end

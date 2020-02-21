@@ -13,19 +13,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   4 .debug_aranges 000000c0  00000000  00000000  000002c4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000d08  00000000  00000000  00000384  2**0
+  5 .debug_info   00000d07  00000000  00000000  00000384  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000008c8  00000000  00000000  0000108c  2**0
+  6 .debug_abbrev 000008c8  00000000  00000000  0000108b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000663  00000000  00000000  00001954  2**0
+  7 .debug_line   00000663  00000000  00000000  00001953  2**0
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  000001b0  00000000  00000000  00001fb8  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000004c7  00000000  00000000  00002168  2**0
+  9 .debug_str    0000051f  00000000  00000000  00002168  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000060f  00000000  00000000  0000262f  2**0
+ 10 .debug_loc    0000060f  00000000  00000000  00002687  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000090  00000000  00000000  00002c3e  2**0
+ 11 .debug_ranges 00000090  00000000  00000000  00002c96  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -96,8 +96,8 @@ int main(void)
   9a:	0e 94 69 00 	call	0xd2	; 0xd2 <spiInit>
 	
     while (1) {
-		uint8_t G_X_L = spiRead(PINB1, OUT_X_H_XL);
-  9e:	69 e2       	ldi	r22, 0x29	; 41
+		uint8_t G_X_L = spiRead(PINB1, OUT_X_L_G);
+  9e:	68 e1       	ldi	r22, 0x18	; 24
   a0:	81 e0       	ldi	r24, 0x01	; 1
   a2:	0e 94 70 00 	call	0xe0	; 0xe0 <spiRead>
   a6:	c8 2f       	mov	r28, r24
@@ -130,28 +130,15 @@ int main(void)
   d0:	e6 cf       	rjmp	.-52     	; 0x9e <main+0x8>
 
 000000d2 <spiInit>:
-#include <avr/io.h>
-#define read 0b10000000
-#define write 0b00000000
-
-void spiInit(void){
-	DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1);		// MOSI, SCK, CS_M and CS_AG output
   d2:	8e e2       	ldi	r24, 0x2E	; 46
   d4:	84 b9       	out	0x04, r24	; 4
-	PORTB = (1<<PORTB4)|(1<<PORTB2)|(1<<PORTB1);		// pullup on MISO and ~SS not active/high
   d6:	86 e1       	ldi	r24, 0x16	; 22
   d8:	85 b9       	out	0x05, r24	; 5
-	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);				// SPI enable, Master, Clockdiv 16
   da:	81 e5       	ldi	r24, 0x51	; 81
   dc:	8c bd       	out	0x2c, r24	; 44
   de:	08 95       	ret
 
 000000e0 <spiRead>:
-}
-
-uint8_t spiRead(uint8_t csPin, uint8_t subAddress){
-	uint8_t temp = 0;
-	PORTB &= ~(1<<csPin);				// start SPI conversation
   e0:	95 b1       	in	r25, 0x05	; 5
   e2:	21 e0       	ldi	r18, 0x01	; 1
   e4:	30 e0       	ldi	r19, 0x00	; 0
@@ -164,29 +151,17 @@ uint8_t spiRead(uint8_t csPin, uint8_t subAddress){
   f2:	80 95       	com	r24
   f4:	98 23       	and	r25, r24
   f6:	95 b9       	out	0x05, r25	; 5
-	SPDR = 0x80 | (subAddress & 0x3f);	// reads from subadress
   f8:	6f 73       	andi	r22, 0x3F	; 63
   fa:	60 68       	ori	r22, 0x80	; 128
   fc:	6e bd       	out	0x2e, r22	; 46
-	while(!(SPSR & (1<<SPIF))){} 		// wait for transfer to complete
   fe:	0d b4       	in	r0, 0x2d	; 45
  100:	07 fe       	sbrs	r0, 7
  102:	fd cf       	rjmp	.-6      	; 0xfe <spiRead+0x1e>
-	temp = SPDR;
  104:	8e b5       	in	r24, 0x2e	; 46
-	PORTB = (1<<csPin);					// end transmission
  106:	25 b9       	out	0x05, r18	; 5
-	return temp;
-}
  108:	08 95       	ret
 
 0000010a <initUSART>:
-      myString[i] = response;                       /* add in a letter */
-      i++;
-    }
-  }
-  myString[i] = 0;                          /* terminal NULL character */
-}
  10a:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
  10e:	87 e6       	ldi	r24, 0x67	; 103
  110:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
@@ -234,13 +209,9 @@ uint8_t spiRead(uint8_t csPin, uint8_t subAddress){
  166:	08 95       	ret
 
 00000168 <printByte>:
-
-void printByte(uint8_t byte) {
  168:	cf 93       	push	r28
  16a:	df 93       	push	r29
  16c:	d8 2f       	mov	r29, r24
-              /* Converts a byte to a string of decimal text, sends it */
-  transmitByte('0' + (byte / 100));                        /* Hundreds */
  16e:	89 e2       	ldi	r24, 0x29	; 41
  170:	d8 9f       	mul	r29, r24
  172:	81 2d       	mov	r24, r1
@@ -249,7 +220,6 @@ void printByte(uint8_t byte) {
  178:	8f 70       	andi	r24, 0x0F	; 15
  17a:	80 5d       	subi	r24, 0xD0	; 208
  17c:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
-  transmitByte('0' + ((byte / 10) % 10));                      /* Tens */
  180:	9d ec       	ldi	r25, 0xCD	; 205
  182:	d9 9f       	mul	r29, r25
  184:	c1 2d       	mov	r28, r1
@@ -272,7 +242,6 @@ void printByte(uint8_t byte) {
  1a6:	89 1b       	sub	r24, r25
  1a8:	80 5d       	subi	r24, 0xD0	; 208
  1aa:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
-  transmitByte('0' + (byte % 10));                             /* Ones */
  1ae:	cc 0f       	add	r28, r28
  1b0:	8c 2f       	mov	r24, r28
  1b2:	88 0f       	add	r24, r24
@@ -282,7 +251,6 @@ void printByte(uint8_t byte) {
  1ba:	8c 1b       	sub	r24, r28
  1bc:	80 5d       	subi	r24, 0xD0	; 208
  1be:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
-}
  1c2:	df 91       	pop	r29
  1c4:	cf 91       	pop	r28
  1c6:	08 95       	ret
