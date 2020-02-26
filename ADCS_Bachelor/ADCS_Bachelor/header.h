@@ -1,10 +1,3 @@
-/*
- * IncFile1.h
- *
- * Created: 20.02.2020 11:37:05
- *  Author: Edvard
- */ 
-
 
 /* Functions to initialize, send, receive over USART
 
@@ -15,6 +8,9 @@
 #ifndef BAUD                          /* if not defined in Makefile... */
 #define BAUD  9600                     /* set a safe default baud rate */
 #endif
+
+#define PIN_XG PINB1
+#define PIN_M PINB2
 
                                   /* These are defined for convenience */
 #define   USART_HAS_DATA   bit_is_set(UCSR0A, RXC0)
@@ -68,3 +64,9 @@ uint8_t spiRead(uint8_t csPin, uint8_t subAddress);
 		-data = byte to send
 */
 void spiWrite(uint8_t csPin, uint8_t subAddress, uint8_t data);
+
+/* WhoAmICheck - Checks the WHO_AM_I registers of both magnetometer and Accelerometer/Gyro
+				 to see if they match the expected response, holds the program until the check passes.
+*/
+void WhoAmICheck(void);
+

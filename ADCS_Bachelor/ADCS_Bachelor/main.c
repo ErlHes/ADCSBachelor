@@ -1,10 +1,3 @@
-/*
- * testspii.c
- *
- * Created: 20.02.2020 10:49:14
- * Author : Edvard
- */ 
-
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
@@ -20,15 +13,28 @@ int main(void)
 {
 	initUSART();
 	spiInit();
+	printString("\r\nStarting connection test, please wait...");
+	printString("\r\nIf the program holds here, check your connections.");
+	_delay_ms(1000);
+	WhoAmICheck();
+	uint8_t testbyte = 0x00;
+	uint8_t testbyte2 = 0x00;
 	
+	spiWrite(PIN_XG, INT_GEN_CFG_XL, 0xA5);
+	spiWrite(PIN_XG, INT_GEN_THS_X_XL, 0xD7);
+	
+	testbyte = spiRead(PIN_XG, INT_GEN_CFG_XL);
+	printString("\r\nReading data from INT_GEN_CFG_XL (Expecting 165): ");
+	printByte(testbyte);
+	printString("");
+	
+	testbyte2 = spiRead(PIN_XG, INT_GEN_THS_X_XL);
+	printString("\r\nReading data from INT_GEN_THS_X_XL (Expecting 215): ");
+	printByte(testbyte2);
+	printString("");
+			
     while (1) {
-		uint8_t G_X_L = spiRead(PINB1, OUT_X_L_G);
-		
-		
-		printString("\r\nRecieved byte: ");	//Print out start
-		printByte(G_X_L);					//?????
-		printString("");					//print out end
-		_delay_ms(1000);
-    }
+		;
+	}
 }
 
