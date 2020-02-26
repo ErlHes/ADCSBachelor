@@ -3,6 +3,7 @@
      * loop form iterating when running at the maximum speed. This gives
      * about 10% more speed, even if it seems counter-intuitive. At lower
      * speeds it is unnoticed.
+	  - Direct quote from Arduino's "SPI.h" library.
      */
 
 
@@ -53,7 +54,7 @@ void WhoAmICheck(void){
 		testM = spiRead(PIN_M, WHO_AM_I_M);
 		testXG = spiRead(PIN_XG, WHO_AM_I_XG);
 		whoAmICombined = (testXG << 8) | (testM);
-		printString("\r\n WHO_AM_I_CHECK: ");
+		printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
 		printWord(whoAmICombined);
 		printString("");
 		_delay_ms(100);

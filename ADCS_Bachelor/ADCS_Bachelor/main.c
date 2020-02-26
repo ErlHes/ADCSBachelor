@@ -34,7 +34,6 @@ int main(void)
 	printString("");
 			
     while (1) {
-		;
 	}
 }
 
