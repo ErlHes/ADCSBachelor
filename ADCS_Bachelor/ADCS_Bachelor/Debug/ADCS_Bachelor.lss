@@ -3,29 +3,29 @@ ADCS_Bachelor.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000012  00800100  000001cc  00000240  2**0
+  0 .data         00000012  00800100  000001d0  00000244  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000001cc  00000000  00000000  00000074  2**1
+  1 .text         000001d0  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  00000252  2**0
+  2 .comment      00000030  00000000  00000000  00000256  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000284  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000288  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 000000c0  00000000  00000000  000002c4  2**0
+  4 .debug_aranges 000000c0  00000000  00000000  000002c8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000d07  00000000  00000000  00000384  2**0
+  5 .debug_info   00000d07  00000000  00000000  00000388  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000008c8  00000000  00000000  0000108b  2**0
+  6 .debug_abbrev 000008c8  00000000  00000000  0000108f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000663  00000000  00000000  00001953  2**0
+  7 .debug_line   00000669  00000000  00000000  00001957  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000001b0  00000000  00000000  00001fb8  2**2
+  8 .debug_frame  000001b0  00000000  00000000  00001fc0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000051f  00000000  00000000  00002168  2**0
+  9 .debug_str    000004c8  00000000  00000000  00002170  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000060f  00000000  00000000  00002687  2**0
+ 10 .debug_loc    0000060f  00000000  00000000  00002638  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000090  00000000  00000000  00002c96  2**0
+ 11 .debug_ranges 00000090  00000000  00000000  00002c47  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -70,7 +70,7 @@ Disassembly of section .text:
   74:	11 e0       	ldi	r17, 0x01	; 1
   76:	a0 e0       	ldi	r26, 0x00	; 0
   78:	b1 e0       	ldi	r27, 0x01	; 1
-  7a:	ec ec       	ldi	r30, 0xCC	; 204
+  7a:	e0 ed       	ldi	r30, 0xD0	; 208
   7c:	f1 e0       	ldi	r31, 0x01	; 1
   7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
   80:	05 90       	lpm	r0, Z+
@@ -79,7 +79,7 @@ Disassembly of section .text:
   86:	b1 07       	cpc	r27, r17
   88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
   8a:	0e 94 4b 00 	call	0x96	; 0x96 <main>
-  8e:	0c 94 e4 00 	jmp	0x1c8	; 0x1c8 <_exit>
+  8e:	0c 94 e6 00 	jmp	0x1cc	; 0x1cc <_exit>
 
 00000092 <__bad_interrupt>:
   92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -91,7 +91,7 @@ Disassembly of section .text:
 int main(void)
 {
 	initUSART();
-  96:	0e 94 85 00 	call	0x10a	; 0x10a <initUSART>
+  96:	0e 94 87 00 	call	0x10e	; 0x10e <initUSART>
 	spiInit();
   9a:	0e 94 69 00 	call	0xd2	; 0xd2 <spiInit>
 	
@@ -99,19 +99,21 @@ int main(void)
 		uint8_t G_X_L = spiRead(PINB1, OUT_X_L_G);
   9e:	68 e1       	ldi	r22, 0x18	; 24
   a0:	81 e0       	ldi	r24, 0x01	; 1
-  a2:	0e 94 70 00 	call	0xe0	; 0xe0 <spiRead>
+  a2:	0e 94 72 00 	call	0xe4	; 0xe4 <spiRead>
   a6:	c8 2f       	mov	r28, r24
+		
+		
 		printString("\r\nRecieved byte: ");	//Print out start
   a8:	80 e0       	ldi	r24, 0x00	; 0
   aa:	91 e0       	ldi	r25, 0x01	; 1
-  ac:	0e 94 9e 00 	call	0x13c	; 0x13c <printString>
+  ac:	0e 94 a0 00 	call	0x140	; 0x140 <printString>
 		printByte(G_X_L);					//?????
   b0:	8c 2f       	mov	r24, r28
-  b2:	0e 94 b4 00 	call	0x168	; 0x168 <printByte>
+  b2:	0e 94 b6 00 	call	0x16c	; 0x16c <printByte>
 		printString("");					//print out end
   b6:	81 e1       	ldi	r24, 0x11	; 17
   b8:	91 e0       	ldi	r25, 0x01	; 1
-  ba:	0e 94 9e 00 	call	0x13c	; 0x13c <printString>
+  ba:	0e 94 a0 00 	call	0x140	; 0x140 <printString>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
@@ -130,133 +132,168 @@ int main(void)
   d0:	e6 cf       	rjmp	.-52     	; 0x9e <main+0x8>
 
 000000d2 <spiInit>:
+#include <avr/io.h>
+#define read 0b10000000
+#define write 0b00000000
+
+void spiInit(void){
+	DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1);		// MOSI, SCK, CS_M and CS_AG output
   d2:	8e e2       	ldi	r24, 0x2E	; 46
   d4:	84 b9       	out	0x04, r24	; 4
-  d6:	86 e1       	ldi	r24, 0x16	; 22
+	PORTB = (1<<PORTB4) /*|(1<<PORTB2)|(1<<PORTB1)*/;	// pullup on MISO, and CS_M and CS_AG not active/high
+  d6:	80 e1       	ldi	r24, 0x10	; 16
   d8:	85 b9       	out	0x05, r24	; 5
-  da:	81 e5       	ldi	r24, 0x51	; 81
-  dc:	8c bd       	out	0x2c, r24	; 44
-  de:	08 95       	ret
+	PINB = (1<<PINB2)|(1<<PINB1);						// CS_M and CS_AG high, making SPI active instead of I2C
+  da:	86 e0       	ldi	r24, 0x06	; 6
+  dc:	83 b9       	out	0x03, r24	; 3
+	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);				// SPI enable, Master, Clockdiv 16
+  de:	81 e5       	ldi	r24, 0x51	; 81
+  e0:	8c bd       	out	0x2c, r24	; 44
+  e2:	08 95       	ret
 
-000000e0 <spiRead>:
-  e0:	95 b1       	in	r25, 0x05	; 5
-  e2:	21 e0       	ldi	r18, 0x01	; 1
-  e4:	30 e0       	ldi	r19, 0x00	; 0
-  e6:	02 c0       	rjmp	.+4      	; 0xec <spiRead+0xc>
-  e8:	22 0f       	add	r18, r18
-  ea:	33 1f       	adc	r19, r19
-  ec:	8a 95       	dec	r24
-  ee:	e2 f7       	brpl	.-8      	; 0xe8 <spiRead+0x8>
-  f0:	82 2f       	mov	r24, r18
-  f2:	80 95       	com	r24
-  f4:	98 23       	and	r25, r24
-  f6:	95 b9       	out	0x05, r25	; 5
-  f8:	6f 73       	andi	r22, 0x3F	; 63
-  fa:	60 68       	ori	r22, 0x80	; 128
-  fc:	6e bd       	out	0x2e, r22	; 46
-  fe:	0d b4       	in	r0, 0x2d	; 45
- 100:	07 fe       	sbrs	r0, 7
- 102:	fd cf       	rjmp	.-6      	; 0xfe <spiRead+0x1e>
- 104:	8e b5       	in	r24, 0x2e	; 46
- 106:	25 b9       	out	0x05, r18	; 5
- 108:	08 95       	ret
+000000e4 <spiRead>:
+}
 
-0000010a <initUSART>:
- 10a:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
- 10e:	87 e6       	ldi	r24, 0x67	; 103
- 110:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
- 114:	e0 ec       	ldi	r30, 0xC0	; 192
- 116:	f0 e0       	ldi	r31, 0x00	; 0
- 118:	80 81       	ld	r24, Z
- 11a:	8d 7f       	andi	r24, 0xFD	; 253
- 11c:	80 83       	st	Z, r24
- 11e:	88 e1       	ldi	r24, 0x18	; 24
- 120:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
- 124:	86 e0       	ldi	r24, 0x06	; 6
- 126:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
- 12a:	08 95       	ret
+uint8_t spiRead(uint8_t csPin, uint8_t subAddress){
+	uint8_t temp = 0;
+	PINB &= ~(1<<csPin);				// start SPI conversation
+  e4:	93 b1       	in	r25, 0x03	; 3
+  e6:	21 e0       	ldi	r18, 0x01	; 1
+  e8:	30 e0       	ldi	r19, 0x00	; 0
+  ea:	02 c0       	rjmp	.+4      	; 0xf0 <spiRead+0xc>
+  ec:	22 0f       	add	r18, r18
+  ee:	33 1f       	adc	r19, r19
+  f0:	8a 95       	dec	r24
+  f2:	e2 f7       	brpl	.-8      	; 0xec <spiRead+0x8>
+  f4:	82 2f       	mov	r24, r18
+  f6:	80 95       	com	r24
+  f8:	98 23       	and	r25, r24
+  fa:	93 b9       	out	0x03, r25	; 3
+	SPDR = 0x80 | (subAddress & 0x3f);	// reads from subaddress
+  fc:	6f 73       	andi	r22, 0x3F	; 63
+  fe:	60 68       	ori	r22, 0x80	; 128
+ 100:	6e bd       	out	0x2e, r22	; 46
+	while(!(SPSR & (1<<SPIF))){} 		// wait for transfer to complete
+ 102:	0d b4       	in	r0, 0x2d	; 45
+ 104:	07 fe       	sbrs	r0, 7
+ 106:	fd cf       	rjmp	.-6      	; 0x102 <spiRead+0x1e>
+	temp = SPDR;
+ 108:	8e b5       	in	r24, 0x2e	; 46
+	PINB = (1<<csPin);					// end transmission
+ 10a:	23 b9       	out	0x03, r18	; 3
+	return temp;
+}
+ 10c:	08 95       	ret
 
-0000012c <transmitByte>:
- 12c:	e0 ec       	ldi	r30, 0xC0	; 192
- 12e:	f0 e0       	ldi	r31, 0x00	; 0
- 130:	90 81       	ld	r25, Z
- 132:	95 ff       	sbrs	r25, 5
- 134:	fd cf       	rjmp	.-6      	; 0x130 <transmitByte+0x4>
- 136:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
- 13a:	08 95       	ret
+0000010e <initUSART>:
+      myString[i] = response;                       /* add in a letter */
+      i++;
+    }
+  }
+  myString[i] = 0;                          /* terminal NULL character */
+}
+ 10e:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+ 112:	87 e6       	ldi	r24, 0x67	; 103
+ 114:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+ 118:	e0 ec       	ldi	r30, 0xC0	; 192
+ 11a:	f0 e0       	ldi	r31, 0x00	; 0
+ 11c:	80 81       	ld	r24, Z
+ 11e:	8d 7f       	andi	r24, 0xFD	; 253
+ 120:	80 83       	st	Z, r24
+ 122:	88 e1       	ldi	r24, 0x18	; 24
+ 124:	80 93 c1 00 	sts	0x00C1, r24	; 0x8000c1 <__TEXT_REGION_LENGTH__+0x7e00c1>
+ 128:	86 e0       	ldi	r24, 0x06	; 6
+ 12a:	80 93 c2 00 	sts	0x00C2, r24	; 0x8000c2 <__TEXT_REGION_LENGTH__+0x7e00c2>
+ 12e:	08 95       	ret
 
-0000013c <printString>:
- 13c:	0f 93       	push	r16
- 13e:	1f 93       	push	r17
- 140:	cf 93       	push	r28
- 142:	fc 01       	movw	r30, r24
- 144:	80 81       	ld	r24, Z
- 146:	88 23       	and	r24, r24
- 148:	59 f0       	breq	.+22     	; 0x160 <printString+0x24>
- 14a:	8f 01       	movw	r16, r30
- 14c:	c0 e0       	ldi	r28, 0x00	; 0
- 14e:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
- 152:	cf 5f       	subi	r28, 0xFF	; 255
- 154:	f8 01       	movw	r30, r16
- 156:	ec 0f       	add	r30, r28
- 158:	f1 1d       	adc	r31, r1
- 15a:	80 81       	ld	r24, Z
- 15c:	81 11       	cpse	r24, r1
- 15e:	f7 cf       	rjmp	.-18     	; 0x14e <printString+0x12>
- 160:	cf 91       	pop	r28
- 162:	1f 91       	pop	r17
- 164:	0f 91       	pop	r16
- 166:	08 95       	ret
+00000130 <transmitByte>:
+ 130:	e0 ec       	ldi	r30, 0xC0	; 192
+ 132:	f0 e0       	ldi	r31, 0x00	; 0
+ 134:	90 81       	ld	r25, Z
+ 136:	95 ff       	sbrs	r25, 5
+ 138:	fd cf       	rjmp	.-6      	; 0x134 <transmitByte+0x4>
+ 13a:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 13e:	08 95       	ret
 
-00000168 <printByte>:
- 168:	cf 93       	push	r28
- 16a:	df 93       	push	r29
- 16c:	d8 2f       	mov	r29, r24
- 16e:	89 e2       	ldi	r24, 0x29	; 41
- 170:	d8 9f       	mul	r29, r24
- 172:	81 2d       	mov	r24, r1
- 174:	11 24       	eor	r1, r1
- 176:	82 95       	swap	r24
- 178:	8f 70       	andi	r24, 0x0F	; 15
- 17a:	80 5d       	subi	r24, 0xD0	; 208
- 17c:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
- 180:	9d ec       	ldi	r25, 0xCD	; 205
- 182:	d9 9f       	mul	r29, r25
- 184:	c1 2d       	mov	r28, r1
- 186:	11 24       	eor	r1, r1
- 188:	c6 95       	lsr	r28
- 18a:	c6 95       	lsr	r28
+00000140 <printString>:
+ 140:	0f 93       	push	r16
+ 142:	1f 93       	push	r17
+ 144:	cf 93       	push	r28
+ 146:	fc 01       	movw	r30, r24
+ 148:	80 81       	ld	r24, Z
+ 14a:	88 23       	and	r24, r24
+ 14c:	59 f0       	breq	.+22     	; 0x164 <printString+0x24>
+ 14e:	8f 01       	movw	r16, r30
+ 150:	c0 e0       	ldi	r28, 0x00	; 0
+ 152:	0e 94 98 00 	call	0x130	; 0x130 <transmitByte>
+ 156:	cf 5f       	subi	r28, 0xFF	; 255
+ 158:	f8 01       	movw	r30, r16
+ 15a:	ec 0f       	add	r30, r28
+ 15c:	f1 1d       	adc	r31, r1
+ 15e:	80 81       	ld	r24, Z
+ 160:	81 11       	cpse	r24, r1
+ 162:	f7 cf       	rjmp	.-18     	; 0x152 <printString+0x12>
+ 164:	cf 91       	pop	r28
+ 166:	1f 91       	pop	r17
+ 168:	0f 91       	pop	r16
+ 16a:	08 95       	ret
+
+0000016c <printByte>:
+
+void printByte(uint8_t byte) {
+ 16c:	cf 93       	push	r28
+ 16e:	df 93       	push	r29
+ 170:	d8 2f       	mov	r29, r24
+              /* Converts a byte to a string of decimal text, sends it */
+  transmitByte('0' + (byte / 100));                        /* Hundreds */
+ 172:	89 e2       	ldi	r24, 0x29	; 41
+ 174:	d8 9f       	mul	r29, r24
+ 176:	81 2d       	mov	r24, r1
+ 178:	11 24       	eor	r1, r1
+ 17a:	82 95       	swap	r24
+ 17c:	8f 70       	andi	r24, 0x0F	; 15
+ 17e:	80 5d       	subi	r24, 0xD0	; 208
+ 180:	0e 94 98 00 	call	0x130	; 0x130 <transmitByte>
+  transmitByte('0' + ((byte / 10) % 10));                      /* Tens */
+ 184:	9d ec       	ldi	r25, 0xCD	; 205
+ 186:	d9 9f       	mul	r29, r25
+ 188:	c1 2d       	mov	r28, r1
+ 18a:	11 24       	eor	r1, r1
  18c:	c6 95       	lsr	r28
- 18e:	c9 9f       	mul	r28, r25
- 190:	91 2d       	mov	r25, r1
- 192:	11 24       	eor	r1, r1
- 194:	96 95       	lsr	r25
- 196:	96 95       	lsr	r25
+ 18e:	c6 95       	lsr	r28
+ 190:	c6 95       	lsr	r28
+ 192:	c9 9f       	mul	r28, r25
+ 194:	91 2d       	mov	r25, r1
+ 196:	11 24       	eor	r1, r1
  198:	96 95       	lsr	r25
- 19a:	99 0f       	add	r25, r25
- 19c:	89 2f       	mov	r24, r25
- 19e:	88 0f       	add	r24, r24
- 1a0:	88 0f       	add	r24, r24
- 1a2:	98 0f       	add	r25, r24
- 1a4:	8c 2f       	mov	r24, r28
- 1a6:	89 1b       	sub	r24, r25
- 1a8:	80 5d       	subi	r24, 0xD0	; 208
- 1aa:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
- 1ae:	cc 0f       	add	r28, r28
- 1b0:	8c 2f       	mov	r24, r28
- 1b2:	88 0f       	add	r24, r24
- 1b4:	88 0f       	add	r24, r24
- 1b6:	c8 0f       	add	r28, r24
- 1b8:	8d 2f       	mov	r24, r29
- 1ba:	8c 1b       	sub	r24, r28
- 1bc:	80 5d       	subi	r24, 0xD0	; 208
- 1be:	0e 94 96 00 	call	0x12c	; 0x12c <transmitByte>
- 1c2:	df 91       	pop	r29
- 1c4:	cf 91       	pop	r28
- 1c6:	08 95       	ret
+ 19a:	96 95       	lsr	r25
+ 19c:	96 95       	lsr	r25
+ 19e:	99 0f       	add	r25, r25
+ 1a0:	89 2f       	mov	r24, r25
+ 1a2:	88 0f       	add	r24, r24
+ 1a4:	88 0f       	add	r24, r24
+ 1a6:	98 0f       	add	r25, r24
+ 1a8:	8c 2f       	mov	r24, r28
+ 1aa:	89 1b       	sub	r24, r25
+ 1ac:	80 5d       	subi	r24, 0xD0	; 208
+ 1ae:	0e 94 98 00 	call	0x130	; 0x130 <transmitByte>
+  transmitByte('0' + (byte % 10));                             /* Ones */
+ 1b2:	cc 0f       	add	r28, r28
+ 1b4:	8c 2f       	mov	r24, r28
+ 1b6:	88 0f       	add	r24, r24
+ 1b8:	88 0f       	add	r24, r24
+ 1ba:	c8 0f       	add	r28, r24
+ 1bc:	8d 2f       	mov	r24, r29
+ 1be:	8c 1b       	sub	r24, r28
+ 1c0:	80 5d       	subi	r24, 0xD0	; 208
+ 1c2:	0e 94 98 00 	call	0x130	; 0x130 <transmitByte>
+}
+ 1c6:	df 91       	pop	r29
+ 1c8:	cf 91       	pop	r28
+ 1ca:	08 95       	ret
 
-000001c8 <_exit>:
- 1c8:	f8 94       	cli
+000001cc <_exit>:
+ 1cc:	f8 94       	cli
 
-000001ca <__stop_program>:
- 1ca:	ff cf       	rjmp	.-2      	; 0x1ca <__stop_program>
+000001ce <__stop_program>:
+ 1ce:	ff cf       	rjmp	.-2      	; 0x1ce <__stop_program>
