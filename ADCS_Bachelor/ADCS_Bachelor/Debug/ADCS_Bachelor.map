@@ -15,16 +15,20 @@ Discarded input sections
  .data          0x00000000        0x0 gyroscope.o
  .bss           0x00000000        0x0 gyroscope.o
  .text.initGyro
+                0x00000000       0x2a gyroscope.o
+ .text.interuptGyro
                 0x00000000        0x2 gyroscope.o
- .debug_info    0x00000000       0x40 gyroscope.o
- .debug_abbrev  0x00000000       0x2e gyroscope.o
+ .text.calibGyro
+                0x00000000        0x2 gyroscope.o
+ .debug_info    0x00000000      0x12e gyroscope.o
+ .debug_abbrev  0x00000000       0x94 gyroscope.o
  .debug_aranges
-                0x00000000       0x20 gyroscope.o
- .debug_ranges  0x00000000       0x10 gyroscope.o
- .debug_line    0x00000000       0x3c gyroscope.o
- .debug_str     0x00000000      0x115 gyroscope.o
+                0x00000000       0x30 gyroscope.o
+ .debug_ranges  0x00000000       0x20 gyroscope.o
+ .debug_line    0x00000000       0x80 gyroscope.o
+ .debug_str     0x00000000      0x1a4 gyroscope.o
  .comment       0x00000000       0x31 gyroscope.o
- .debug_frame   0x00000000       0x24 gyroscope.o
+ .debug_frame   0x00000000       0x44 gyroscope.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o

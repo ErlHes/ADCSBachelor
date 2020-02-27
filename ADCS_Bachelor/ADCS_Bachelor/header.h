@@ -49,6 +49,13 @@ uint8_t getNumber(void);
 
 void spiInit(void);
 
+void initGyro(void);
+void interuptGyro(void);
+void calibGyro(void);
+void initMag(void);
+void interuptMag(void);
+void offsetMag(void);
+
 /* SPIread - reads one byte of data from the desired registry via the hardware SPI.
 	INPUTS:
 		-csPin = chip select, chose between Accelerometer/Gyroscope or Magnetometer
