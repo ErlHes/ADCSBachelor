@@ -9,8 +9,8 @@
 #define BAUD  9600                     /* set a safe default baud rate */
 #endif
 
-#define PIN_XG PINB1
-#define PIN_M PINB2
+#define PIN_XG PB1
+#define PIN_M PB2
 
                                   /* These are defined for convenience */
 #define   USART_HAS_DATA   bit_is_set(UCSR0A, RXC0)
@@ -70,3 +70,11 @@ void spiWrite(uint8_t csPin, uint8_t subAddress, uint8_t data);
 */
 void WhoAmICheck(void);
 
+uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress);
+
+uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress,
+uint8_t * dest, uint8_t count);
+
+uint8_t spiTransfer(uint8_t data);
+
+ void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data);

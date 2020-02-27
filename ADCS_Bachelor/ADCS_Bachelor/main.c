@@ -17,23 +17,25 @@ int main(void)
 	printString("\r\nIf the program holds here, check your connections.");
 	_delay_ms(1000);
 	WhoAmICheck();
+	
 	uint8_t testbyte = 0x00;
 	uint8_t testbyte2 = 0x00;
 	
-	spiWrite(PIN_XG, INT_GEN_CFG_XL, 0xA5);
-	spiWrite(PIN_XG, INT_GEN_THS_X_XL, 0xD7);
-	
-	testbyte = spiRead(PIN_XG, INT_GEN_CFG_XL);
+	SPIwriteByte(PIN_XG, INT_GEN_CFG_XL, 0xA5);
+	SPIwriteByte(PIN_XG, INT_GEN_THS_X_XL, 0xD7);
+		
+	testbyte = SPIreadByte(PIN_XG, INT_GEN_CFG_XL);
 	printString("\r\nReading data from INT_GEN_CFG_XL (Expecting 165): ");
 	printByte(testbyte);
 	printString("");
-	
-	testbyte2 = spiRead(PIN_XG, INT_GEN_THS_X_XL);
+		
+	testbyte2 = SPIreadByte(PIN_XG, INT_GEN_THS_X_XL);
 	printString("\r\nReading data from INT_GEN_THS_X_XL (Expecting 215): ");
 	printByte(testbyte2);
 	printString("");
-			
-    while (1) {
+		
+	
+	while(1){
+		;
 	}
 }
-
