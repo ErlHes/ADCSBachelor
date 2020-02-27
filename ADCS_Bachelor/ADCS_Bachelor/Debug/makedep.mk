@@ -4,6 +4,8 @@
 
 gyroscope.c
 
+magnetometer.c
+
 main.c
 
 SPI.c

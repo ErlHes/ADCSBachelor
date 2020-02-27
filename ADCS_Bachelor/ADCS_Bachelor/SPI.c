@@ -8,7 +8,7 @@ void spiInit(void){
 	DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);			// MOSI, SCK, CS_M and CS_AG output ||DDB0 is for testing
 	PORTB = (1<<PORTB2)|(1<<PORTB1)|(1<<PORTB0);						// CS_M and CS_AG start HIGH || PORTB0 is for testing
 	SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR1)|(1<<SPR0);	// * SPI enable, Master mode, MSB first, Clockdiv 128
-	// * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3.
+																		// * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3.
 }
 
 

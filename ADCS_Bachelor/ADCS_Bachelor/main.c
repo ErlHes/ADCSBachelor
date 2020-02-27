@@ -20,17 +20,14 @@ int main(void)
 	
 	uint8_t testbyte = 0x00;
 	uint8_t testbyte2 = 0x00;
-	
-	SPIwriteByte(PIN_XG, INT_GEN_CFG_XL, 0xA5);
-	SPIwriteByte(PIN_XG, INT_GEN_THS_X_XL, 0xD7);
 		
-	testbyte = SPIreadByte(PIN_XG, INT_GEN_CFG_XL);
-	printString("\r\nReading data from INT_GEN_CFG_XL (Expecting 165): ");
+	testbyte = SPIreadByte(PIN_XG, CTRL_REG4);
+	printString("\r\nReading data from CTRL_REG4 (Expecting 56): ");
 	printByte(testbyte);
 	printString("");
 		
-	testbyte2 = SPIreadByte(PIN_XG, INT_GEN_THS_X_XL);
-	printString("\r\nReading data from INT_GEN_THS_X_XL (Expecting 215): ");
+	testbyte2 = SPIreadByte(PIN_M, CTRL_REG3_M);
+	printString("\r\nReading data from CTRL_REG3_M (Expecting 3): ");
 	printByte(testbyte2);
 	printString("");
 		
