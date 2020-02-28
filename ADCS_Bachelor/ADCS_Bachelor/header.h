@@ -67,22 +67,22 @@ void initGyro(void);
 void interuptGyro(void);
 
 
-/* calibGyro - Calibrates the gyroscope on the IMU module, see gyroscope.c
+/* calibGyro - Calibrates the gyroscope on the IMU module, see sensorInits.c
 */
 void calibGyro(void);
 
 
-/* initMag - Initializes the magnetometer control registers, values can be changed in magnetometer.c
+/* initMag - Initializes the magnetometer control registers, values can be changed in sensorInits.c
 */
 void initMag(void);
 
 
-/* interruptMap - Sets up the interrupt flags for magnetometer, set values in magnetometer.c
+/* interruptMap - Sets up the interrupt flags for magnetometer, set values in sensorInits.c
 */
 void interuptMag(void);
 
 
-/* offsetMag - initializes the magnetometer offsets, values can be changed in magnetometer.c
+/* offsetMag - initializes the magnetometer offsets, values can be changed in sensorInits.c
 
 */
 void offsetMag(void);
@@ -122,6 +122,123 @@ void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data);
 void WhoAmICheck(void);
 
 /* spiTransfer - Transmits one byte of data over SPI, reads one byte back.
-	-data = Byte to send.
+	INPUTS:
+		-data = Byte to send.
 */
 uint8_t spiTransfer(uint8_t data);
+
+
+/* getFIFOSamples - Reads the FIFO_SRC register on the desired chip select.
+	INPUTS:
+		-csPin = chip select.
+*/
+uint8_t getFIFOSamples();
+
+
+/*	setFIFO - Set desired FIFO mode and threshold.
+	INPUTS:
+		-fifoMode = 3 bit value to set desired mode:
+			0 = Bypass mode. FIFO is turned off.	1 = FIFO mode. Stops collecting data when FIFO is full
+			2 = reserved.							3 = Continuous mode until trigger is deasserted, then FIFO mode.
+			4 = Bypass mode until trigger is deasserted, then countinous mode.
+			5 = Continous mode. If the FIFO is full, the new sample over-writes the older sample.
+		-Threshold = ??? FIFO threshold, max value = 31.
+*/
+void setFIFO(uint8_t fifoMode, uint8_t fifoThs);
+
+
+/*	enableFIFO - enables FIFO mode
+	INPUTS:
+		enable - Any value other than 0 enables FIFO.
+*/
+void enableFIFO(uint8_t enable);
+
+
+/*	sleepGyro - tucks the gyroscope into bed.
+	INPUTS:
+		enable - ANy value other than 0 enables sleep.
+*/
+void sleepGyro(uint8_t enable);
+
+/* getGyroIntSrc() -- Get contents of magnetometer interrupt source register
+*/
+uint8_t getMagIntSrc();
+
+
+/* configMagThs - Sets the magnetometer interrupt threshold
+	INPUTS:
+		-threshold = 16-bit value for the desired threshold.
+*/
+void configMagThs(uint16_t threshold);
+
+
+/* configMagInt - configures the magnetometer interrupt register
+	INPUTS:
+		- generator = Interrupt axis/high-low events
+			Any OR'd combination of ZIEN, YIEN, XIEN    --- What the fuck does this mean?
+		- activeLow = Interrupt active configuration
+			Can be either 0 for Active LOW or 1 for active HIGH
+		- latch: latch gyroscope interrupt request.
+*/
+void configMagInt(uint8_t generator, uint8_t activeLow, uint8_t latch);
+
+
+/* getGyroIntSrc - Reads the gyro interrupt source register
+*/
+uint8_t getGyroIntSrc();
+
+
+/*	configGyroThs() -- Configure the threshold of a gyroscope axis
+	Input:
+		threshold = Interrupt threshold. Possible values: 0-0x7FF.
+		Value is equivalent to raw gyroscope value.
+		axis = Axis to be configured. Either 1 for X, 2 for Y, or 3 for Z
+		duration = Duration value must be above or below threshold to trigger interrupt
+		wait = Wait function on duration counter
+			1: Wait for duration samples before exiting interrupt
+			0: Wait function off
+*/
+void configGyroThs(int16_t threshold, uint8_t axis, uint8_t duration, uint8_t wait);
+
+/*	configGyroInt() -- Configure Gyroscope Interrupt Generator
+	Input:
+		- generator = Interrupt axis/high-low events
+			Any OR'd combination of ZHIE_G, ZLIE_G, YHIE_G, YLIE_G, XHIE_G, XLIE_G  - ??? wats dis.
+		- aoi = AND/OR combination of interrupt events
+			1: AND combination
+			0: OR combination
+		- latch: latch gyroscope interrupt request.
+*/
+void configGyroInt(uint8_t generator, uint8_t aoi, uint8_t latch);
+
+
+/* getGyroIntSrc() - Get status of inactivity interrupt
+*/
+uint8_t getInactivity();
+
+
+/* configInactivity - 
+	Input:
+		- duration = Inactivity duration - actual value depends on gyro ODR
+		- threshold = Activity Threshold
+		- sleepOn = Gyroscope operating mode during inactivity.
+		  1: gyroscope in sleep mode
+		  0: gyroscope in power-down
+*/
+void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn);
+
+
+/* configInt - Configure INT1 or INT2 (Gyro and Accel Interrupts only)
+	Input:
+		- interrupt = Select INT1_CTRL or INT2_CTRL
+		  Possible values: INT1_CTRL or INT2_CTRL
+		- generator = OR'd combination of interrupt generators.
+		  Possible values: INT_DRDY_XL, INT_DRDY_G, INT1_BOOT (INT1 only), INT2_DRDY_TEMP (INT2 only)
+		  INT_FTH, INT_OVR, INT_FSS5, INT_IG_XL (INT1 only), INT1_IG_G (INT1 only), INT2_INACT (INT2 only)   --???? work on this.
+		- activeLow = Interrupt active configuration
+			1: Active HIGH
+			0: Active lOW
+		- pushPull =  Push-pull or open drain interrupt configuration    -- ???? work on this.
+		  Can be either INT_PUSH_PULL or INT_OPEN_DRAIN
+*/
+void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull);
