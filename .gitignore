@@ -1,0 +1,17 @@
+
+ADCS_Bachelor/.vs/ADCS_Bachelor/v14/.atsuo
+*.xml
+*.eep
+*.elf
+*.hex
+*.lss
+*.map
+*.srec
+*.d
+*.d
+*.o
+*.mk
+ADCS_Bachelor/ADCS_Bachelor/Debug/Makefile
+*.d
+*.d
+*.d

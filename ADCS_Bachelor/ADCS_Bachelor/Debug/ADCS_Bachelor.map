@@ -639,14 +639,14 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1e3e
+.debug_info     0x00000000     0x1e4b
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x71d functions.o
- .debug_info    0x00000d11      0x48b main.o
- .debug_info    0x0000119c      0x479 sensorInits.o
- .debug_info    0x00001615      0x411 SPI.o
- .debug_info    0x00001a26      0x418 USART.o
+ .debug_info    0x00000d11      0x498 main.o
+ .debug_info    0x000011a9      0x479 sensorInits.o
+ .debug_info    0x00001622      0x411 SPI.o
+ .debug_info    0x00001a33      0x418 USART.o
 
 .debug_abbrev   0x00000000      0xc21
  *(.debug_abbrev)
@@ -679,11 +679,11 @@ END GROUP
  .debug_str     0x00000000      0x208 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x2cd functions.o
                                 0x315 (size before relaxing)
- .debug_str     0x000004d5       0xc3 main.o
-                                0x24f (size before relaxing)
- .debug_str     0x00000598      0x190 sensorInits.o
+ .debug_str     0x000004d5       0xcd main.o
+                                0x259 (size before relaxing)
+ .debug_str     0x000005a2      0x190 sensorInits.o
                                 0x338 (size before relaxing)
- .debug_str     0x00000728       0x67 SPI.o
+ .debug_str     0x00000732       0x5d SPI.o
                                 0x274 (size before relaxing)
  .debug_str     0x0000078f       0xb1 USART.o
                                 0x25c (size before relaxing)

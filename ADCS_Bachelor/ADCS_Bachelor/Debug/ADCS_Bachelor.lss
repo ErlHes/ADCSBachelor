@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000001b8  00000000  00000000  00000adc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001e3e  00000000  00000000  00000c94  2**0
+  6 .debug_info   00001e4b  00000000  00000000  00000c94  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000c21  00000000  00000000  00002ad2  2**0
+  7 .debug_abbrev 00000c21  00000000  00000000  00002adf  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000c74  00000000  00000000  000036f3  2**0
+  8 .debug_line   00000c74  00000000  00000000  00003700  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000424  00000000  00000000  00004368  2**2
+  9 .debug_frame  00000424  00000000  00000000  00004374  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000840  00000000  00000000  0000478c  2**0
+ 10 .debug_str    00000840  00000000  00000000  00004798  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000012ff  00000000  00000000  00004fcc  2**0
+ 11 .debug_loc    000012ff  00000000  00000000  00004fd8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000168  00000000  00000000  000062cb  2**0
+ 12 .debug_ranges 00000168  00000000  00000000  000062d7  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -265,12 +265,12 @@ int main(void)
  196:	85 ed       	ldi	r24, 0xD5	; 213
  198:	91 e0       	ldi	r25, 0x01	; 1
  19a:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		printString(gx);
+		printWord(gx);
  19e:	c3 01       	movw	r24, r6
  1a0:	b2 01       	movw	r22, r4
  1a2:	0e 94 24 03 	call	0x648	; 0x648 <__fixunssfsi>
  1a6:	cb 01       	movw	r24, r22
- 1a8:	0e 94 30 02 	call	0x460	; 0x460 <printString>
+ 1a8:	0e 94 76 02 	call	0x4ec	; 0x4ec <printWord>
 		
 		printString("\r\ngy: ");
  1ac:	8c ed       	ldi	r24, 0xDC	; 220
