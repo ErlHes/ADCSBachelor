@@ -65,6 +65,8 @@ int main(void)
 		gy = readGyro(OUT_Y_L_G);
 		gz = readGyro(OUT_Z_L_G);
 		
+		gx =
+		
 		printString("\r\nReading Gyroscope: ");
 		printString("\r\ngx: ");
 		printWord(gx);

@@ -249,3 +249,23 @@ void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn);
 		  Can be either INT_PUSH_PULL or INT_OPEN_DRAIN
 */
 void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull);
+
+
+/* readGyro - reads the desired gyroscope axis.
+	INPUTS:
+		axis_address = desired low byte address to start on, chose between:
+			OUT_X_L_G
+			OUT_Y_L_G
+			OUT_Z_L_G
+*/
+int16_t readGyro(uint8_t axis_address);
+
+
+/* readMag - reads the desired magnetometer axis.
+	INPUTS:
+		axis_address = desired low byte address to start on, chose between:
+			OUT_X_L_M
+			OUT_Y_L_M
+			OUT_Z_L_M
+*/
+int16_t readMag(uint8_t axis_address);
