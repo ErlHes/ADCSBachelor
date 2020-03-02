@@ -9,31 +9,91 @@
 
 
 void initGyro(void){
-
-	//	reference value for digital high pass filter
-	//REFERENCE_G = 0x00;
-	SPIwriteByte(PIN_XG, REFERENCE_G, 0x00);
 	
-	/*	bit 7-5:	output data rate selection, activates gyroscope when written
+	uint8_t gyroEnableX = 1;	// 0 for off, 1 for on
+	uint8_t gyroEnableZ = 1;	// 0 for off, 1 for on
+	uint8_t gyroEnableY = 1;	// 0 for off, 1 for on
+	
+	// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps
+	uint8_t gyroScale = 0;	
+	// gyro sample rate [MHz]: choose value between 1-6
+	// 1 = 14.9    4 = 238
+	// 2 = 59.5    5 = 476
+	// 3 = 119     6 = 952
+	uint8_t gyroSampleRate = 6;
+	// bandwith is dependent on scaling, choose value between 0-3
+	uint8_t gyroBandwidth = 0;
+	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
+	uint8_t gyroHPFEnable = 0;	// 0 for off, 1 for on
+	// HPF cutoff frequency depends on sample rate
+	// choose value between 0-9
+	uint8_t gyroHPFCutoff = 0;
+	uint8_t gyroFlipX = 0;	// 0 for default, 1 for orientation inverted
+	uint8_t gyroFlipZ = 0;	// ----
+	uint8_t gyroFlipY = 0;	// ----
+	uint8_t gyroOrientation = 0b00000000;	// 3-bit value
+	uint8_t gyroLatchINT = 0;	// 0 for off, 1 for on
+	
+	uint8_t tempValue = 0;
+	
+	/*	CTRL_REG1_G
+		bit 7-5:	output data rate selection, activates gyroscope when written
 		bit 4-3:	full-scale selection
 		bit 2:		always 0, don't write
 		bit 1-0:	bandwidth selection */
-	//CTRL_REG1_G = 0x00;
-	SPIwriteByte(PIN_XG, CTRL_REG1_G, 0b10000000);
+	//	Default: CTRL_REG1_G = 0x00;
+	tempValue = (gyroSampleRate & 0b00000111) << 5;
+	tempValue |= (gyroScale & 0b00000011) << 3;
+	tempValue |= (gyroBandwidth & 0b00000011);
+	SPIwriteByte(PIN_XG, CTRL_REG1_G, tempValue);
 	
-	/*	bit 7-4:	always 0
+	/*	CTRL_REG2_G
+		bit 7-4:	always 0
 		bit 3-2:	INT (interrupt) selection configuration
 		bit 1-0:	OUT selection configuration	*/
-	//CTRL_REG2_G = 0x00;
+	//	Default: CTRL_REG2_G = 0x00;
 	SPIwriteByte(PIN_XG, CTRL_REG2_G, 0x00);
 	
-	/*	bit 7:		low power mode enable
+	/*	CTRL_REG3_G
+		bit 7:		low power mode enable
 		bit 6:		high-pass filter enable
 		bit 5-4:	always 0
-		bit 3-0:	high-pass filter cutoff frequency selection*/
-	//CTRL_REG3_G = 0x00;
-	SPIwriteByte(PIN_XG, CTRL_REG3_G, 0x00);
+		bit 3-0:	high-pass filter cutoff frequency selection */
+	//	Default: CTRL_REG3_G = 0x00;
+	tempValue = 0;
+	tempValue = (gyroLowPowerEnable & 0x01) << 7;
+	tempValue |= (gyroHPFEnable & 0x01) << 6;
+	tempValue |= (gyroHPFCutoff & 0b0000111);
+	SPIwriteByte(PIN_XG, CTRL_REG3_G, tempValue);
 	
+	/*	CTRL_REG4	
+		bit 5:		yaw axis (Z) output enable
+		bit 4:		roll axis (Y) output enable
+		bit 3:		pitch axis (X) output enable
+		bit 1:		lached interrupt
+		bit 0:		4D option on interrupt
+		rest:		always 0 */
+	//	Default: CTRL_REG4 = 0x00;
+	tempValue = 0;
+	tempValue = (gyroEnableZ & 0x01) << 5;
+	tempValue |= (gyroEnableY & 0x01) << 4;
+	tempValue |= (gyroEnableX & 0x01) << 3;
+	tempValue |= (gyroLatchINT & 0x01) << 1;
+	SPIwriteByte(PIN_XG, CTRL_REG4, tempValue);
+	
+	/*	ORIENT_CFG_G
+		bit 7-6:	always 0
+		bit 5:		pitch axis (X) angular rate sign
+		bit 4:		roll axis (Y) angular rate sign
+		bit 3:		yaw axis (Z) angular rate sign
+		bit 2-0:	directional user orientation selection */	
+	// default = ORIENT_CFG_G = 0x00;
+	tempValue = 0;
+	tempValue = (gyroFlipX & 0x01) << 5;
+	tempValue |= (gyroFlipY & 0x01) << 4;
+	tempValue |= (gyroFlipZ & 0x01) << 3;
+	tempValue |= (gyroOrientation & 0b00000111);
+	SPIwriteByte(PIN_XG, ORIENT_CFG_G, tempValue);
 }
 
 
