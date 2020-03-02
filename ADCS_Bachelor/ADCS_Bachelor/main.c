@@ -65,17 +65,19 @@ int main(void)
 		gy = readGyro(OUT_Y_L_G);
 		gz = readGyro(OUT_Z_L_G);
 		
-		gx =
+		gx = calcGyro(gx);
+		gy = calcGyro(gy);
+		gz = calcGyro(gz);
 		
 		printString("\r\nReading Gyroscope: ");
 		printString("\r\ngx: ");
 		printWord(gx);
 		
 		printString("\r\ngy: ");
-		printWord(gy);
+		printString(gy);
 		
 		printString("\r\ngz: ");
-		printWord(gz);
+		printString(gz);
 		
 		_delay_ms(75);		
 	}
