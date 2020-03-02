@@ -30,55 +30,23 @@ int main(void)
 	printString("\r\nReading data from CTRL_REG3_M (Expecting 3): ");
 	printByte(testbyte2);
 	printString("");
-		
-	uint16_t mx;
-	uint16_t my;
-	uint16_t mz;
-	uint16_t gx;
-	uint16_t gy;
-	uint16_t gz;
+	
+	float gx;
+	float gy;
+	float gz;
 	
 	initMag();
 	initGyro();
 	while(1){
+		int16_t temp = 0;
 		
-		/*
-		mx = readMag(OUT_X_L_M);
-		my = readMag(OUT_Y_L_M);
-		mz = readMag(OUT_Z_L_M);
+		temp = readGyro(OUT_X_L_G);
+		gx = calcGyro(temp);
 		
-		printString("\r\nReading Magnetometer: ");
-		printString("\r\nmx: ");
-		printWord(mx);
+		temp = readGyro(OUT_Y_L_G);
+		gy = calcGyro(temp);
 		
-		printString("\r\nmy: ");
-		printWord(my);
-		
-		printString("\r\nmz: ");
-		printWord(mz);
-		
-		_delay_ms(10);		
-		*/
-		
-		
-		gx = readGyro(OUT_X_L_G);
-		gy = readGyro(OUT_Y_L_G);
-		gz = readGyro(OUT_Z_L_G);
-		
-		gx = calcGyro(gx);
-		gy = calcGyro(gy);
-		gz = calcGyro(gz);
-		
-		printString("\r\nReading Gyroscope: ");
-		printString("\r\ngx: ");
-		printWord(gx);
-		
-		printString("\r\ngy: ");
-		printString(gy);
-		
-		printString("\r\ngz: ");
-		printString(gz);
-		
-		_delay_ms(100);		
+		temp = readGyro(OUT_Z_L_G);
+		gz = calcGyro(temp);
 	}
 }
