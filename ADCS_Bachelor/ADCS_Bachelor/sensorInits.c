@@ -10,6 +10,8 @@
 
 void initGyro(void){
 	
+	//---------------------------VALUES---------------------------//
+	
 	uint8_t gyroEnableX = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableZ = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableY = 1;	// 0 for off, 1 for on
@@ -35,6 +37,10 @@ void initGyro(void){
 	uint8_t gyroLatchINT = 0;	// 0 for off, 1 for on
 	
 	uint8_t tempValue = 0;
+	
+	
+		
+	//---------------------------FUNCTIONS---------------------------//
 	
 	/*	CTRL_REG1_G
 		bit 7-5:	output data rate selection, activates gyroscope when written
@@ -112,6 +118,7 @@ void calibGyro(void){
 
 void initMag(void){
 	
+	//---------------------------VALUES---------------------------//
 	uint8_t tempRegValue = 0x00;
 	
 	uint8_t	magEnable = 0x01;
@@ -136,6 +143,9 @@ void initMag(void){
 	// 2 = power down
 	uint8_t magOperatingMode = 0;
 	
+	
+	//---------------------------FUNCTIONS---------------------------//
+		
 	/*	CTRL_REG1_M
 		bit 7:		temperature compensation enable
 		bit 6-5:	X and Y axis operation mode selection

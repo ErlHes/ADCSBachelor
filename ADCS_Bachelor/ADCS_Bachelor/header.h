@@ -1,4 +1,9 @@
 
+volatile uint16_t mx;
+volatile uint16_t my;
+volatile uint16_t mz;
+
+
 /* Functions to initialize, send, receive over USART
 
    initUSART requires BAUD to be defined in order to calculate
@@ -242,3 +247,23 @@ void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn);
 		  Can be either INT_PUSH_PULL or INT_OPEN_DRAIN
 */
 void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull);
+
+
+/*	readMag - reads a single axis from the magnetometer.
+	INPUTS:
+		-axis_address = the desired low-byte start address
+			OUT_X_L_M
+			OUT_Y_L_M
+			OUT_Z_L_M
+*/
+uint16_t readMag(uint8_t axis_address);
+
+
+/*	readGyro - reads a single axis from the gyroscope.
+	INPUTS:
+		-axis_address = the desired low-byte start address
+			OUT_X_L_G
+			OUT_Y_L_G
+			OUT_Z_L_G
+*/
+uint16_t readGyro(uint8_t axis_address);

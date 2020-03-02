@@ -4,6 +4,7 @@
 #include "header.h"
 #include "registers.h"
 
+
 uint8_t getFIFOSamples(){
 	return (SPIreadByte(PIN_XG, FIFO_SRC) & 0x3F);
 }
@@ -114,7 +115,7 @@ void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn){
 }
 
 void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull){
-	// Write to INT1_CTRL or INT2_CTRL. [interupt] should already be one of
+	// Write to INT1_CTRL or INT2_CTRL. [interrupt] should already be one of
 	// those two values.
 	// [generator] should be an OR'd list of values from the interrupt_generators enum
 	SPIwriteByte(PIN_XG, interrupt_select, generator);
@@ -132,10 +133,16 @@ void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, u
 	SPIwriteByte(PIN_XG, CTRL_REG8, temp);
 }
 
-void readMag(){
-	uint8_t temp[6]; // We'll read six bytes from the mag into temp
-	SPIreadBytes(PIN_M, OUT_X_L_M, temp, 6);
-	mx = (temp[1] << 8 | temp[0]);
-	my = (temp[3] << 8 | temp[2]);
-	mz = (temp[5] << 8 | temp[4]);
+uint16_t readMag(uint8_t axis_address){
+	uint8_t temp[2]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_M, axis_address, temp, 2);
+	uint16_t m = (temp[1] << 8 | temp[0]);
+	return m;
+}
+
+uint16_t readGyro(uint8_t axis_address){
+	uint8_t temp[2];
+	SPIreadBytes(PIN_XG, axis_address, temp, 2);
+	uint16_t g = (temp[1] << 8 | temp[0]);
+	return g;
 }
