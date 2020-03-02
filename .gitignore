@@ -15,3 +15,9 @@ ADCS_Bachelor/ADCS_Bachelor/Debug/Makefile
 *.d
 *.d
 *.d
+*.hex
+*.elf
+ADCS_Bachelor/.vs/ADCS_Bachelor/v14/.atsuo
+*.lss
+*.srec
+*.o

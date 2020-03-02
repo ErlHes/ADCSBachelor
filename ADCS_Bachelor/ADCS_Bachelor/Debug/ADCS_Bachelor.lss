@@ -293,9 +293,9 @@ int main(void)
  1ce:	0e 94 24 03 	call	0x648	; 0x648 <__fixunssfsi>
  1d2:	cb 01       	movw	r24, r22
  1d4:	0e 94 30 02 	call	0x460	; 0x460 <printString>
- 1d8:	2f e7       	ldi	r18, 0x7F	; 127
- 1da:	89 ea       	ldi	r24, 0xA9	; 169
- 1dc:	93 e0       	ldi	r25, 0x03	; 3
+ 1d8:	2f ef       	ldi	r18, 0xFF	; 255
+ 1da:	82 e5       	ldi	r24, 0x52	; 82
+ 1dc:	97 e0       	ldi	r25, 0x07	; 7
  1de:	21 50       	subi	r18, 0x01	; 1
  1e0:	80 40       	sbci	r24, 0x00	; 0
  1e2:	90 40       	sbci	r25, 0x00	; 0

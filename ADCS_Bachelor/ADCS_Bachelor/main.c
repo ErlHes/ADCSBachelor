@@ -79,6 +79,6 @@ int main(void)
 		printString("\r\ngz: ");
 		printString(gz);
 		
-		_delay_ms(75);		
+		_delay_ms(150);		
 	}
 }
