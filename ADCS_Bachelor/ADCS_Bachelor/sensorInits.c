@@ -5,19 +5,34 @@
 #include "registers.h"
 
 
-/* --------------------- GYROSCOPE -------------------- */
+// Sensor Sensitivity Constants
+// Values set according to the typical specifications provided in
+// table 3 of the LSM9DS1 datasheet. (pg 12)
+#define SENSITIVITY_ACCELEROMETER_2  0.000061
+#define SENSITIVITY_ACCELEROMETER_4  0.000122
+#define SENSITIVITY_ACCELEROMETER_8  0.000244
+#define SENSITIVITY_ACCELEROMETER_16 0.000732
+#define SENSITIVITY_GYROSCOPE_245    0.00875
+#define SENSITIVITY_GYROSCOPE_500    0.0175
+#define SENSITIVITY_GYROSCOPE_2000   0.07
+#define SENSITIVITY_MAGNETOMETER_4   0.00014
+#define SENSITIVITY_MAGNETOMETER_8   0.00029
+#define SENSITIVITY_MAGNETOMETER_12  0.00043
+#define SENSITIVITY_MAGNETOMETER_16  0.00058
 
+
+
+/* --------------------- GYROSCOPE -------------------- */
+// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
+volatile uint8_t gyroScale = 0;
 
 void initGyro(void){
-	
-	//---------------------------VALUES---------------------------//
 	
 	uint8_t gyroEnableX = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableZ = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableY = 1;	// 0 for off, 1 for on
 	
-	// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps
-	uint8_t gyroScale = 0;	
+	
 	// gyro sample rate [MHz]: choose value between 1-6
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
@@ -37,10 +52,6 @@ void initGyro(void){
 	uint8_t gyroLatchINT = 0;	// 0 for off, 1 for on
 	
 	uint8_t tempValue = 0;
-	
-	
-		
-	//---------------------------FUNCTIONS---------------------------//
 	
 	/*	CTRL_REG1_G
 		bit 7-5:	output data rate selection, activates gyroscope when written
@@ -102,6 +113,23 @@ void initGyro(void){
 	SPIwriteByte(PIN_XG, ORIENT_CFG_G, tempValue);
 }
 
+float calcGyro(int16_t gyro){
+	// Return the gyro raw reading times our pre-calculated DPS / (ADC tick):
+	float temp = 0;
+		switch (gyroScale){
+			case 0:
+			temp = gyro * SENSITIVITY_GYROSCOPE_245;
+			break;
+			case 1:
+			temp = gyro * SENSITIVITY_GYROSCOPE_500;
+			break;
+			case 3:
+			temp = gyro *  SENSITIVITY_GYROSCOPE_2000;
+			break;
+		}
+	return temp;
+}
+	
 
 void interuptGyro(void){
 	
@@ -118,7 +146,6 @@ void calibGyro(void){
 
 void initMag(void){
 	
-	//---------------------------VALUES---------------------------//
 	uint8_t tempRegValue = 0x00;
 	
 	uint8_t	magEnable = 0x01;
@@ -143,9 +170,6 @@ void initMag(void){
 	// 2 = power down
 	uint8_t magOperatingMode = 0;
 	
-	
-	//---------------------------FUNCTIONS---------------------------//
-		
 	/*	CTRL_REG1_M
 		bit 7:		temperature compensation enable
 		bit 6-5:	X and Y axis operation mode selection
