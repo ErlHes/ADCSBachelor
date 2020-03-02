@@ -31,54 +31,10 @@ int main(void)
 	printByte(testbyte2);
 	printString("");
 		
-	uint16_t mx;
-	uint16_t my;
-	uint16_t mz;
-	uint16_t gx;
-	uint16_t gy;
-	uint16_t gz;
 	
 	initMag();
 	initGyro();
 	while(1){
 		
-		/*
-		mx = readMag(OUT_X_L_M);
-		my = readMag(OUT_Y_L_M);
-		mz = readMag(OUT_Z_L_M);
-		
-		printString("\r\nReading Magnetometer: ");
-		printString("\r\nmx: ");
-		printWord(mx);
-		
-		printString("\r\nmy: ");
-		printWord(my);
-		
-		printString("\r\nmz: ");
-		printWord(mz);
-		
-		_delay_ms(10);		
-		*/
-		
-		
-		gx = readGyro(OUT_X_L_G);
-		gy = readGyro(OUT_Y_L_G);
-		gz = readGyro(OUT_Z_L_G);
-		
-		gx = calcGyro(gx);
-		gy = calcGyro(gy);
-		gz = calcGyro(gz);
-		
-		printString("\r\nReading Gyroscope: ");
-		printString("\r\ngx: ");
-		printWord(gx);
-		
-		printString("\r\ngy: ");
-		printString(gy);
-		
-		printString("\r\ngz: ");
-		printString(gz);
-		
-		_delay_ms(100);		
 	}
 }

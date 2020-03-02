@@ -83,6 +83,11 @@ void calibGyro(void);
 */
 void initMag(void);
 
+/*calcMag - scales the gyro output axis to correct resolution scale.
+	INPUTS:
+		gyro = gyro axis to scale.
+*/
+float calcMag(int16_t mag);
 
 /* interruptMap - Sets up the interrupt flags for magnetometer, set values in sensorInits.c
 */
@@ -93,7 +98,6 @@ void interuptMag(void);
 
 */
 void offsetMag(void);
-
 
 /* SPIreadByte - reads one byte of data from the desired registry via the hardware SPI.
 	INPUTS:
@@ -110,8 +114,7 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress);
 		-dest = Destination array for storing data
 		-count = desired amount of bytes to read
 */
-uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress,
-uint8_t * dest, uint8_t count);
+uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress, uint8_t * dest, uint8_t count);
 
 
 /* SPIwriteByte - writes one byte of data to desired registry via SPI

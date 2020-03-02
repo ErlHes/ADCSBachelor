@@ -23,8 +23,9 @@
 
 
 /* --------------------- GYROSCOPE -------------------- */
-// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
-volatile uint8_t gyroScale = 0;
+
+	// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
+	volatile uint8_t gyroScale = 0;
 
 void initGyro(void){
 	
@@ -143,14 +144,15 @@ void calibGyro(void){
 
 /* --------------------- MAGNETOMETER -------------------- */
 
+	// mag scale can be 4, 8, 12, or 16
+	volatile uint8_t magScale = 4;
 
 void initMag(void){
 	
 	uint8_t tempRegValue = 0x00;
 	
 	uint8_t	magEnable = 0x01;
-	// mag scale can be 4, 8, 12, or 16
-	uint8_t magScale = 4;
+
 	// mag data rate can be 0-7
 	// 0 = 0.625 Hz  4 = 10 Hz
 	// 1 = 1.25 Hz   5 = 20 Hz
@@ -235,6 +237,26 @@ void initMag(void){
 	SPIwriteByte(PIN_M, CTRL_REG5_M, tempRegValue);
 }
 
+float calcMag(int16_t mag){
+	// scales and returns the magnetometer output axis to correct resolution scale.
+	float temp = 0;
+	switch (magScale){
+		case 4:
+		temp = mag * SENSITIVITY_MAGNETOMETER_4;
+		break;
+		case 8:
+		temp = mag * SENSITIVITY_MAGNETOMETER_8;
+		break;
+		case 12:
+		temp = mag * SENSITIVITY_MAGNETOMETER_12;
+		break;
+		case 16:
+		temp = mag * SENSITIVITY_MAGNETOMETER_16;
+		break;
+	}
+	return temp;
+}
+
 void interuptMag(void){
 	/*	bit 7:	enable interrupt generation on X-axis
 		bit 6:	enable interrupt generation on Y-axis
@@ -261,7 +283,6 @@ void offsetMag(void){
 	SPIwriteByte(PIN_M, OFFSET_Z_REG_H_M, 0x00);
 }
 
-float calcMag(float mag);
 
 
 /* --------------------- ACCELEROMETER -------------------- */
