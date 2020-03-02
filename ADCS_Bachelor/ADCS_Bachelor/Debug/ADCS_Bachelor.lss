@@ -19,15 +19,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_abbrev 00000c21  00000000  00000000  00002adf  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000c74  00000000  00000000  00003700  2**0
+  8 .debug_line   00000d8d  00000000  00000000  00003700  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000424  00000000  00000000  00004374  2**2
+  9 .debug_frame  00000424  00000000  00000000  00004490  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000840  00000000  00000000  00004798  2**0
+ 10 .debug_str    00000890  00000000  00000000  000048b4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000012ff  00000000  00000000  00004fd8  2**0
+ 11 .debug_loc    000012ff  00000000  00000000  00005144  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000168  00000000  00000000  000062d7  2**0
+ 12 .debug_ranges 00000168  00000000  00000000  00006443  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -101,19 +101,11 @@ Disassembly of section .text:
   a2:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000a6 <readGyro>:
-	SPIreadBytes(PIN_M, axis_address, temp, 2);
-	int16_t m = (temp[1] << 8 | temp[0]);
-	return m;
-}
-
-int16_t readGyro(uint8_t axis_address){
   a6:	cf 93       	push	r28
   a8:	df 93       	push	r29
   aa:	00 d0       	rcall	.+0      	; 0xac <readGyro+0x6>
   ac:	cd b7       	in	r28, 0x3d	; 61
   ae:	de b7       	in	r29, 0x3e	; 62
-	int8_t temp[2];
-	SPIreadBytes(PIN_XG, axis_address, temp, 2);
   b0:	22 e0       	ldi	r18, 0x02	; 2
   b2:	ae 01       	movw	r20, r28
   b4:	4f 5f       	subi	r20, 0xFF	; 255
@@ -121,7 +113,6 @@ int16_t readGyro(uint8_t axis_address){
   b8:	68 2f       	mov	r22, r24
   ba:	81 e0       	ldi	r24, 0x01	; 1
   bc:	0e 94 72 01 	call	0x2e4	; 0x2e4 <SPIreadBytes>
-	int16_t g = (temp[1] << 8 | temp[0]);
   c0:	2a 81       	ldd	r18, Y+2	; 0x02
   c2:	02 2e       	mov	r0, r18
   c4:	00 0c       	add	r0, r0
@@ -132,7 +123,6 @@ int16_t readGyro(uint8_t axis_address){
   ce:	08 2e       	mov	r0, r24
   d0:	00 0c       	add	r0, r0
   d2:	99 0b       	sbc	r25, r25
-	return g;
   d4:	82 2b       	or	r24, r18
   d6:	93 2b       	or	r25, r19
   d8:	0f 90       	pop	r0
@@ -142,20 +132,11 @@ int16_t readGyro(uint8_t axis_address){
   e0:	08 95       	ret
 
 000000e2 <main>:
-#define UBRR_VALUE ((F_CPU / (BAUDRATE * 16UL)) - 1 )
-
-
-int main(void)
-{
-	initUSART();
   e2:	0e 94 17 02 	call	0x42e	; 0x42e <initUSART>
-	spiInit();
   e6:	0e 94 64 01 	call	0x2c8	; 0x2c8 <spiInit>
-	printString("\r\nStarting connection test, please wait...");
   ea:	80 e0       	ldi	r24, 0x00	; 0
   ec:	91 e0       	ldi	r25, 0x01	; 1
   ee:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-	printString("\r\nIf the program holds here, check your connections.");
   f2:	8b e2       	ldi	r24, 0x2B	; 43
   f4:	91 e0       	ldi	r25, 0x01	; 1
   f6:	0e 94 30 02 	call	0x460	; 0x460 <printString>
@@ -174,120 +155,76 @@ int main(void)
  106:	e1 f7       	brne	.-8      	; 0x100 <main+0x1e>
  108:	00 c0       	rjmp	.+0      	; 0x10a <main+0x28>
  10a:	00 00       	nop
-	_delay_ms(1000);
-	WhoAmICheck();
  10c:	0e 94 bb 01 	call	0x376	; 0x376 <WhoAmICheck>
-	
-	uint8_t testbyte = 0x00;
-	uint8_t testbyte2 = 0x00;
-		
-	testbyte = SPIreadByte(PIN_XG, CTRL_REG4);
  110:	6e e1       	ldi	r22, 0x1E	; 30
  112:	81 e0       	ldi	r24, 0x01	; 1
  114:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
  118:	f8 2e       	mov	r15, r24
-	printString("\r\nReading data from CTRL_REG4 (Expecting 56): ");
  11a:	80 e6       	ldi	r24, 0x60	; 96
  11c:	91 e0       	ldi	r25, 0x01	; 1
  11e:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-	printByte(testbyte);
  122:	8f 2d       	mov	r24, r15
  124:	0e 94 46 02 	call	0x48c	; 0x48c <printByte>
-	printString("");
  128:	8e eb       	ldi	r24, 0xBE	; 190
  12a:	91 e0       	ldi	r25, 0x01	; 1
  12c:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		
-	testbyte2 = SPIreadByte(PIN_M, CTRL_REG3_M);
  130:	62 e2       	ldi	r22, 0x22	; 34
  132:	82 e0       	ldi	r24, 0x02	; 2
  134:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
  138:	f8 2e       	mov	r15, r24
-	printString("\r\nReading data from CTRL_REG3_M (Expecting 3): ");
  13a:	8f e8       	ldi	r24, 0x8F	; 143
  13c:	91 e0       	ldi	r25, 0x01	; 1
  13e:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-	printByte(testbyte2);
  142:	8f 2d       	mov	r24, r15
  144:	0e 94 46 02 	call	0x48c	; 0x48c <printByte>
-	printString("");
  148:	8e eb       	ldi	r24, 0xBE	; 190
  14a:	91 e0       	ldi	r25, 0x01	; 1
  14c:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-	uint16_t mz;
-	uint16_t gx;
-	uint16_t gy;
-	uint16_t gz;
-	
-	initMag();
  150:	0e 94 4a 01 	call	0x294	; 0x294 <initMag>
-	initGyro();
  154:	0e 94 f6 00 	call	0x1ec	; 0x1ec <initGyro>
-		
-		_delay_ms(10);		
-		*/
-		
-		
-		gx = readGyro(OUT_X_L_G);
  158:	88 e1       	ldi	r24, 0x18	; 24
  15a:	0e 94 53 00 	call	0xa6	; 0xa6 <readGyro>
  15e:	5c 01       	movw	r10, r24
-		gy = readGyro(OUT_Y_L_G);
  160:	8a e1       	ldi	r24, 0x1A	; 26
  162:	0e 94 53 00 	call	0xa6	; 0xa6 <readGyro>
  166:	6c 01       	movw	r12, r24
-		gz = readGyro(OUT_Z_L_G);
  168:	8c e1       	ldi	r24, 0x1C	; 28
  16a:	0e 94 53 00 	call	0xa6	; 0xa6 <readGyro>
  16e:	7c 01       	movw	r14, r24
-		
-		gx = calcGyro(gx);
  170:	c5 01       	movw	r24, r10
  172:	0e 94 16 01 	call	0x22c	; 0x22c <calcGyro>
  176:	2b 01       	movw	r4, r22
  178:	3c 01       	movw	r6, r24
-		gy = calcGyro(gy);
  17a:	c6 01       	movw	r24, r12
  17c:	0e 94 16 01 	call	0x22c	; 0x22c <calcGyro>
  180:	4b 01       	movw	r8, r22
  182:	5c 01       	movw	r10, r24
-		gz = calcGyro(gz);
  184:	c7 01       	movw	r24, r14
  186:	0e 94 16 01 	call	0x22c	; 0x22c <calcGyro>
  18a:	6b 01       	movw	r12, r22
  18c:	7c 01       	movw	r14, r24
-		
-		printString("\r\nReading Gyroscope: ");
  18e:	8f eb       	ldi	r24, 0xBF	; 191
  190:	91 e0       	ldi	r25, 0x01	; 1
  192:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		printString("\r\ngx: ");
  196:	85 ed       	ldi	r24, 0xD5	; 213
  198:	91 e0       	ldi	r25, 0x01	; 1
  19a:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		printWord(gx);
  19e:	c3 01       	movw	r24, r6
  1a0:	b2 01       	movw	r22, r4
  1a2:	0e 94 24 03 	call	0x648	; 0x648 <__fixunssfsi>
  1a6:	cb 01       	movw	r24, r22
  1a8:	0e 94 76 02 	call	0x4ec	; 0x4ec <printWord>
-		
-		printString("\r\ngy: ");
  1ac:	8c ed       	ldi	r24, 0xDC	; 220
  1ae:	91 e0       	ldi	r25, 0x01	; 1
  1b0:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		printString(gy);
  1b4:	c5 01       	movw	r24, r10
  1b6:	b4 01       	movw	r22, r8
  1b8:	0e 94 24 03 	call	0x648	; 0x648 <__fixunssfsi>
  1bc:	cb 01       	movw	r24, r22
  1be:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		
-		printString("\r\ngz: ");
  1c2:	83 ee       	ldi	r24, 0xE3	; 227
  1c4:	91 e0       	ldi	r25, 0x01	; 1
  1c6:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		printString(gz);
  1ca:	c7 01       	movw	r24, r14
  1cc:	b6 01       	movw	r22, r12
  1ce:	0e 94 24 03 	call	0x648	; 0x648 <__fixunssfsi>
@@ -439,53 +376,24 @@ void calibGyro(void){
  2c6:	08 95       	ret
 
 000002c8 <spiInit>:
-#include <stdio.h>
-#include "header.h"
-#include "registers.h"
-
-void spiInit(void){
-	DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);			// MOSI, SCK, CS_M and CS_AG output ||DDB0 is for testing
  2c8:	8f e2       	ldi	r24, 0x2F	; 47
  2ca:	84 b9       	out	0x04, r24	; 4
-	PORTB = (1<<PORTB2)|(1<<PORTB1)|(1<<PORTB0);						// CS_M and CS_AG start HIGH || PORTB0 is for testing
  2cc:	87 e0       	ldi	r24, 0x07	; 7
  2ce:	85 b9       	out	0x05, r24	; 5
-	SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR1)|(1<<SPR0);	// * SPI enable, Master mode, MSB first, Clockdiv 128
  2d0:	8f e5       	ldi	r24, 0x5F	; 95
  2d2:	8c bd       	out	0x2c, r24	; 44
  2d4:	08 95       	ret
 
 000002d6 <spiTransfer>:
-	
-	return count;
-}
-
-uint8_t spiTransfer(uint8_t data) {
-    SPDR = data;
  2d6:	8e bd       	out	0x2e, r24	; 46
-     * The following NOP introduces a small delay that can prevent the wait
-     * loop form iterating when running at the maximum speed. This gives
-     * about 10% more speed, even if it seems counter-intuitive. At lower
-     * speeds it is unnoticed.
-     */
-    asm volatile("nop");
  2d8:	00 00       	nop
-    while (!(SPSR & _BV(SPIF))) ; // wait
  2da:	0d b4       	in	r0, 0x2d	; 45
  2dc:	07 fe       	sbrs	r0, 7
  2de:	fd cf       	rjmp	.-6      	; 0x2da <spiTransfer+0x4>
-    return SPDR;
  2e0:	8e b5       	in	r24, 0x2e	; 46
-  }
  2e2:	08 95       	ret
 
 000002e4 <SPIreadBytes>:
-	return temp;
-}
-
-uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress,
-uint8_t * dest, uint8_t count)
-{
  2e4:	df 92       	push	r13
  2e6:	ef 92       	push	r14
  2e8:	ff 92       	push	r15
@@ -495,22 +403,14 @@ uint8_t * dest, uint8_t count)
  2f0:	df 93       	push	r29
  2f2:	8a 01       	movw	r16, r20
  2f4:	d2 2e       	mov	r13, r18
-	// To indicate a read, set bit 0 (msb) of first byte to 1
-	uint8_t rAddress = 0x80 | (subAddress & 0x3F);
  2f6:	6f 73       	andi	r22, 0x3F	; 63
  2f8:	60 68       	ori	r22, 0x80	; 128
-	// Mag SPI port is different. If we're reading multiple bytes,
-	// set bit 1 to 1. The remaining six bytes are the address to be read
-	if ((csPin == PIN_M) && count > 1)
  2fa:	82 30       	cpi	r24, 0x02	; 2
  2fc:	21 f4       	brne	.+8      	; 0x306 <SPIreadBytes+0x22>
  2fe:	91 e0       	ldi	r25, 0x01	; 1
  300:	92 17       	cp	r25, r18
  302:	08 f4       	brcc	.+2      	; 0x306 <SPIreadBytes+0x22>
-	rAddress |= 0x40;
  304:	60 64       	ori	r22, 0x40	; 64
-	
-	PORTB &= ~(1<<csPin);	// Initiate communication
  306:	95 b1       	in	r25, 0x05	; 5
  308:	21 e0       	ldi	r18, 0x01	; 1
  30a:	30 e0       	ldi	r19, 0x00	; 0
@@ -524,39 +424,22 @@ uint8_t * dest, uint8_t count)
  31a:	80 95       	com	r24
  31c:	89 23       	and	r24, r25
  31e:	85 b9       	out	0x05, r24	; 5
-	spiTransfer(rAddress);
  320:	86 2f       	mov	r24, r22
  322:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <spiTransfer>
-	for (int i=0; i<count; i++)
  326:	dd 20       	and	r13, r13
  328:	51 f0       	breq	.+20     	; 0x33e <SPIreadBytes+0x5a>
  32a:	e8 01       	movw	r28, r16
  32c:	0d 0d       	add	r16, r13
  32e:	11 1d       	adc	r17, r1
-	{
-		dest[i] = spiTransfer(0x00); // Read into destination array
  330:	80 e0       	ldi	r24, 0x00	; 0
  332:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <spiTransfer>
  336:	89 93       	st	Y+, r24
-	if ((csPin == PIN_M) && count > 1)
-	rAddress |= 0x40;
-	
-	PORTB &= ~(1<<csPin);	// Initiate communication
-	spiTransfer(rAddress);
-	for (int i=0; i<count; i++)
  338:	c0 17       	cp	r28, r16
  33a:	d1 07       	cpc	r29, r17
  33c:	c9 f7       	brne	.-14     	; 0x330 <SPIreadBytes+0x4c>
-	{
-		dest[i] = spiTransfer(0x00); // Read into destination array
-	}
-	PORTB |= (1<<csPin); // Close communication
  33e:	85 b1       	in	r24, 0x05	; 5
  340:	e8 2a       	or	r14, r24
  342:	e5 b8       	out	0x05, r14	; 5
-	
-	return count;
-}
  344:	8d 2d       	mov	r24, r13
  346:	df 91       	pop	r29
  348:	cf 91       	pop	r28
@@ -568,28 +451,16 @@ uint8_t * dest, uint8_t count)
  354:	08 95       	ret
 
 00000356 <SPIreadByte>:
-																		// * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3.
-}
-
-
-uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
-{
  356:	cf 93       	push	r28
  358:	df 93       	push	r29
  35a:	1f 92       	push	r1
  35c:	cd b7       	in	r28, 0x3d	; 61
  35e:	de b7       	in	r29, 0x3e	; 62
-	uint8_t temp;
-	// Use the multiple read function to read 1 byte.
-	// Value is returned to `temp`.
-	SPIreadBytes(csPin, subAddress, &temp, 1);
  360:	21 e0       	ldi	r18, 0x01	; 1
  362:	ae 01       	movw	r20, r28
  364:	4f 5f       	subi	r20, 0xFF	; 255
  366:	5f 4f       	sbci	r21, 0xFF	; 255
  368:	0e 94 72 01 	call	0x2e4	; 0x2e4 <SPIreadBytes>
-	return temp;
-}
  36c:	89 81       	ldd	r24, Y+1	; 0x01
  36e:	0f 90       	pop	r0
  370:	df 91       	pop	r29
@@ -597,63 +468,41 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
  374:	08 95       	ret
 
 00000376 <WhoAmICheck>:
-    asm volatile("nop");
-    while (!(SPSR & _BV(SPIF))) ; // wait
-    return SPDR;
-  }
-  
-  void WhoAmICheck(void){
  376:	cf 93       	push	r28
  378:	df 93       	push	r29
-	  uint8_t testM = 0x00;
-	  uint8_t testXG = 0x00;
-	  uint16_t whoAmICombined = 0x0000;
-	  //spiWrite(PIN_M, CTRL_REG3_M, 0b00000111);		//Needed to read from the Magnetometer registers.
-	  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
  37a:	6f e0       	ldi	r22, 0x0F	; 15
  37c:	81 e0       	ldi	r24, 0x01	; 1
  37e:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
  382:	c8 2f       	mov	r28, r24
-	  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
  384:	6f e0       	ldi	r22, 0x0F	; 15
  386:	82 e0       	ldi	r24, 0x02	; 2
  388:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
-	  whoAmICombined = (testXG << 8) | testM;
  38c:	d0 e0       	ldi	r29, 0x00	; 0
  38e:	dc 2f       	mov	r29, r28
  390:	cc 27       	eor	r28, r28
  392:	c8 2b       	or	r28, r24
-	  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
  394:	8a ee       	ldi	r24, 0xEA	; 234
  396:	91 e0       	ldi	r25, 0x01	; 1
  398:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-	  printWord(whoAmICombined);
  39c:	ce 01       	movw	r24, r28
  39e:	0e 94 76 02 	call	0x4ec	; 0x4ec <printWord>
-	  while(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
  3a2:	cd 33       	cpi	r28, 0x3D	; 61
  3a4:	d8 46       	sbci	r29, 0x68	; 104
  3a6:	11 f1       	breq	.+68     	; 0x3ec <WhoAmICheck+0x76>
-		  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
  3a8:	6f e0       	ldi	r22, 0x0F	; 15
  3aa:	82 e0       	ldi	r24, 0x02	; 2
  3ac:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
  3b0:	c8 2f       	mov	r28, r24
-		  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
  3b2:	6f e0       	ldi	r22, 0x0F	; 15
  3b4:	81 e0       	ldi	r24, 0x01	; 1
  3b6:	0e 94 ab 01 	call	0x356	; 0x356 <SPIreadByte>
-		  whoAmICombined = (testXG << 8) | (testM);
  3ba:	d0 e0       	ldi	r29, 0x00	; 0
  3bc:	d8 2b       	or	r29, r24
-		  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
  3be:	8a ee       	ldi	r24, 0xEA	; 234
  3c0:	91 e0       	ldi	r25, 0x01	; 1
  3c2:	0e 94 30 02 	call	0x460	; 0x460 <printString>
-		  printWord(whoAmICombined);
  3c6:	ce 01       	movw	r24, r28
  3c8:	0e 94 76 02 	call	0x4ec	; 0x4ec <printWord>
-		  printString("");
  3cc:	8e eb       	ldi	r24, 0xBE	; 190
  3ce:	91 e0       	ldi	r25, 0x01	; 1
  3d0:	0e 94 30 02 	call	0x460	; 0x460 <printString>
@@ -666,34 +515,18 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
  3e0:	e1 f7       	brne	.-8      	; 0x3da <WhoAmICheck+0x64>
  3e2:	00 c0       	rjmp	.+0      	; 0x3e4 <WhoAmICheck+0x6e>
  3e4:	00 00       	nop
-	  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
-	  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
-	  whoAmICombined = (testXG << 8) | testM;
-	  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
-	  printWord(whoAmICombined);
-	  while(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
  3e6:	cd 33       	cpi	r28, 0x3D	; 61
  3e8:	d8 46       	sbci	r29, 0x68	; 104
  3ea:	f1 f6       	brne	.-68     	; 0x3a8 <WhoAmICheck+0x32>
-		  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
-		  printWord(whoAmICombined);
-		  printString("");
-		  _delay_ms(100);
-	  }
-  }
  3ec:	df 91       	pop	r29
  3ee:	cf 91       	pop	r28
  3f0:	08 95       	ret
 
 000003f2 <SPIwriteByte>:
-  
-  void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data)
-  {
  3f2:	1f 93       	push	r17
  3f4:	cf 93       	push	r28
  3f6:	df 93       	push	r29
  3f8:	14 2f       	mov	r17, r20
-	  PORTB &= ~(1<<csPin); // Initiate communication
  3fa:	95 b1       	in	r25, 0x05	; 5
  3fc:	c1 e0       	ldi	r28, 0x01	; 1
  3fe:	d0 e0       	ldi	r29, 0x00	; 0
@@ -706,18 +539,11 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
  40c:	80 95       	com	r24
  40e:	98 23       	and	r25, r24
  410:	95 b9       	out	0x05, r25	; 5
-	  
-	  // If write, bit 0 (MSB) should be 0
-	  // If single write, bit 1 should be 0
-	  spiTransfer(subAddress & 0x3F); // Send Address
  412:	86 2f       	mov	r24, r22
  414:	8f 73       	andi	r24, 0x3F	; 63
  416:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <spiTransfer>
-	  spiTransfer(data); // Send data
  41a:	81 2f       	mov	r24, r17
  41c:	0e 94 6b 01 	call	0x2d6	; 0x2d6 <spiTransfer>
-	  
-	  PORTB |= (1<<csPin); // Close communication
  420:	85 b1       	in	r24, 0x05	; 5
  422:	c8 2b       	or	r28, r24
  424:	c5 b9       	out	0x05, r28	; 5
@@ -727,12 +553,6 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
  42c:	08 95       	ret
 
 0000042e <initUSART>:
-      myString[i] = response;                       /* add in a letter */
-      i++;
-    }
-  }
-  myString[i] = 0;                          /* terminal NULL character */
-}
  42e:	10 92 c5 00 	sts	0x00C5, r1	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
  432:	87 e6       	ldi	r24, 0x67	; 103
  434:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
@@ -780,13 +600,9 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
  48a:	08 95       	ret
 
 0000048c <printByte>:
-
-void printByte(uint8_t byte) {
  48c:	cf 93       	push	r28
  48e:	df 93       	push	r29
  490:	d8 2f       	mov	r29, r24
-              /* Converts a byte to a string of decimal text, sends it */
-  transmitByte('0' + (byte / 100));                        /* Hundreds */
  492:	89 e2       	ldi	r24, 0x29	; 41
  494:	d8 9f       	mul	r29, r24
  496:	81 2d       	mov	r24, r1
@@ -795,7 +611,6 @@ void printByte(uint8_t byte) {
  49c:	8f 70       	andi	r24, 0x0F	; 15
  49e:	80 5d       	subi	r24, 0xD0	; 208
  4a0:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + ((byte / 10) % 10));                      /* Tens */
  4a4:	9d ec       	ldi	r25, 0xCD	; 205
  4a6:	d9 9f       	mul	r29, r25
  4a8:	c1 2d       	mov	r28, r1
@@ -818,7 +633,6 @@ void printByte(uint8_t byte) {
  4ca:	89 1b       	sub	r24, r25
  4cc:	80 5d       	subi	r24, 0xD0	; 208
  4ce:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + (byte % 10));                             /* Ones */
  4d2:	cc 0f       	add	r28, r28
  4d4:	8c 2f       	mov	r24, r28
  4d6:	88 0f       	add	r24, r24
@@ -828,20 +642,16 @@ void printByte(uint8_t byte) {
  4de:	8c 1b       	sub	r24, r28
  4e0:	80 5d       	subi	r24, 0xD0	; 208
  4e2:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-}
  4e6:	df 91       	pop	r29
  4e8:	cf 91       	pop	r28
  4ea:	08 95       	ret
 
 000004ec <printWord>:
-
-void printWord(uint16_t word) {
  4ec:	0f 93       	push	r16
  4ee:	1f 93       	push	r17
  4f0:	cf 93       	push	r28
  4f2:	df 93       	push	r29
  4f4:	8c 01       	movw	r16, r24
-  transmitByte('0' + (word / 10000));                 /* Ten-thousands */
  4f6:	9c 01       	movw	r18, r24
  4f8:	32 95       	swap	r19
  4fa:	22 95       	swap	r18
@@ -860,7 +670,6 @@ void printWord(uint16_t word) {
  516:	87 95       	ror	r24
  518:	80 5d       	subi	r24, 0xD0	; 208
  51a:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + ((word / 1000) % 10));               /* Thousands */
  51e:	98 01       	movw	r18, r16
  520:	36 95       	lsr	r19
  522:	27 95       	ror	r18
@@ -905,7 +714,6 @@ void printWord(uint16_t word) {
  574:	c9 01       	movw	r24, r18
  576:	80 5d       	subi	r24, 0xD0	; 208
  578:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + ((word / 100) % 10));                 /* Hundreds */
  57c:	98 01       	movw	r18, r16
  57e:	36 95       	lsr	r19
  580:	27 95       	ror	r18
@@ -944,7 +752,6 @@ void printWord(uint16_t word) {
  5c6:	c9 01       	movw	r24, r18
  5c8:	80 5d       	subi	r24, 0xD0	; 208
  5ca:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + ((word / 10) % 10));                      /* Tens */
  5ce:	98 01       	movw	r18, r16
  5d0:	ad ec       	ldi	r26, 0xCD	; 205
  5d2:	bc ec       	ldi	r27, 0xCC	; 204
@@ -981,7 +788,6 @@ void printWord(uint16_t word) {
  614:	c9 01       	movw	r24, r18
  616:	80 5d       	subi	r24, 0xD0	; 208
  618:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-  transmitByte('0' + (word % 10));                             /* Ones */
  61c:	ce 01       	movw	r24, r28
  61e:	88 0f       	add	r24, r24
  620:	99 1f       	adc	r25, r25
@@ -998,7 +804,6 @@ void printWord(uint16_t word) {
  636:	9d 0b       	sbc	r25, r29
  638:	80 5d       	subi	r24, 0xD0	; 208
  63a:	0e 94 28 02 	call	0x450	; 0x450 <transmitByte>
-}
  63e:	df 91       	pop	r29
  640:	cf 91       	pop	r28
  642:	1f 91       	pop	r17

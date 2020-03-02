@@ -261,6 +261,8 @@ void offsetMag(void){
 	SPIwriteByte(PIN_M, OFFSET_Z_REG_H_M, 0x00);
 }
 
+float calcMag(float mag);
+
 
 /* --------------------- ACCELEROMETER -------------------- */
 
