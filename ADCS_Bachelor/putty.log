@@ -1,0 +1,7 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2020.03.02 13:57:48 =~=~=~=~=~=~=~=~=~=~=~=
+
+Starting connection test, please wait...
+If the program holds here, check your connections.
+ WHO_AM_I_CHECK (correct result is 26685: 26685
+Reading data from CTRL_REG4 (Expecting 56): 056
+Reading data from CTRL_REG3_M (Expecting 3): 003

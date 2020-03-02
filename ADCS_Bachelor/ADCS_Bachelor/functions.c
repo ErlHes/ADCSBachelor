@@ -131,3 +131,11 @@ void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, u
 	
 	SPIwriteByte(PIN_XG, CTRL_REG8, temp);
 }
+
+void readMag(){
+	uint8_t temp[6]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_M, OUT_X_L_M, temp, 6);
+	mx = (temp[1] << 8 | temp[0]);
+	my = (temp[3] << 8 | temp[2]);
+	mz = (temp[5] << 8 | temp[4]);
+}
