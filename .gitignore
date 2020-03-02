@@ -21,3 +21,9 @@ ADCS_Bachelor/.vs/ADCS_Bachelor/v14/.atsuo
 *.lss
 *.srec
 *.o
+ADCS_Bachelor/ADCS_Bachelor/Debug/ADCS_Bachelor.hex
+ADCS_Bachelor/ADCS_Bachelor/Debug/ADCS_Bachelor.elf
+ADCS_Bachelor/ADCS_Bachelor/Debug/ADCS_Bachelor.lss
+ADCS_Bachelor/ADCS_Bachelor/Debug/ADCS_Bachelor.srec
+ADCS_Bachelor/ADCS_Bachelor/Debug/main.o
+ADCS_Bachelor/.vs/ADCS_Bachelor/v14/.atsuo
