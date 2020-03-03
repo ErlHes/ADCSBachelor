@@ -17,24 +17,36 @@ int main(void)
 	printString("\r\nIf the program holds here, check your connections.");
 	_delay_ms(1000);
 	WhoAmICheck();
-	
+
 	uint8_t testbyte = 0x00;
 	uint8_t testbyte2 = 0x00;
-		
+
 	testbyte = SPIreadByte(PIN_XG, CTRL_REG4);
 	printString("\r\nReading data from CTRL_REG4 (Expecting 56): ");
 	printByte(testbyte);
 	printString("");
-		
+
 	testbyte2 = SPIreadByte(PIN_M, CTRL_REG3_M);
 	printString("\r\nReading data from CTRL_REG3_M (Expecting 3): ");
 	printByte(testbyte2);
 	printString("");
-		
-	
+
+	float gx;
+	float gy;
+	float gz;
+
 	initMag();
 	initGyro();
 	while(1){
-		
+
+		int16_t temp = 0;
+		temp = readGyro(OUT_X_L_G);
+		gx = calcGyro(temp);
+
+		temp = readGyro(OUT_Y_L_G);
+		gy = calcGyro(temp);
+
+		temp = readGyro(OUT_Z_L_G);
+		gz = calcGyro(temp);
 	}
 }

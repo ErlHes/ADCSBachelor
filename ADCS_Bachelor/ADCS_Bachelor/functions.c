@@ -133,19 +133,20 @@ void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, u
 	SPIwriteByte(PIN_XG, CTRL_REG8, temp);
 }
 
+int16_t readGyro(uint8_t axis_address){
+	uint8_t temp[2];
+	SPIreadBytes(PIN_XG, axis_address, temp, 2);
+	int16_t g = (temp[1] << 8 | temp[0]);
+	return g;
+}
+
 int16_t readMag(uint8_t axis_address){
-	int8_t temp[2]; // We'll read six bytes from the mag into temp
+	uint8_t temp[2]; // We'll read six bytes from the mag into temp
 	SPIreadBytes(PIN_M, axis_address, temp, 2);
 	int16_t m = (temp[1] << 8 | temp[0]);
 	return m;
 }
 
-int16_t readGyro(uint8_t axis_address){
-	int8_t temp[2];
-	SPIreadBytes(PIN_XG, axis_address, temp, 2);
-	int16_t g = (temp[1] << 8 | temp[0]);
-	return g;
-}
 uint8_t availableGyro(){
 	uint8_t status = SPIreadByte(PIN_XG, STATUS_REG_1);
 	return ((status & 0b00000010) >> 1);
@@ -155,4 +156,5 @@ uint8_t availableMag(uint8_t axis){
 	uint8_t status = SPIreadByte(PIN_M, STATUS_REG_M);
 	return ((status & (1<<axis)) >> axis);
 }
+
 
