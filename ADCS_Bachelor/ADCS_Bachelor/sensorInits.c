@@ -130,11 +130,6 @@ float calcGyro(int16_t gyro){
 		}
 	return temp;
 }
-	
-
-void interuptGyro(void){
-	
-}
 
 
 void calibGyro(void){
@@ -257,30 +252,41 @@ float calcMag(int16_t mag){
 	return temp;
 }
 
-void interuptMag(void){
-	/*	bit 7:	enable interrupt generation on X-axis
-		bit 6:	enable interrupt generation on Y-axis
-		bit 5:	enable interrupt generation on Z-axis
-		bit 4-3:	always 0
-		bit 2:	interrupt active configuration on INT_MAG
-		bit 1:	latch interrupt request
-		bit 0:	interrupt enable on INT_M pin */
-	//INT_CFG_M = 0x00;
-	SPIwriteByte(PIN_M, INT_CFG_M, 0x00);
+void calibrateMag(uint8_t loadIn){
+	int i, j;
+	int16_t magMin[3] = {0,0,0};
+	int16_t magMax[3] = {0,0,0};  // The road warrior 
+//	int16_t mBias[3] = {0,0,0};
+	int16_t mBiasRaw[3] = {0,0,0};
+	for (i=0; i<128; i++){
+		while(!availableMag(3));
+		int16_t magTemp[3] = {0, 0, 0};
+		magTemp[0] = readMag(OUT_X_L_M);
+		magTemp[1] = readMag(OUT_Y_L_M);
+		magTemp[2] = readMag(OUT_Z_L_M);
+		for (j=0; j<3; j++){
+			if (magTemp[j] > magMax[j]) magMax[j] = magTemp[j];
+			if (magTemp[j] < magMin[j]) magMin[j] = magTemp[j];
+		}
+	}
+	for (j=0; j<3; j++){
+		mBiasRaw[j] = (magMax[j] + magMin[j]) / 2;
+		// mBias[j] = calcMag(mBiasRaw[j]);
+		if (loadIn){
+			offsetMag(j, mBiasRaw[j]);
+		}
+	}
 }
 
-void offsetMag(void){
+
+void offsetMag(uint8_t axis, int16_t offset){
 	/*	Offset values. This values acts on the magnetic output data values 
 		in order to subtract the environmental offset */
-	//	X-axis:
-	SPIwriteByte(PIN_M, OFFSET_X_REG_L_M, 0x00);
-	SPIwriteByte(PIN_M, OFFSET_X_REG_H_M, 0x00);
-	//	Y-axis:
-	SPIwriteByte(PIN_M, OFFSET_Y_REG_L_M, 0x00);
-	SPIwriteByte(PIN_M, OFFSET_Y_REG_H_M, 0x00);
-	//	Z-axis:
-	SPIwriteByte(PIN_M, OFFSET_Z_REG_L_M, 0x00);
-	SPIwriteByte(PIN_M, OFFSET_Z_REG_H_M, 0x00);
+	if (axis > 2) return;	// make sure we don't write to wrong address 
+	uint8_t msb = (offset & 0xFF00) >> 8;
+	uint8_t lsb = offset & 0x00FF;
+	SPIwriteByte(PIN_M, OFFSET_X_REG_L_M + (2 * axis), lsb);
+	SPIwriteByte(PIN_M, OFFSET_X_REG_H_M + (2 * axis), msb);
 }
 
 

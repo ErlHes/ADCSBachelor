@@ -37,7 +37,7 @@ int main(void)
 		temp = readGyro(OUT_Y_L_G);
 		gy = calcGyro(temp);
 		temp = readGyro(OUT_Z_L_G);
-		gz = calcGyro(temp); 
+		gz = calcGyro(temp);
 				
 		temp = readMag(OUT_X_L_M);
 		mx = calcMag(temp);

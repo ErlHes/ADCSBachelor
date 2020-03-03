@@ -59,11 +59,6 @@ float calcMag(int16_t mag);
 void interuptMag(void);
 
 
-/* offsetMag - initializes the magnetometer offsets, values can be changed in sensorInits.c
-
-*/
-void offsetMag(void);
-
 /* SPIreadByte - reads one byte of data from the desired registry via the hardware SPI.
 	INPUTS:
 		-csPin = chip select, chose between Accelerometer/Gyroscope or Magnetometer
@@ -237,3 +232,28 @@ int16_t readGyro(uint8_t axis_address);
 			OUT_Z_L_M
 */
 int16_t readMag(uint8_t axis_address);
+
+/* availableGyro = 1 when data available. 
+				 = 0 when data not available
+*/
+uint8_t availableGyro();
+
+/* availableMag	= 1 when data available.
+				= 0 when data not available
+   INPUTS:	0 for X-axis
+			1 for Y-axis
+			2 for Z-axis
+			3 for X, Y, and Z- axis
+*/
+uint8_t availableMag(uint8_t axis);
+
+/* calibrate the magnetometer
+	INPUT:	
+		- loadIn:	write 1 for calibrating offset, 0 to not calibrate
+*/
+void calibrateMag(uint8_t loadIn);
+
+/*	set the offset of the magnetometer, this function is called in calibrateMag
+	INPUTS:		inputs are selected in another function
+*/
+void offsetMag(uint8_t axis, int16_t offset);
