@@ -6,37 +6,27 @@
 
 /*Defines*/
 #define USART_BAUDRATE 9600
-#define UBRR_VALUE ((F_CPU / (BAUDRATE * 16UL)) - 1 )
+#define MYUBRR F_CPU/16/BAUD-1
+
+static FILE mystdout = FDEV_SETUP_STREAM(usart_putchar_printf, NULL, _FDEV_SETUP_WRITE);
 
 
 int main(void)
 {
-	initUSART();
+	stdout = &mystdout; // related to printf
+	
+	usart_init(MYUBRR);
 	spiInit();
-	printString("\r\nStarting connection test, please wait...");
-	printString("\r\nIf the program holds here, check your connections.");
 	_delay_ms(1000);
 	WhoAmICheck();
-
-	uint8_t testbyte = 0x00;
-	uint8_t testbyte2 = 0x00;
-
-	testbyte = SPIreadByte(PIN_XG, CTRL_REG4);
-	printString("\r\nReading data from CTRL_REG4 (Expecting 56): ");
-	printByte(testbyte);
-	printString("");
-
-	testbyte2 = SPIreadByte(PIN_M, CTRL_REG3_M);
-	printString("\r\nReading data from CTRL_REG3_M (Expecting 3): ");
-	printByte(testbyte2);
-	printString("");
+	printf("Check complete, all systems are ready to go!\n");
 
 	float gx;
 	float gy;
 	float gz;
 
 	initMag();
-	initGyro();
+	initGyro(); 
 	while(1){
 
 		int16_t temp = 0;
@@ -47,6 +37,14 @@ int main(void)
 		gy = calcGyro(temp);
 
 		temp = readGyro(OUT_Z_L_G);
-		gz = calcGyro(temp);
+		gz = calcGyro(temp); 
+	
+		printf("Reading Gyroscpe: \n");
+		printf("X: %f ", gx);
+		printf("Y: %f ", gy);
+		printf("Z: %f \n", gz);
+		printf("\n");
+		
+		_delay_ms(100);
 	}
 }
