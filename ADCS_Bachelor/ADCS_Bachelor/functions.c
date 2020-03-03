@@ -146,3 +146,13 @@ int16_t readGyro(uint8_t axis_address){
 	int16_t g = (temp[1] << 8 | temp[0]);
 	return g;
 }
+uint8_t availableGyro(){
+	uint8_t status = SPIreadByte(PIN_XG, STATUS_REG_1);
+	return ((status & 0b00000010) >> 1);
+}
+
+uint8_t availableMag(uint8_t axis){
+	uint8_t status = SPIreadByte(PIN_M, STATUS_REG_M);
+	return ((status & (1<<axis)) >> axis);
+}
+
