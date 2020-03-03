@@ -30,10 +30,9 @@ int main(void)
 	initMag();
 	initGyro();
 	calibrateMag(1); 
-	int64_t test = calibrateGyro();
-	int16_t gxBias = (test >> 32);
-	int16_t gyBias = (test >> 16);
-	int16_t gzBias = test & 0xFF;
+	int16_t gxBias = calibrateGyro(OUT_X_L_G);
+	int16_t gyBias = calibrateGyro(OUT_Y_L_G);
+	int16_t gzBias = calibrateGyro(OUT_Z_L_G);
 	while(1){
 
 		int16_t temp = 0;

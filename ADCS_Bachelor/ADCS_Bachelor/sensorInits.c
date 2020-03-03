@@ -132,42 +132,27 @@ float calcGyro(int16_t gyro){
 }
 
 
-int64_t calibrateGyro(){
+int16_t calibrateGyro(uint8_t Axis_address){
 	uint8_t samples = 0;
 	int i;
-//	int32_t aBiasRawTemp[3] = {0, 0, 0};
-//	int16_t aBiasRaw[3] = {0, 0, 0};
-//	int16_t aBias[3] = {0, 0, 0};
-	int32_t gBiasRawTemp[3] = {0, 0, 0};
-	int16_t gBiasRaw[3] = {0, 0, 0};
-//	int16_t gBias[3] = {0, 0, 0};
+	int32_t gBiasRawTemp = 0;
+	int16_t gBiasRaw = 0;
 	
 	enableFIFO(1);
 	setFIFO(1, 31);
-	while (samples < 0x1F) {
-		samples = (SPIreadByte(PIN_XG, FIFO_SRC)) & 0x3F; // Read number of stored samples
-	} 
-	for (i=0; i<samples; i++) {
-		gBiasRawTemp[0] += readGyro(OUT_X_L_G);
-		gBiasRawTemp[1] += readGyro(OUT_Y_L_G);
-		gBiasRawTemp[2] += readGyro(OUT_Z_L_G);
-	/*	aBiasRawTemp[0] += readAccel(OUT_X_L_XL);
-		aBiasRawTemp[1] += readAccel(OUT_Y_L_XL);
-		aBiasRawTemp[2] += readAccel(OUT_Z_L_XL); */	
-	} 
-	for (i=0; i<3; i++){
-			gBiasRaw[i] = gBiasRawTemp[i] / samples;
-		//	gBias[ii] = calcGyro(gBiasRaw[i]);
-		/*	aBiasRaw[i] = aBiasRawTemp[i] / samples;
-			aBias[i] = calcAccel(aBiasRaw[i]); */
+	while(samples<0x1F){
+		samples = (SPIreadByte(PIN_XG, FIFO_SRC)) & 0x3F;
 	}
+	for(i=0; i<samples; i++){
+		gBiasRawTemp += readGyro(Axis_address);
+	}
+	gBiasRaw = (gBiasRawTemp / samples);
+	
 	enableFIFO(0);
 	setFIFO(0,0);
 	
-	int64_t temp = (gBiasRaw[0] << 32 | gBiasRaw[1] << 16 | gBiasRaw[2]);
-	return temp;
+	return gBiasRaw;
 }
-
 
 /* --------------------- MAGNETOMETER -------------------- */
 
