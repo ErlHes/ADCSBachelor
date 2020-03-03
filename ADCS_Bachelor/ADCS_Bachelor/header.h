@@ -39,9 +39,10 @@ float calcGyro(int16_t gyro);
 void interuptGyro(void);
 
 
-/* calibGyro - Calibrates the gyroscope on the IMU module, see sensorInits.c
+/* calibrateGyro - Calibrates the gyroscope on the IMU module, spits out a 64bit value that contains the
+				   Raw bias value of the three axis. Right shift the output as needed.
 */
-void calibGyro(void);
+int64_t calibrateGyro(void);
 
 
 /* initMag - Initializes the magnetometer control registers, values can be changed in sensorInits.c
