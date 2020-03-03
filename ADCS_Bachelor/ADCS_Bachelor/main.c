@@ -24,7 +24,9 @@ int main(void)
 	float gx;
 	float gy;
 	float gz;
-
+	float mx;
+	float my;
+	float mz;
 	initMag();
 	initGyro(); 
 	while(1){
@@ -32,17 +34,30 @@ int main(void)
 		int16_t temp = 0;
 		temp = readGyro(OUT_X_L_G);
 		gx = calcGyro(temp);
-
 		temp = readGyro(OUT_Y_L_G);
 		gy = calcGyro(temp);
-
 		temp = readGyro(OUT_Z_L_G);
 		gz = calcGyro(temp); 
-	
+				
+		temp = readMag(OUT_X_L_M);
+		mx = calcMag(temp);
+		temp = readMag(OUT_Y_L_M);
+		my = calcMag(temp);
+		temp = readMag(OUT_Z_L_M);
+		mz = calcMag(temp);
+		
+		
 		printf("Reading Gyroscpe: \n");
 		printf("X: %f ", gx);
 		printf("Y: %f ", gy);
 		printf("Z: %f \n", gz);
+		printf("\n");
+
+		
+		printf("Reading Magnetometer: \n");
+		printf("X: %f ", mx);
+		printf("Y: %f ", my);
+		printf("Z: %f \n", mz);
 		printf("\n");
 		
 		_delay_ms(100);
