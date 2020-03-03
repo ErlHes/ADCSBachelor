@@ -140,6 +140,14 @@ int16_t readGyro(uint8_t axis_address){
 	return g;
 }
 
+int16_t readGyro_calc(uint8_t axis_address, int16_t gBiasRaw_axis){
+	uint8_t temp[2];
+	SPIreadBytes(PIN_XG, axis_address, temp, 2);
+	int16_t g = (temp[1] << 8 | temp[0]);
+	g -= gBiasRaw_axis;
+	return g;
+}
+
 int16_t readMag(uint8_t axis_address){
 	uint8_t temp[2]; // We'll read six bytes from the mag into temp
 	SPIreadBytes(PIN_M, axis_address, temp, 2);
