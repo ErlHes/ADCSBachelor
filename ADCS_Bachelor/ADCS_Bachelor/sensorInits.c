@@ -24,8 +24,8 @@
 
 /* --------------------- GYROSCOPE -------------------- */
 
-	// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
-	volatile uint8_t gyroScale = 0;
+// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
+#define gyroScale 0
 
 void initGyro(void){
 	
@@ -144,14 +144,14 @@ void calibGyro(void){
 
 /* --------------------- MAGNETOMETER -------------------- */
 
-	// mag scale can be 4, 8, 12, or 16
-	volatile uint8_t magScale = 4;
+// mag scale can be 4, 8, 12, or 16
+#define magScale 4
 
 void initMag(void){
 	
 	uint8_t tempRegValue = 0x00;
 	
-	uint8_t	magEnable = 0x01;
+//	uint8_t	magEnable = 0x01;
 
 	// mag data rate can be 0-7
 	// 0 = 0.625 Hz  4 = 10 Hz
