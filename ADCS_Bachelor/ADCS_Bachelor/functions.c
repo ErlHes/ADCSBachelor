@@ -156,5 +156,3 @@ uint8_t availableMag(uint8_t axis){
 	uint8_t status = SPIreadByte(PIN_M, STATUS_REG_M);
 	return ((status & (1<<axis)) >> axis);
 }
-
-

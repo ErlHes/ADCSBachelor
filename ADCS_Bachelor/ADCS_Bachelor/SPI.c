@@ -62,16 +62,13 @@ uint8_t spiTransfer(uint8_t data) {
 	  //spiWrite(PIN_M, CTRL_REG3_M, 0b00000111);		//Needed to read from the Magnetometer registers.
 	  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
 	  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
+	  printf("Conducting WHO_AM_I check, please wait...\n");
 	  whoAmICombined = (testXG << 8) | testM;
-	  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
-	  printWord(whoAmICombined);
+	  printf("WHO_AM_I reads 0x%X, expected 0x683D\n", whoAmICombined);
 	  while(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
 		  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
 		  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
 		  whoAmICombined = (testXG << 8) | (testM);
-		  printString("\r\n WHO_AM_I_CHECK (correct result is 26685: ");
-		  printWord(whoAmICombined);
-		  printString("");
 		  _delay_ms(100);
 	  }
   }
