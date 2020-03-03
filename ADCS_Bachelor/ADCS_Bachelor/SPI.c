@@ -65,11 +65,10 @@ uint8_t spiTransfer(uint8_t data) {
 	  printf("Conducting WHO_AM_I check, please wait...\n");
 	  whoAmICombined = (testXG << 8) | testM;
 	  printf("WHO_AM_I reads 0x%X, expected 0x683D\n", whoAmICombined);
-	  while(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
-		  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
-		  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
-		  whoAmICombined = (testXG << 8) | (testM);
-		  _delay_ms(100);
+	  if(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
+		   printf("test failed. \n");
+		   printf("double-check wiring and retry, program will not run as long as the check fails.\n");
+		   while(1);
 	  }
   }
   

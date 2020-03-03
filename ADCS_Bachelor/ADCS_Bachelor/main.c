@@ -28,7 +28,8 @@ int main(void)
 	float my;
 	float mz;
 	initMag();
-	initGyro(); 
+	initGyro();
+	calibrateMag(1); 
 	while(1){
 
 		int16_t temp = 0;
