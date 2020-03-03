@@ -30,14 +30,17 @@ int main(void)
 	initMag();
 	initGyro();
 	calibrateMag(1); 
+	int16_t gxBias = calibrateGyro(OUT_X_L_G);
+	int16_t gyBias = calibrateGyro(OUT_Y_L_G);
+	int16_t gzBias = calibrateGyro(OUT_Z_L_G);
 	while(1){
 
 		int16_t temp = 0;
-		temp = readGyro(OUT_X_L_G);
+		temp = readGyro_calc(OUT_X_L_G, gxBias);
 		gx = calcGyro(temp);
-		temp = readGyro(OUT_Y_L_G);
+		temp = readGyro_calc(OUT_Y_L_G, gyBias);
 		gy = calcGyro(temp);
-		temp = readGyro(OUT_Z_L_G);
+		temp = readGyro_calc(OUT_Z_L_G, gzBias);
 		gz = calcGyro(temp);
 				
 		temp = readMag(OUT_X_L_M);

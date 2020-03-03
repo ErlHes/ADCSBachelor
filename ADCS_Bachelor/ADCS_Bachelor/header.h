@@ -39,12 +39,6 @@ float calcGyro(int16_t gyro);
 void interuptGyro(void);
 
 
-/* calibrateGyro - Calibrates the gyroscope on the IMU module, spits out a 64bit value that contains the
-				   Raw bias value of the three axis. Right shift the output as needed.
-*/
-int64_t calibrateGyro(void);
-
-
 /* initMag - Initializes the magnetometer control registers, values can be changed in sensorInits.c
 */
 void initMag(void);
@@ -258,6 +252,17 @@ uint8_t availableGyro();
 			3 for X, Y, and Z- axis
 */
 uint8_t availableMag(uint8_t axis);
+
+
+/* calibrateGyro - Calibrates the gyroscope on the IMU module, returns the bias of the selected Axis.
+	ÌNPUTS:
+		-Axis_address - the desired axis low-byte address, chose between:
+			OUT_X_L_G
+			OUT_Y_L_G
+			OUT_Z_L_G
+*/
+int16_t calibrateGyro(uint8_t Axis_address);
+
 
 /* calibrate the magnetometer
 	INPUT:	
