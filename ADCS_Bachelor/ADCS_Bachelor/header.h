@@ -1,3 +1,48 @@
+/* Global Variables */
+
+//Raw values from Gyroscope
+float gx;
+float gy;
+float gz;
+
+//Raw values from Magnetometer
+float mx;
+float my;
+float mz;
+
+float angle_pitch;
+float angle_roll;
+
+uint8_t autocalc;
+
+int16_t gBiasRawX;
+int16_t gBiasRawY;
+int16_t gBiasRawZ;
+
+
+// Sensor Sensitivity Constants
+// Values set according to the typical specifications provided in
+// table 3 of the LSM9DS1 datasheet. (pg 12)
+#define SENSITIVITY_ACCELEROMETER_2  0.000061
+#define SENSITIVITY_ACCELEROMETER_4  0.000122
+#define SENSITIVITY_ACCELEROMETER_8  0.000244
+#define SENSITIVITY_ACCELEROMETER_16 0.000732
+#define SENSITIVITY_GYROSCOPE_245    0.00875
+#define SENSITIVITY_GYROSCOPE_500    0.0175
+#define SENSITIVITY_GYROSCOPE_2000   0.07
+#define SENSITIVITY_MAGNETOMETER_4   0.00014
+#define SENSITIVITY_MAGNETOMETER_8   0.00029
+#define SENSITIVITY_MAGNETOMETER_12  0.00043
+#define SENSITIVITY_MAGNETOMETER_16  0.00058
+
+// mag scale can be 4, 8, 12, or 16
+static uint8_t magScale = 4;
+
+
+// Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
+static uint8_t gyroScale = 1;
+
+
 #ifndef BAUD                          /* if not defined in Makefile... */
 #define BAUD  9600                     /* set a safe default baud rate */
 #endif
@@ -27,13 +72,6 @@ void spiInit(void);
 void initGyro(void);
 
 
-/* calcGyro - scales the gyro output axis to correct resolution scale.
-	INPUTS:
-		gyro = gyro axis to scale.
-*/
-float calcGyro(int16_t gyro);
-
-
 /* interuptGyro - Initializes the gyroscope interrupt registers.
 */
 void interuptGyro(void);
@@ -42,12 +80,6 @@ void interuptGyro(void);
 /* initMag - Initializes the magnetometer control registers, values can be changed in sensorInits.c
 */
 void initMag(void);
-
-/*calcMag - scales the gyro output axis to correct resolution scale.
-	INPUTS:
-		gyro = gyro axis to scale.
-*/
-float calcMag(int16_t mag);
 
 /* interruptMap - Sets up the interrupt flags for magnetometer, set values in sensorInits.c
 */
@@ -179,7 +211,7 @@ void configGyroInt(uint8_t generator, uint8_t aoi, uint8_t latch);
 
 /* getGyroIntSrc() - Get status of inactivity interrupt
 */
-uint8_t getInactivity();
+uint8_t getInactivity(void);
 
 
 /* configInactivity - 
@@ -216,18 +248,8 @@ void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, u
 			OUT_Y_L_G
 			OUT_Z_L_G
 */
-int16_t readGyro(uint8_t axis_address);
+void readGyro(void);
 
-
-/* readGyro_calc - Reads the desired gyroscope axis and applies the calculated bias.
-	INPUTS:
-		axis_address = desired low byte address to start on, chose between:
-			OUT_X_L_G
-			OUT_Y_L_G
-			OUT_Z_L_G
-		gBiasRaw_axis = The raw bias value for the chosen axis.
-*/
-int16_t readGyro_calc(uint8_t axis_address, int16_t gBiasRaw_axis);
 
 
 /* readMag - reads the desired magnetometer axis.
@@ -237,12 +259,12 @@ int16_t readGyro_calc(uint8_t axis_address, int16_t gBiasRaw_axis);
 			OUT_Y_L_M
 			OUT_Z_L_M
 */
-int16_t readMag(uint8_t axis_address);
+void readMag(void);
 
 /* availableGyro = 1 when data available. 
 				 = 0 when data not available
 */
-uint8_t availableGyro();
+uint8_t availableGyro(void);
 
 /* availableMag	= 1 when data available.
 				= 0 when data not available
@@ -261,14 +283,14 @@ uint8_t availableMag(uint8_t axis);
 			OUT_Y_L_G
 			OUT_Z_L_G
 */
-int16_t calibrateGyro(uint8_t Axis_address);
+void calibrateGyro(void);
 
 
 /* calibrate the magnetometer
 	INPUT:	
 		- loadIn:	write 1 for calibrating offset, 0 to not calibrate
 */
-void calibrateMag(uint8_t loadIn);
+void calibrateMag(void);
 
 /*	set the offset of the magnetometer, this function is called in calibrateMag
 	INPUTS:		inputs are selected in another function

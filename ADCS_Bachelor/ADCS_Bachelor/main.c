@@ -22,6 +22,8 @@
 static FILE mystdout = FDEV_SETUP_STREAM(usart_putchar_printf, NULL, _FDEV_SETUP_WRITE);
 
 
+// Global variables are made in the header //
+
 
 
 int main(void)
@@ -33,75 +35,52 @@ int main(void)
 	_delay_ms(1000);
 	WhoAmICheck();
 	printf("Check complete, all systems are ready to go!\n");
-	/*
-	float gx;
-	float gy;
-	float gz;
-	*/
-	float mx;
-	float my;
-	float mz;
+	
 	initMag();
 	initGyro();
-	calibrateMag(1); 
-	/*
-	int16_t gxBias = calibrateGyro(OUT_X_L_G);
-	int16_t gyBias = calibrateGyro(OUT_Y_L_G);
-	int16_t gzBias = calibrateGyro(OUT_Z_L_G);
-	*/
-	while(1){
-		int16_t temp = 0;
-	/*
-		temp = readGyro_calc(OUT_X_L_G, gxBias);
-		gx = calcGyro(temp);
-		temp = readGyro_calc(OUT_Y_L_G, gyBias);
-		gy = calcGyro(temp);
-		temp = readGyro_calc(OUT_Z_L_G, gzBias);
-		gz = calcGyro(temp);
-	*/			
-		temp = readMag(OUT_X_L_M);
-		mx = calcMag(temp);
-		temp = readMag(OUT_Y_L_M);
-		my = calcMag(temp);
-		temp = readMag(OUT_Z_L_M);
-		mz = calcMag(temp);
-		
-	/*	
-		printf("Reading Gyroscpe: \n");
-		printf("X: %f ", gx);
-		printf("Y: %f ", gy);
-		printf("Z: %f \n", gz);
-		printf("\n");
+	calibrateMag(); 
+	calibrateGyro();
 	
-		printf("Reading Magnetometer: \n");
-		printf("X: %f ", mx);
-		printf("Y: %f ", my);
-		printf("Z: %f \n", mz);
-		printf("\n");
-	*/
-		//*********************************************************************//
-		//																	   //
-		//						HEADING / PITCH / ROLL / Position?			   //
-		//																	   //
-		//*********************************************************************//
-		
-		float heading;
-		if (my == 0){
-			heading = (mx < 0) ? PI : 0;
-		}
-		else
-			heading = atan2(mx, my);
+	
+	while(1){
 			
-		heading -= DECLINATION * PI / 180;
+		readGyro();
+		readMag();
 		
-		if(heading > PI) heading -= (2 * PI);
-		else if (heading < -PI) heading += (2*PI);
+		angle_pitch += gx * 0.00007;
+		angle_roll += gy * 0.00007;
 		
-		heading *= 180.0 / PI;
+		angle_pitch += angle_roll * sin(gz * 0.00007*PI/180);
+		angle_roll -= angle_pitch * sin(gz * 0.00007*PI/180);
 		
-		printf("Heading: %f \n", heading);
+		// TODO
+		// * Finish refactoring code
+		// * Clean up spaghetti code from the refactoring
+		// * Comment Code - Go through all the code with the group, get everyone on the same page.
+		// * Implement hardware counter to configure pulse, the program should loop every 4000 microsecond, or with 250hz. if possible.
+		// * If the program can not pulse properly, a timer would still be needed to calculate the pitch and roll.
+		// * The accelerometer is essential to avoid gyroscope drift, better bite the bullet and set it up early.
+		// * Learn how to use the magnetometer to find calculate heading
+		// * Implement magnetometer heading calculations
+		// * Convert everything to radians
+		// * Display data in a meaningful manner
 		
-		_delay_ms(100);
+		// TODO (later)
+		// * Conduct static measurement tests to find noise characteristics
+		// * Conduct dynamic measurement tests to find more noise
+		// * Signal processing
+		// * ?????
+		// * A+ 
+		
+		
+		
+		//*********************************************************************//
+		//																	   //
+		//						HEADING / PITCH / ROLL / YAW				   //
+		//																	   //
+		//*********************************************************************//
+		
+	
 				
 	}
 }

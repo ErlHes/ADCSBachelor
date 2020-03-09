@@ -5,27 +5,8 @@
 #include "registers.h"
 
 
-// Sensor Sensitivity Constants
-// Values set according to the typical specifications provided in
-// table 3 of the LSM9DS1 datasheet. (pg 12)
-#define SENSITIVITY_ACCELEROMETER_2  0.000061
-#define SENSITIVITY_ACCELEROMETER_4  0.000122
-#define SENSITIVITY_ACCELEROMETER_8  0.000244
-#define SENSITIVITY_ACCELEROMETER_16 0.000732
-#define SENSITIVITY_GYROSCOPE_245    0.00875
-#define SENSITIVITY_GYROSCOPE_500    0.0175
-#define SENSITIVITY_GYROSCOPE_2000   0.07
-#define SENSITIVITY_MAGNETOMETER_4   0.00014
-#define SENSITIVITY_MAGNETOMETER_8   0.00029
-#define SENSITIVITY_MAGNETOMETER_12  0.00043
-#define SENSITIVITY_MAGNETOMETER_16  0.00058
-
-
 
 /* --------------------- GYROSCOPE -------------------- */
-
-// scaling, choose:		0 = 245dps, 1 = 500dps, 3 = 2000dps	
-#define gyroScale 0
 
 void initGyro(void){
 	
@@ -114,29 +95,11 @@ void initGyro(void){
 	SPIwriteByte(PIN_XG, ORIENT_CFG_G, tempValue);
 }
 
-float calcGyro(int16_t gyro){
-	// Return the gyro raw reading times our pre-calculated DPS / (ADC tick):
-	float temp = 0;
-		switch (gyroScale){
-			case 0:
-			temp = gyro * SENSITIVITY_GYROSCOPE_245;
-			break;
-			case 1:
-			temp = gyro * SENSITIVITY_GYROSCOPE_500;
-			break;
-			case 3:
-			temp = gyro *  SENSITIVITY_GYROSCOPE_2000;
-			break;
-		}
-	return temp;
-}
-
-
-int16_t calibrateGyro(uint8_t Axis_address){
+void calibrateGyro(void){
 	uint8_t samples = 0;
 	int i;
-	int32_t gBiasRawTemp = 0;
-	int16_t gBiasRaw = 0;
+	// int32_t aBiasRawTemp[3] = {0, 0, 0};	 //Not yet implemented
+	int32_t gBiasRawTemp[3] = {0, 0, 0};
 	
 	enableFIFO(1);
 	setFIFO(1, 31);
@@ -144,20 +107,31 @@ int16_t calibrateGyro(uint8_t Axis_address){
 		samples = (SPIreadByte(PIN_XG, FIFO_SRC)) & 0x3F;
 	}
 	for(i=0; i<samples; i++){
-		gBiasRawTemp += readGyro(Axis_address);
+		readGyro();
+		gBiasRawTemp[0] += gx;
+		gBiasRawTemp[1] += gy;
+		gBiasRawTemp[2] += gz;
+	//	readAccel();				// XL not yet implemented
+	//	aBiasRawTemp[0] += ax;
+	//	aBiasRawTemp[1] += ay;
+	//	aBiasRawTemp[2] += az - (int16_t)(1./aRes); // Assumes sensor facing up!
 	}
-	gBiasRaw = (gBiasRawTemp / samples);
 	
+		gBiasRawX = gBiasRawTemp[0] / samples;
+		gBiasRawY = gBiasRawTemp[1] / samples;
+		gBiasRawZ = gBiasRawTemp[2] / samples;
+	//	aBiasRaw[i] = aBiasRawTemp[i] / samples;
+	//	aBias[i] = calcAccel(aBiasRaw[i]);
+	
+		
 	enableFIFO(0);
 	setFIFO(0,0);
 	
-	return gBiasRaw;
+	autocalc = 1; // Set autocalc enable
 }
 
 /* --------------------- MAGNETOMETER -------------------- */
 
-// mag scale can be 4, 8, 12, or 16
-#define magScale 4
 
 void initMag(void){
 	
@@ -249,38 +223,20 @@ void initMag(void){
 	SPIwriteByte(PIN_M, CTRL_REG5_M, tempRegValue);
 }
 
-float calcMag(int16_t mag){
-	// scales and returns the magnetometer output axis to correct resolution scale.
-	float temp = 0;
-	switch (magScale){
-		case 4:
-		temp = mag * SENSITIVITY_MAGNETOMETER_4;
-		break;
-		case 8:
-		temp = mag * SENSITIVITY_MAGNETOMETER_8;
-		break;
-		case 12:
-		temp = mag * SENSITIVITY_MAGNETOMETER_12;
-		break;
-		case 16:
-		temp = mag * SENSITIVITY_MAGNETOMETER_16;
-		break;
-	}
-	return temp;
-}
 
-void calibrateMag(uint8_t loadIn){
+void calibrateMag(void){
 	int i, j;
 	int16_t magMin[3] = {0,0,0};
-	int16_t magMax[3] = {0,0,0};  // The road warrior 
-//	int16_t mBias[3] = {0,0,0};
+	int16_t magMax[3] = {0,0,0}; 
 	int16_t mBiasRaw[3] = {0,0,0};
+		
 	for (i=0; i<128; i++){
 		while(!availableMag(3));
+		readMag();
 		int16_t magTemp[3] = {0, 0, 0};
-		magTemp[0] = readMag(OUT_X_L_M);
-		magTemp[1] = readMag(OUT_Y_L_M);
-		magTemp[2] = readMag(OUT_Z_L_M);
+		magTemp[0] = mx;
+		magTemp[1] = my;
+		magTemp[2] = mz;
 		for (j=0; j<3; j++){
 			if (magTemp[j] > magMax[j]) magMax[j] = magTemp[j];
 			if (magTemp[j] < magMin[j]) magMin[j] = magTemp[j];
@@ -289,9 +245,7 @@ void calibrateMag(uint8_t loadIn){
 	for (j=0; j<3; j++){
 		mBiasRaw[j] = (magMax[j] + magMin[j]) / 2;
 		// mBias[j] = calcMag(mBiasRaw[j]);
-		if (loadIn){
-			offsetMag(j, mBiasRaw[j]);
-		}
+		offsetMag(j, mBiasRaw[j]);
 	}
 }
 
