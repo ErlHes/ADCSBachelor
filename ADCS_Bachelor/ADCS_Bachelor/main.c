@@ -53,14 +53,38 @@ int main(void)
 		angle_pitch += gx / 119; // Divide by the capture rate.
 		angle_roll += gy / 119; // --||--
 		
-		angle_pitch += angle_roll * sin(gz/119*PI/180); // Transfer roll to pitch in case of yaw
-		angle_roll -= angle_pitch * sin(gz/119*PI/180); // Transfer pitch to roll in case of yaw
+		angle_pitch += angle_roll * sin((gz / 119) * PI / 180); // Transfer roll to pitch in case of yaw
+		angle_roll -= angle_pitch * sin((gz / 119) * PI / 180); // Transfer pitch to roll in case of yaw
+
+		printf("Pitch:	%f\n", angle_pitch);
+		printf("Roll:	%f\n", angle_roll);
 		
-		printf("Current Pitch is:	%f degrees\n", angle_pitch);
-		printf("Current Roll is:	%f degrees\n", angle_roll);
+		/*
+		uint16_t temp = TCNT1;
+		printf("\n");
+		printf("Clock cycles lapsed: %u\n", temp);
+		printf("\n");
+		*/
+
 		
 		while(TCNT1 < 16807); // We need to wait for 8.4 milliseconds to pass, this makes the program run at 119Hz to match the data capture rate of the gyroscope.
-		TCNT1 = 0x00;
+		
+		/*
+		temp = TCNT1;
+		printf("\n");
+		printf("Waited %u clock cycles\n", temp);
+		printf("\n");
+		*/
+		
+		TCNT1 = 0x0000;
+		
+		/*
+		temp = TCNT1;
+		printf("\n");
+		printf("Clock cycles after reset: %u\n", temp);
+		printf("\n");		
+		*/
+		
 		
 		// TODO
 		// * Finish refactoring code
