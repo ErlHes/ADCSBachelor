@@ -8,7 +8,3 @@ main.c
 
 sensorInits.c
 
-SPI.c
-
-USART.c
-
