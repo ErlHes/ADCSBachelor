@@ -1,114 +1,920 @@
-=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2020.03.10 10:34:49 =~=~=~=~=~=~=~=~=~=~=~=
-Ang
-angle pitch is:	108.887830
-tch is:	108.809070
-Angle roll is:	36.101185
-angle pitch is:	108.887830
-Angle roll is:	36.074951
-angle pitch is:	108.887830
-Conducting WHO_AM_I check, please wait...
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2020.03.10 14:20:57 =~=~=~=~=~=~=~=~=~=~=~=
+urrent Roll is:	-7.811128 degrees
+Current Pitch is:	16.931129 degrees
+Current RollConducting WHO_AM_I check, please wait...
 WHO_AM_I reads 0x683D, expected 0x683D
 Check complete, all systems are ready to go!
-Angle roll is:	0.498750
-angle pitch is:	-0.052500
-Angle roll is:	0.866250
-angle pitch is:	0.393750
-Angle roll is:	0.892500
-angle pitch is:	0.708749
-Angle roll is:	1.181250
-angle pitch is:	0.918749
-Angle roll is:	1.076251
-angle pitch is:	1.128749
-Angle roll is:	1.102501
-angle pitch is:	1.259999
-Angle roll is:	1.601251
-angle pitch is:	1.391249
-Angle roll is:	1.732501
-angle pitch is:	1.548749
-Angle roll is:	2.021251
-angle pitch is:	1.364999
-Angle roll is:	2.126252
-angle pitch is:	1.784998
-Angle roll is:	2.362502
-angle pitch is:	1.889997
-Angle roll is:	2.835002
-angle pitch is:	1.942497
-Angle roll is:	3.202502
-angle pitch is:	2.204997
-Angle roll is:	3.465003
-angle pitch is:	2.152496
-Angle roll is:	3.543753
-angle pitch is:	2.204996
-Angle roll is:	3.622504
-angle pitch is:	2.493744
-Angle roll is:	4.095004
-angle pitch is:	2.703744
-Angle roll is:	4.383754
-angle pitch is:	3.097494
-Angle roll is:	4.646254
-angle pitch is:	3.464994
-Angle roll is:	4.908755
-angle pitch is:	3.674992
-Angle roll is:	5.433755
-angle pitch is:	4.016242
-Angle roll is:	5.171256
-angle pitch is:	3.989992
-Angle roll is:	5.328756
-angle pitch is:	4.068741
-Angle roll is:	5.906257
-angle pitch is:	3.832490
-Angle roll is:	5.853759
-angle pitch is:	3.832488
-Angle roll is:	6.300008
-angle pitch is:	3.674989
-Angle roll is:	6.352509
-angle pitch is:	3.753738
-Angle roll is:	6.431260
-angle pitch is:	4.278736
-Angle roll is:	6.483761
-angle pitch is:	4.226234
-Angle roll is:	6.693761
-angle pitch is:	4.357483
-Angle roll is:	7.061262
-angle pitch is:	4.278732
-Angle roll is:	7.192513
-angle pitch is:	4.304979
-Angle roll is:	7.323765
-angle pitch is:	4.409977
-Angle roll is:	7.717515
-angle pitch is:	4.436226
-Angle roll is:	7.848767
-angle pitch is:	4.619974
-Angle roll is:	8.058766
-angle pitch is:	5.118723
-Angle roll is:	8.347517
-angle pitch is:	5.381222
-Angle roll is:	8.557518
-angle pitch is:	5.696220
-Angle roll is:	8.688769
-angle pitch is:	5.827468
-Angle roll is:	9.056270
-angle pitch is:	6.116219
-Angle roll is:	9.266271
-angle pitch is:	6.168717
-Angle roll is:	9.345021
-angle pitch is:	6.378716
-Angle roll is:	9.397523
-angle pitch is:	6.719963
-Angle roll is:	9.161276
-angle pitch is:	6.929959
-Angle roll is:	9.135028
-angle pitch is:	7.454957
-Angle roll is:	9.345030
-angle pitch is:	7.454955
-Angle roll is:	9.240031
-angle pitch is:	7.769954
-Angle roll is:	9.266281
-angle pitch is:	8.084953
-Angle roll is:	9.345033
-angle pitch is:	7.901201
-Angle roll is:	9.187533
-angle pitch is:	8.058700
-Angle roll is:	9.581285
-angle pitch is:	8.321198
-An
+Current Pitch is:	0.018234 degrees
+Current Roll is:	-0.007357 degrees
+Current Pitch is:	0.036907 degrees
+Current Roll is:	-0.015454 degrees
+Current Pitch is:	0.056460 degrees
+Current Roll is:	-0.023261 degrees
+Current Pitch is:	0.072335 degrees
+Current Roll is:	-0.030778 degrees
+Current Pitch is:	0.088356 degrees
+Current Roll is:	-0.038005 degrees
+Current Pitch is:	0.106580 degrees
+Current Roll is:	-0.046117 degrees
+Current Pitch is:	0.123481 degrees
+Current Roll is:	-0.054378 degrees
+Current Pitch is:	0.141114 degrees
+Current Roll is:	-0.062792 degrees
+Current Pitch is:	0.158598 degrees
+Current Roll is:	-0.070769 degrees
+Current Pitch is:	0.175934 degrees
+Current Roll is:	-0.078749 degrees
+Current Pitch is:	0.192974 degrees
+Current Roll is:	-0.086584 degrees
+Current Pitch is:	0.210893 degrees
+Current Roll is:	-0.093987 degrees
+Current Pitch is:	0.227929 degrees
+Current Roll is:	-0.101538 degrees
+Current Pitch is:	0.245550 degrees
+Current Roll is:	-0.109832 degrees
+Current Pitch is:	0.262876 degrees
+Current Roll is:	-0.118127 degrees
+Current Pitch is:	0.281379 degrees
+Current Roll is:	-0.125098 degrees
+Current Pitch is:	0.299731 degrees
+Current Roll is:	-0.133694 degrees
+Current Pitch is:	0.317789 degrees
+Current Roll is:	-0.142291 degrees
+Current Pitch is:	0.335698 degrees
+Current Roll is:	-0.150745 degrees
+Current Pitch is:	0.352575 degrees
+Current Roll is:	-0.159206 degrees
+Current Pitch is:	0.370332 degrees
+Current Roll is:	-0.167228 degrees
+Current Pitch is:	0.386907 degrees
+Current Roll is:	-0.174825 degrees
+Current Pitch is:	0.403629 degrees
+Current Roll is:	-0.183446 degrees
+Current Pitch is:	0.421088 degrees
+Current Roll is:	-0.191918 degrees
+Current Pitch is:	0.439278 degrees
+Current Roll is:	-0.199814 degrees
+Current Pitch is:	0.455260 degrees
+Current Roll is:	-0.208299 degrees
+Current Pitch is:	0.472417 degrees
+Current Roll is:	-0.216054 degrees
+Current Pitch is:	0.490749 degrees
+Current Roll is:	-0.222928 degrees
+Current Pitch is:	0.508198 degrees
+Current Roll is:	-0.230836 degrees
+Current Pitch is:	0.526232 degrees
+Current Roll is:	-0.239336 degrees
+Current Pitch is:	0.543677 degrees
+Current Roll is:	-0.247545 degrees
+Current Pitch is:	0.561856 degrees
+Current Roll is:	-0.256640 degrees
+Current Pitch is:	0.579294 degrees
+Current Roll is:	-0.264864 degrees
+Current Pitch is:	0.596293 degrees
+Current Roll is:	-0.273964 degrees
+Current Pitch is:	0.613727 degrees
+Current Roll is:	-0.283078 degrees
+Current Pitch is:	0.631163 degrees
+Current Roll is:	-0.290570 degrees
+Current Pitch is:	0.650068 degrees
+Current Roll is:	-0.298508 degrees
+Current Pitch is:	0.667793 degrees
+Current Roll is:	-0.306159 degrees
+Current Pitch is:	0.685810 degrees
+Current Roll is:	-0.314108 degrees
+Current Pitch is:	0.703386 degrees
+Current Roll is:	-0.321616 degrees
+Current Pitch is:	0.721548 degrees
+Current Roll is:	-0.330305 degrees
+Current Pitch is:	0.739119 degrees
+Current Roll is:	-0.338707 degrees
+Current Pitch is:	0.756834 degrees
+Current Roll is:	-0.346086 degrees
+Current Pitch is:	0.773964 degrees
+Current Roll is:	-0.353900 degrees
+Current Pitch is:	0.791822 degrees
+Current Roll is:	-0.362463 degrees
+Current Pitch is:	0.808799 degrees
+Current Roll is:	-0.370583 degrees
+Current Pitch is:	0.825773 degrees
+Current Roll is:	-0.379297 degrees
+Current Pitch is:	0.843189 degrees
+Current Roll is:	-0.387422 degrees
+Current Pitch is:	0.859716 degrees
+Current Roll is:	-0.395118 degrees
+Current Pitch is:	0.878159 degrees
+Current Roll is:	-0.404131 degrees
+Current Pitch is:	0.895711 degrees
+Current Roll is:	-0.411397 degrees
+Current Pitch is:	0.913998 degrees
+Current Roll is:	-0.419986 degrees
+Current Pitch is:	0.932580 degrees
+Current Roll is:	-0.429015 degrees
+Current Pitch is:	0.949396 degrees
+Current Roll is:	-0.437751 degrees
+Current Pitch is:	0.967243 degrees
+Current Roll is:	-0.445899 degrees
+Current Pitch is:	0.985231 degrees
+Current Roll is:	-0.453469 degrees
+Current Pitch is:	1.003657 degrees
+Current Roll is:	-0.460899 degrees
+Current Pitch is:	1.020023 degrees
+Current Roll is:	-0.469362 degrees
+Current Pitch is:	1.037566 degrees
+Current Roll is:	-0.477677 degrees
+Current Pitch is:	1.057164 degrees
+Current Roll is:	-0.487322 degrees
+Current Pitch is:	1.074549 degrees
+Current Roll is:	-0.495367 degrees
+Current Pitch is:	1.092664 degrees
+Current Roll is:	-0.503716 degrees
+Current Pitch is:	1.110333 degrees
+Current Roll is:	-0.511487 degrees
+Current Pitch is:	1.128891 degrees
+Current Roll is:	-0.519392 degrees
+Current Pitch is:	1.145982 degrees
+Current Roll is:	-0.526553 degrees
+Current Pitch is:	1.163213 degrees
+Current Roll is:	-0.535496 degrees
+Current Pitch is:	1.179117 degrees
+Current Roll is:	-0.543415 degrees
+Current Pitch is:	1.196926 degrees
+Current Roll is:	-0.550907 degrees
+Current Pitch is:	1.214738 degrees
+Current Roll is:	-0.559128 degrees
+Current Pitch is:	1.231671 degrees
+Current Roll is:	-0.566903 degrees
+Current Pitch is:	1.248751 degrees
+Current Roll is:	-0.575117 degrees
+Current Pitch is:	1.266267 degrees
+Current Roll is:	-0.582756 degrees
+Current Pitch is:	1.284514 degrees
+Current Roll is:	-0.591579 degrees
+Current Pitch is:	1.300564 degrees
+Current Roll is:	-0.600235 degrees
+Current Pitch is:	1.317637 degrees
+Current Roll is:	-0.608611 degrees
+Current Pitch is:	1.334551 degrees
+Current Roll is:	-0.616720 degrees
+Current Pitch is:	1.351169 degrees
+Current Roll is:	-0.625124 degrees
+Current Pitch is:	1.366910 degrees
+Current Roll is:	-0.634252 degrees
+Current Pitch is:	1.385299 degrees
+Current Roll is:	-0.643378 degrees
+Current Pitch is:	1.402657 degrees
+Current Roll is:	-0.651625 degrees
+Current Pitch is:	1.419863 degrees
+Current Roll is:	-0.659884 degrees
+Current Pitch is:	1.435745 degrees
+Current Roll is:	-0.669024 degrees
+Current Pitch is:	1.452649 degrees
+Current Roll is:	-0.677150 degrees
+Current Pitch is:	1.469413 degrees
+Current Roll is:	-0.685702 degrees
+Current Pitch is:	1.486165 degrees
+Current Roll is:	-0.693398 degrees
+Current Pitch is:	1.503212 degrees
+Current Roll is:	-0.701532 degrees
+Current Pitch is:	1.519379 degrees
+Current Roll is:	-0.709367 degrees
+Current Pitch is:	1.536421 degrees
+Current Roll is:	-0.717513 degrees
+Current Pitch is:	1.553167 degrees
+Current Roll is:	-0.725073 degrees
+Current Pitch is:	1.569767 degrees
+Current Roll is:	-0.733369 degrees
+Current Pitch is:	1.588138 degrees
+Current Roll is:	-0.741501 degrees
+Current Pitch is:	1.605621 degrees
+Current Roll is:	-0.750381 degrees
+Current Pitch is:	1.623097 degrees
+Current Roll is:	-0.759571 degrees
+Current Pitch is:	1.640128 degrees
+Current Roll is:	-0.766858 degrees
+Current Pitch is:	1.656425 degrees
+Current Roll is:	-0.776345 degrees
+Current Pitch is:	1.674483 degrees
+Current Roll is:	-0.785400 degrees
+Current Pitch is:	1.691651 degrees
+Current Roll is:	-0.794177 degrees
+Current Pitch is:	1.709556 degrees
+Current Roll is:	-0.803097 degrees
+Current Pitch is:	1.727171 degrees
+Current Roll is:	-0.810685 degrees
+Current Pitch is:	1.746394 degrees
+Current Roll is:	-0.818294 degrees
+Current Pitch is:	1.763549 degrees
+Current Roll is:	-0.826950 degrees
+Current Pitch is:	1.779834 degrees
+Current Roll is:	-0.834700 degrees
+Current Pitch is:	1.798631 degrees
+Current Roll is:	-0.843746 degrees
+Current Pitch is:	1.815059 degrees
+Current Roll is:	-0.850328 degrees
+Current Pitch is:	1.832664 degrees
+Current Roll is:	-0.857938 degrees
+Current Pitch is:	1.850705 degrees
+Current Roll is:	-0.867322 degrees
+Current Pitch is:	1.867870 degrees
+Current Roll is:	-0.875372 degrees
+Current Pitch is:	1.884132 degrees
+Current Roll is:	-0.884493 degrees
+Current Pitch is:	1.901432 degrees
+Current Roll is:	-0.892565 degrees
+Current Pitch is:	1.919170 degrees
+Current Roll is:	-0.900940 degrees
+Current Pitch is:	1.936178 degrees
+Current Roll is:	-0.909597 degrees
+Current Pitch is:	1.954353 degrees
+Current Roll is:	-0.917392 degrees
+Current Pitch is:	1.972396 degrees
+Current Roll is:	-0.925743 degrees
+Current Pitch is:	1.989697 degrees
+Current Roll is:	-0.934108 degrees
+Current Pitch is:	2.006560 degrees
+Current Roll is:	-0.942760 degrees
+Current Pitch is:	2.024727 degrees
+Current Roll is:	-0.950571 degrees
+Current Pitch is:	2.042013 degrees
+Current Roll is:	-0.958968 degrees
+Current Pitch is:	2.059589 degrees
+Current Roll is:	-0.967816 degrees
+Current Pitch is:	2.077013 degrees
+Current Roll is:	-0.976231 degrees
+Current Pitch is:	2.094580 degrees
+Current Roll is:	-0.985097 degrees
+Current Pitch is:	2.111572 degrees
+Current Roll is:	-0.993788 degrees
+Current Pitch is:	2.129730 degrees
+Current Roll is:	-1.001763 degrees
+Current Pitch is:	2.147877 degrees
+Current Roll is:	-1.009912 degrees
+Current Pitch is:	2.165738 degrees
+Current Roll is:	-1.018043 degrees
+Current Pitch is:	2.183150 degrees
+Current Roll is:	-1.027365 degrees
+Current Pitch is:	2.201157 degrees
+Current Roll is:	-1.035645 degrees
+Current Pitch is:	2.217700 degrees
+Current Roll is:	-1.043029 degrees
+Current Pitch is:	2.236296 degrees
+Current Roll is:	-1.052335 degrees
+Current Pitch is:	2.254143 degrees
+Current Roll is:	-1.060056 degrees
+Current Pitch is:	2.270971 degrees
+Current Roll is:	-1.068781 degrees
+Current Pitch is:	2.288375 degrees
+Current Roll is:	-1.077827 degrees
+Current Pitch is:	2.306085 degrees
+Current Roll is:	-1.085965 degrees
+Current Pitch is:	2.323790 degrees
+Current Roll is:	-1.093966 degrees
+Current Pitch is:	2.341613 degrees
+Current Roll is:	-1.102913 degrees
+Current Pitch is:	2.359312 degrees
+Current Roll is:	-1.111369 degrees
+Current Pitch is:	2.377444 degrees
+Current Roll is:	-1.119547 degrees
+Current Pitch is:	2.394410 degrees
+Current Roll is:	-1.127851 degrees
+Current Pitch is:	2.411518 degrees
+Current Roll is:	-1.135724 degrees
+Current Pitch is:	2.428625 degrees
+Current Roll is:	-1.144189 degrees
+Current Pitch is:	2.445423 degrees
+Current Roll is:	-1.152094 degrees
+Current Pitch is:	2.463097 degrees
+Current Roll is:	-1.160163 degrees
+Current Pitch is:	2.479018 degrees
+Current Roll is:	-1.168204 degrees
+Current Pitch is:	2.495962 degrees
+Current Roll is:	-1.176556 degrees
+Current Pitch is:	2.513066 degrees
+Current Roll is:	-1.184732 degrees
+Current Pitch is:	2.530308 degrees
+Current Roll is:	-1.193659 degrees
+Current Pitch is:	2.547237 degrees
+Current Roll is:	-1.202483 degrees
+Current Pitch is:	2.564601 degrees
+Current Roll is:	-1.210729 degrees
+Current Pitch is:	2.580794 degrees
+Current Roll is:	-1.217642 degrees
+Current Pitch is:	2.597883 degrees
+Current Roll is:	-1.225408 degrees
+Current Pitch is:	2.615382 degrees
+Current Roll is:	-1.235003 degrees
+Current Pitch is:	2.632774 degrees
+Current Roll is:	-1.243485 degrees
+Current Pitch is:	2.649263 degrees
+Current Roll is:	-1.250834 degrees
+Current Pitch is:	2.666028 degrees
+Current Roll is:	-1.258075 degrees
+Current Pitch is:	2.683680 degrees
+Current Roll is:	-1.267364 degrees
+Current Pitch is:	2.701042 degrees
+Current Roll is:	-1.275173 degrees
+Current Pitch is:	2.718255 degrees
+Current Roll is:	-1.283721 degrees
+Current Pitch is:	2.735892 degrees
+Current Roll is:	-1.292162 degrees
+Current Pitch is:	2.753984 degrees
+Current Roll is:	-1.300130 degrees
+Current Pitch is:	2.771202 degrees
+Current Roll is:	-1.308668 degrees
+Current Pitch is:	2.787833 degrees
+Current Roll is:	-1.317939 degrees
+Current Pitch is:	2.805321 degrees
+Current Roll is:	-1.325351 degrees
+Current Pitch is:	2.822078 degrees
+Current Roll is:	-1.334812 degrees
+Current Pitch is:	2.839730 degrees
+Current Roll is:	-1.343660 degrees
+Current Pitch is:	2.856620 degrees
+Current Roll is:	-1.353004 degrees
+Current Pitch is:	2.873354 degrees
+Current Roll is:	-1.361336 degrees
+Current Pitch is:	2.890706 degrees
+Current Roll is:	-1.370195 degrees
+Current Pitch is:	2.907755 degrees
+Current Roll is:	-1.378190 degrees
+Current Pitch is:	2.924938 degrees
+Current Roll is:	-1.386211 degrees
+Current Pitch is:	2.941690 degrees
+Current Roll is:	-1.393919 degrees
+Current Pitch is:	2.959009 degrees
+Current Roll is:	-1.402698 degrees
+Current Pitch is:	2.967579 degrees
+Current Roll is:	-1.416761 degrees
+Current Pitch is:	2.984183 degrees
+Current Roll is:	-1.427257 degrees
+Current Pitch is:	3.002844 degrees
+Current Roll is:	-1.436287 degrees
+Current Pitch is:	3.020628 degrees
+Current Roll is:	-1.444570 degrees
+Current Pitch is:	3.052107 degrees
+Current Roll is:	-1.430181 degrees
+Current Pitch is:	3.073287 degrees
+Current Roll is:	-1.432422 degrees
+Current Pitch is:	3.090573 degrees
+Current Roll is:	-1.441915 degrees
+Current Pitch is:	3.125770 degrees
+Current Roll is:	-1.440532 degrees
+Current Pitch is:	3.147929 degrees
+Current Roll is:	-1.446128 degrees
+Current Pitch is:	3.174820 degrees
+Current Roll is:	-1.444615 degrees
+Current Pitch is:	3.172243 degrees
+Current Roll is:	-1.465639 degrees
+Current Pitch is:	3.217749 degrees
+Current Roll is:	-1.441484 degrees
+Current Pitch is:	3.232176 degrees
+Current Roll is:	-1.451077 degrees
+Current Pitch is:	3.262247 degrees
+Current Roll is:	-1.445999 degrees
+Current Pitch is:	3.294714 degrees
+Current Roll is:	-1.439199 degrees
+Current Pitch is:	3.301081 degrees
+Current Roll is:	-1.455943 degrees
+Current Pitch is:	3.319307 degrees
+Current Roll is:	-1.460163 degrees
+Current Pitch is:	3.335204 degrees
+Current Roll is:	-1.469473 degrees
+Current Pitch is:	3.357455 degrees
+Current Roll is:	-1.472689 degrees
+Current Pitch is:	3.374109 degrees
+Current Roll is:	-1.480336 degrees
+Current Pitch is:	3.379032 degrees
+Current Roll is:	-1.504810 degrees
+Current Pitch is:	3.390843 degrees
+Current Roll is:	-1.517058 degrees
+Current Pitch is:	3.422132 degrees
+Current Roll is:	-1.508540 degrees
+Current Pitch is:	3.455297 degrees
+Current Roll is:	-1.497177 degrees
+Current Pitch is:	3.469384 degrees
+Current Roll is:	-1.506013 degrees
+Current Pitch is:	3.465433 degrees
+Current Roll is:	-1.507714 degrees
+Current Pitch is:	3.504880 degrees
+Current Roll is:	-1.506158 degrees
+Current Pitch is:	3.544261 degrees
+Current Roll is:	-1.511775 degrees
+Current Pitch is:	3.570077 degrees
+Current Roll is:	-1.499578 degrees
+Current Pitch is:	3.577543 degrees
+Current Roll is:	-1.507859 degrees
+Current Pitch is:	3.594142 degrees
+Current Roll is:	-1.502724 degrees
+Current Pitch is:	3.602651 degrees
+Current Roll is:	-1.380900 degrees
+Current Pitch is:	3.631016 degrees
+Current Roll is:	-1.228571 degrees
+Current Pitch is:	3.655405 degrees
+Current Roll is:	-1.090320 degrees
+Current Pitch is:	3.661611 degrees
+Current Roll is:	-0.945462 degrees
+Current Pitch is:	3.683363 degrees
+Current Roll is:	-0.872345 degrees
+Current Pitch is:	3.696878 degrees
+Current Roll is:	-0.749760 degrees
+Current Pitch is:	3.717040 degrees
+Current Roll is:	-0.595002 degrees
+Current Pitch is:	3.730757 degrees
+Current Roll is:	-0.458373 degrees
+Current Pitch is:	3.745811 degrees
+Current Roll is:	-0.366972 degrees
+Current Pitch is:	3.762068 degrees
+Current Roll is:	-0.266144 degrees
+Current Pitch is:	3.779678 degrees
+Current Roll is:	-0.152075 degrees
+Current Pitch is:	3.799664 degrees
+Current Roll is:	-0.056129 degrees
+Current Pitch is:	3.811578 degrees
+Current Roll is:	0.007461 degrees
+Current Pitch is:	3.830277 degrees
+Current Roll is:	0.093292 degrees
+Current Pitch is:	3.848849 degrees
+Current Roll is:	0.208551 degrees
+Current Pitch is:	3.866113 degrees
+Current Roll is:	0.293228 degrees
+Current Pitch is:	3.881448 degrees
+Current Roll is:	0.394447 degrees
+Current Pitch is:	3.898012 degrees
+Current Roll is:	0.488550 degrees
+Current Pitch is:	3.912673 degrees
+Current Roll is:	0.572563 degrees
+Current Pitch is:	3.931899 degrees
+Current Roll is:	0.630269 degrees
+Current Pitch is:	3.952609 degrees
+Current Roll is:	0.685304 degrees
+Current Pitch is:	3.975267 degrees
+Current Roll is:	0.741663 degrees
+Current Pitch is:	3.991426 degrees
+Current Roll is:	0.813381 degrees
+Current Pitch is:	4.008046 degrees
+Current Roll is:	0.859887 degrees
+Current Pitch is:	4.031360 degrees
+Current Roll is:	0.886510 degrees
+Current Pitch is:	4.044466 degrees
+Current Roll is:	0.939922 degrees
+Current Pitch is:	4.060885 degrees
+Current Roll is:	0.994520 degrees
+Current Pitch is:	4.073430 degrees
+Current Roll is:	1.050689 degrees
+Current Pitch is:	4.093184 degrees
+Current Roll is:	1.116151 degrees
+Current Pitch is:	4.107841 degrees
+Current Roll is:	1.194719 degrees
+Current Pitch is:	4.120629 degrees
+Current Roll is:	1.260249 degrees
+Current Pitch is:	4.136964 degrees
+Current Roll is:	1.324734 degrees
+Current Pitch is:	4.154165 degrees
+Current Roll is:	1.372242 degrees
+Current Pitch is:	4.180478 degrees
+Current Roll is:	1.431575 degrees
+Current Pitch is:	4.202082 degrees
+Current Roll is:	1.541293 degrees
+Current Pitch is:	4.218754 degrees
+Current Roll is:	1.657464 degrees
+Current Pitch is:	4.234295 degrees
+Current Roll is:	1.743419 degrees
+Current Pitch is:	4.242491 degrees
+Current Roll is:	1.758637 degrees
+Current Pitch is:	4.255149 degrees
+Current Roll is:	1.801298 degrees
+Current Pitch is:	4.269319 degrees
+Current Roll is:	1.873892 degrees
+Current Pitch is:	4.286408 degrees
+Current Roll is:	1.932258 degrees
+Current Pitch is:	4.298686 degrees
+Current Roll is:	2.003681 degrees
+Current Pitch is:	4.310573 degrees
+Current Roll is:	2.097834 degrees
+Current Pitch is:	4.325405 degrees
+Current Roll is:	2.181413 degrees
+Current Pitch is:	4.344463 degrees
+Current Roll is:	2.257000 degrees
+Current Pitch is:	4.361931 degrees
+Current Roll is:	2.319890 degrees
+Current Pitch is:	4.381554 degrees
+Current Roll is:	2.313199 degrees
+Current Pitch is:	4.396958 degrees
+Current Roll is:	2.315814 degrees
+Current Pitch is:	4.413285 degrees
+Current Roll is:	2.369693 degrees
+Current Pitch is:	4.436629 degrees
+Current Roll is:	2.406033 degrees
+Current Pitch is:	4.448339 degrees
+Current Roll is:	2.427089 degrees
+Current Pitch is:	4.463542 degrees
+Current Roll is:	2.478959 degrees
+Current Pitch is:	4.480158 degrees
+Current Roll is:	2.520824 degrees
+Current Pitch is:	4.493380 degrees
+Current Roll is:	2.559045 degrees
+Current Pitch is:	4.508108 degrees
+Current Roll is:	2.617218 degrees
+Current Pitch is:	4.521759 degrees
+Current Roll is:	2.701815 degrees
+Current Pitch is:	4.539369 degrees
+Current Roll is:	2.785477 degrees
+Current Pitch is:	4.560988 degrees
+Current Roll is:	2.909111 degrees
+Current Pitch is:	4.580897 degrees
+Current Roll is:	3.060941 degrees
+Current Pitch is:	4.598783 degrees
+Current Roll is:	3.190190 degrees
+Current Pitch is:	4.620919 degrees
+Current Roll is:	3.260510 degrees
+Current Pitch is:	4.641665 degrees
+Current Roll is:	3.378051 degrees
+Current Pitch is:	4.659227 degrees
+Current Roll is:	3.483357 degrees
+Current Pitch is:	4.681469 degrees
+Current Roll is:	3.610358 degrees
+Current Pitch is:	4.695529 degrees
+Current Roll is:	3.818509 degrees
+Current Pitch is:	4.723773 degrees
+Current Roll is:	3.992293 degrees
+Current Pitch is:	4.733643 degrees
+Current Roll is:	4.069801 degrees
+Current Pitch is:	4.771400 degrees
+Current Roll is:	4.225868 degrees
+Current Pitch is:	4.783059 degrees
+Current Roll is:	4.332937 degrees
+Current Pitch is:	4.722404 degrees
+Current Roll is:	4.406959 degrees
+Current Pitch is:	4.779030 degrees
+Current Roll is:	4.626552 degrees
+Current Pitch is:	4.823590 degrees
+Current Roll is:	4.873789 degrees
+Current Pitch is:	4.826150 degrees
+Current Roll is:	4.877418 degrees
+Current Pitch is:	4.761323 degrees
+Current Roll is:	4.959935 degrees
+Current Pitch is:	4.777266 degrees
+Current Roll is:	5.228256 degrees
+Current Pitch is:	4.812035 degrees
+Current Roll is:	5.585480 degrees
+Current Pitch is:	4.829355 degrees
+Current Roll is:	5.809654 degrees
+Current Pitch is:	4.854070 degrees
+Current Roll is:	5.844824 degrees
+Current Pitch is:	4.872746 degrees
+Current Roll is:	5.887897 degrees
+Current Pitch is:	4.889606 degrees
+Current Roll is:	5.964797 degrees
+Current Pitch is:	4.912539 degrees
+Current Roll is:	5.996099 degrees
+Current Pitch is:	4.928468 degrees
+Current Roll is:	5.957146 degrees
+Current Pitch is:	4.949195 degrees
+Current Roll is:	5.853047 degrees
+Current Pitch is:	4.962236 degrees
+Current Roll is:	5.797942 degrees
+Current Pitch is:	4.983891 degrees
+Current Roll is:	5.764540 degrees
+Current Pitch is:	5.002690 degrees
+Current Roll is:	5.748851 degrees
+Current Pitch is:	5.016396 degrees
+Current Roll is:	5.727648 degrees
+Current Pitch is:	5.034029 degrees
+Current Roll is:	5.735892 degrees
+Current Pitch is:	5.050159 degrees
+Current Roll is:	5.777736 degrees
+Current Pitch is:	5.073898 degrees
+Current Roll is:	5.799777 degrees
+Current Pitch is:	5.089848 degrees
+Current Roll is:	5.825473 degrees
+Current Pitch is:	5.106675 degrees
+Current Roll is:	5.813944 degrees
+Current Pitch is:	5.123201 degrees
+Current Roll is:	5.783735 degrees
+Current Pitch is:	5.140297 degrees
+Current Roll is:	5.764859 degrees
+Current Pitch is:	5.161365 degrees
+Current Roll is:	5.766861 degrees
+Current Pitch is:	5.180401 degrees
+Current Roll is:	5.759715 degrees
+Current Pitch is:	5.198684 degrees
+Current Roll is:	5.745960 degrees
+Current Pitch is:	5.216774 degrees
+Current Roll is:	5.734595 degrees
+Current Pitch is:	5.235906 degrees
+Current Roll is:	5.725418 degrees
+Current Pitch is:	5.254814 degrees
+Current Roll is:	5.711317 degrees
+Current Pitch is:	5.271677 degrees
+Current Roll is:	5.709257 degrees
+Current Pitch is:	5.291441 degrees
+Current Roll is:	5.727675 degrees
+Current Pitch is:	5.313581 degrees
+Current Roll is:	5.759762 degrees
+Current Pitch is:	5.335913 degrees
+Current Roll is:	5.763999 degrees
+Current Pitch is:	5.356706 degrees
+Current Roll is:	5.720638 degrees
+Current Pitch is:	5.376053 degrees
+Current Roll is:	5.702245 degrees
+Current Pitch is:	5.396693 degrees
+Current Roll is:	5.699031 degrees
+Current Pitch is:	5.414405 degrees
+Current Roll is:	5.690938 degrees
+Current Pitch is:	5.432500 degrees
+Current Roll is:	5.699677 degrees
+Current Pitch is:	5.453875 degrees
+Current Roll is:	5.691443 degrees
+Current Pitch is:	5.473374 degrees
+Current Roll is:	5.728483 degrees
+Current Pitch is:	5.489010 degrees
+Current Roll is:	5.844566 degrees
+Current Pitch is:	5.510001 degrees
+Current Roll is:	6.053757 degrees
+Current Pitch is:	5.526442 degrees
+Current Roll is:	6.142491 degrees
+Current Pitch is:	5.534589 degrees
+Current Roll is:	6.301237 degrees
+Current Pitch is:	5.538006 degrees
+Current Roll is:	6.492202 degrees
+Current Pitch is:	5.559577 degrees
+Current Roll is:	6.640813 degrees
+Current Pitch is:	5.577868 degrees
+Current Roll is:	6.692089 degrees
+Current Pitch is:	5.602018 degrees
+Current Roll is:	6.730153 degrees
+Current Pitch is:	5.620112 degrees
+Current Roll is:	6.789448 degrees
+Current Pitch is:	5.636529 degrees
+Current Roll is:	6.800530 degrees
+Current Pitch is:	5.655576 degrees
+Current Roll is:	6.731560 degrees
+Current Pitch is:	5.675406 degrees
+Current Roll is:	6.668541 degrees
+Current Pitch is:	5.693702 degrees
+Current Roll is:	6.657652 degrees
+Current Pitch is:	5.710467 degrees
+Current Roll is:	6.705098 degrees
+Current Pitch is:	5.731488 degrees
+Current Roll is:	6.700612 degrees
+Current Pitch is:	5.747113 degrees
+Current Roll is:	6.671814 degrees
+Current Pitch is:	5.763761 degrees
+Current Roll is:	6.641100 degrees
+Current Pitch is:	5.780677 degrees
+Current Roll is:	6.634355 degrees
+Current Pitch is:	5.799967 degrees
+Current Roll is:	6.619957 degrees
+Current Pitch is:	5.819826 degrees
+Current Roll is:	6.611599 degrees
+Current Pitch is:	5.838958 degrees
+Current Roll is:	6.597180 degrees
+Current Pitch is:	5.858562 degrees
+Current Roll is:	6.579344 degrees
+Current Pitch is:	5.877823 degrees
+Current Roll is:	6.571414 degrees
+Current Pitch is:	5.897343 degrees
+Current Roll is:	6.561010 degrees
+Current Pitch is:	5.918675 degrees
+Current Roll is:	6.547761 degrees
+Current Pitch is:	5.936502 degrees
+Current Roll is:	6.523586 degrees
+Current Pitch is:	5.956926 degrees
+Current Roll is:	6.507991 degrees
+Current Pitch is:	5.972597 degrees
+Current Roll is:	6.502153 degrees
+Current Pitch is:	5.991981 degrees
+Current Roll is:	6.519810 degrees
+Current Pitch is:	6.011857 degrees
+Current Roll is:	6.533437 degrees
+Current Pitch is:	6.031489 degrees
+Current Roll is:	6.538777 degrees
+Current Pitch is:	6.050498 degrees
+Current Roll is:	6.531644 degrees
+Current Pitch is:	6.068135 degrees
+Current Roll is:	6.519561 degrees
+Current Pitch is:	6.087527 degrees
+Current Roll is:	6.498790 degrees
+Current Pitch is:	6.107523 degrees
+Current Roll is:	6.490645 degrees
+Current Pitch is:	6.125996 degrees
+Current Roll is:	6.478721 degrees
+Current Pitch is:	6.143978 degrees
+Current Roll is:	6.471404 degrees
+Current Pitch is:	6.163758 degrees
+Current Roll is:	6.469638 degrees
+Current Pitch is:	6.182701 degrees
+Current Roll is:	6.461934 degrees
+Current Pitch is:	6.200404 degrees
+Current Roll is:	6.462088 degrees
+Current Pitch is:	6.218893 degrees
+Current Roll is:	6.463512 degrees
+Current Pitch is:	6.238421 degrees
+Current Roll is:	6.449031 degrees
+Current Pitch is:	6.256934 degrees
+Current Roll is:	6.435559 degrees
+Current Pitch is:	6.274695 degrees
+Current Roll is:	6.429896 degrees
+Current Pitch is:	6.293059 degrees
+Current Roll is:	6.427298 degrees
+Current Pitch is:	6.311650 degrees
+Current Roll is:	6.415350 degrees
+Current Pitch is:	6.332211 degrees
+Current Roll is:	6.392154 degrees
+Current Pitch is:	6.350613 degrees
+Current Roll is:	6.377876 degrees
+Current Pitch is:	6.367457 degrees
+Current Roll is:	6.356030 degrees
+Current Pitch is:	6.387419 degrees
+Current Roll is:	6.342087 degrees
+Current Pitch is:	6.410335 degrees
+Current Roll is:	6.320624 degrees
+Current Pitch is:	6.431132 degrees
+Current Roll is:	6.232445 degrees
+Current Pitch is:	6.452959 degrees
+Current Roll is:	6.136892 degrees
+Current Pitch is:	6.488777 degrees
+Current Roll is:	6.015716 degrees
+Current Pitch is:	6.552658 degrees
+Current Roll is:	5.844021 degrees
+Current Pitch is:	6.652956 degrees
+Current Roll is:	5.620097 degrees
+Current Pitch is:	6.769576 degrees
+Current Roll is:	5.351902 degrees
+Current Pitch is:	6.905923 degrees
+Current Roll is:	5.074088 degrees
+Current Pitch is:	7.017696 degrees
+Current Roll is:	4.877733 degrees
+Current Pitch is:	7.257299 degrees
+Current Roll is:	4.516473 degrees
+Current Pitch is:	7.460989 degrees
+Current Roll is:	4.220306 degrees
+Current Pitch is:	7.653558 degrees
+Current Roll is:	3.933615 degrees
+Current Pitch is:	8.004450 degrees
+Current Roll is:	3.785741 degrees
+Current Pitch is:	8.315184 degrees
+Current Roll is:	3.258670 degrees
+Current Pitch is:	8.569628 degrees
+Current Roll is:	2.757326 degrees
+Current Pitch is:	8.960824 degrees
+Current Roll is:	2.186388 degrees
+Current Pitch is:	9.339808 degrees
+Current Roll is:	1.687137 degrees
+Current Pitch is:	9.697106 degrees
+Current Roll is:	1.264594 degrees
+Current Pitch is:	10.226792 degrees
+Current Roll is:	0.872714 degrees
+Current Pitch is:	10.806177 degrees
+Current Roll is:	0.364001 degrees
+Current Pitch is:	11.469122 degrees
+Current Roll is:	0.151412 degrees
+Current Pitch is:	12.091210 degrees
+Current Roll is:	-0.129693 degrees
+Current Pitch is:	13.017358 degrees
+Current Roll is:	-0.261355 degrees
+Current Pitch is:	13.784592 degrees
+Current Roll is:	-0.311636 degrees
+Current Pitch is:	14.739869 degrees
+Current Roll is:	-0.222230 degrees
+Current Pitch is:	15.579192 degrees
+Current Roll is:	-0.265950 degrees
+Current Pitch is:	16.293190 degrees
+Current Roll is:	-0.321901 degrees
+Current Pitch is:	16.752947 degrees
+Current Roll is:	-0.352103 degrees
+Current Pitch is:	17.094971 degrees
+Current Roll is:	-0.349505 degrees
+Current Pitch is:	17.096380 degrees
+Current Roll is:	-0.358953 degrees
+Current Pitch is:	17.079973 degrees
+Current Roll is:	-0.365971 degrees
+Current Pitch is:	17.165539 degrees
+Current Roll is:	-0.363637 degrees
+Current Pitch is:	17.083397 degrees
+Current Roll is:	-0.394526 degrees
+Current Pitch is:	17.075968 degrees
+Current Roll is:	-0.400623 degrees
+Current Pitch is:	17.061096 degrees
+Current Roll is:	-0.410676 degrees
+Current Pitch is:	16.945932 degrees
+Current Roll is:	-0.460557 degrees
+Current Pitch is:	16.831629 degrees
+Current Roll is:	-0.472915 degrees
+Current Pitch is:	16.565508 degrees
+Current Roll is:	-0.446089 degrees
+Current Pitch is:	16.285019 degrees
+Current Roll is:	-0.471249 degrees
+Current Pitch is:	16.055746 degrees
+Current Roll is:	-0.463853 degrees
+Current Pitch is:	15.882139 degrees
+Current Roll is:	-0.449525 degrees
+Current Pitch is:	15.685638 degrees
+Current Roll is:	-0.470965 degrees
+Current Pitch is:	15.471887 degrees
+Current Roll is:	-0.510343 degrees
+Current Pitch is:	15.230447 degrees
+Current Roll is:	-0.487238 degrees
+Current Pitch is:	14.744102 degrees
+Current Roll is:	-0.520659 degrees
+Current Pitch is:	14.216536 degrees
+Current Roll is:	-0.551311 degrees
+Current Pitch is:	13.478637 degrees
+Current Roll is:	-0.606055 degrees
+Current Pitch is:	13.009933 degrees
+Current Roll is:	-0.616449 degrees
+Current Pitch is:	12.440531 degrees
+Current Roll is:	-0.671735 degrees
+Current Pitch is:	11.563686 degrees
+Current Roll is:	-0.667525 degrees
+Current Pitch is:	10.309527 degrees
+Current Roll is:	-0.814959 degrees
+Current Pitch is:	8.615375 degrees
+Current Roll is:	-1.205362 degrees
+Current Pitch is:	7.330552 degrees
+Current Roll is:	-1.731929 degrees
+Current Pitch is:	6.368315 degrees
+Current Roll is:	-2.197956 degrees
+Current Pitch is:	5.506926 degrees
+Current Roll is:	-2.262718 degrees
+Current Pitch is:	5.181650 degrees
+Current Roll is:	-2.424232 degrees
+Current Pitch is:	5.283770 degrees
+Current Roll is:	-2.056385 degrees
+Current Pitch is:	5.962112 degrees
+Current Roll is:	-0.913377 degrees
+Current Pitch is:	6.372410 degrees
+Current Roll is:	0.478262 degrees
+Current Pitch is:	6.370090 degrees
+Current Roll is:	2.078243 degrees
+Current Pitch is:	6.340276 degrees
+Current Roll is:	3.292848 degrees
+Current Pitch is:	6.371209 degrees
+Current Roll is:	4.568408 degrees
+Current Pitch is:	6.427951 degrees
+Current Roll is:	6.006880 degrees
+Current Pitch is:	6.519683 degrees
+Current Roll is:	7.111286 degrees
+Current Pitch is:	6.668955 degrees
+Current Roll is:	8.023883 degrees
+Current Pitch is:	6.756455 degrees
+Current Roll is:	8.847879 degrees
+Current Pitch is:	6.669431 degrees
+Current Roll is:	8.959835 degrees
+Current Pitch is:	6.665191 degrees
+Current Roll is:	8.436578 degrees
+Current Pitch is:	6.861368 degrees
+Current Roll is:	6.945653 degrees
+Current Pitch is:	7.022395 degrees
+Current Roll is:	4.780001 degrees
+Current Pitch is:	7.005101 degrees
+Current Roll is:	2.995627 degrees
+Current Pitch is:	6.709246 degrees
+Current Roll is:	1.088382 degrees
+Current Pitch is:	6.511476 degrees
+Current Roll is:	-0.759700 degrees
+Current Pitch is:	6.234954 degrees
+Current Roll is:	-2.069559 degrees
+Current Pitch is:	6.028741 degrees
+Current Roll is:	-2.599621 degrees
+Current Pitch is:	6.842469 degrees
+Current Roll is:	-3.497447 degrees
+Current Pitch is:	6.923945 degrees
+Current Roll is:	-3.376483 degrees
+Current Pitch is:	7.570589 degrees
+Current Roll is:	-1.697655 degrees
+Current Pitch is:	7.592724 degrees
+Current Roll is:	-1.635811 degrees
+Current Pitch is:	7.542523 degrees
+Current Roll is:	-1.570839 degrees
+Current Pitch is:	7.579208 degrees
+Current Roll is:	-1.602021 degrees
+Current Pitch is:	7.598962 degrees
+Current Roll is:	-1.614315 degrees
+Current Pitch is:	7.616659 degrees
+Current Roll is:	-1.624535 degrees
+Current Pitch is:	7.633770 degrees
+Current Roll is:	-1.632828 degrees
+Current Pitch is:	7.651310 degrees
+Current Roll is:	-1.642341 degrees
+Current Pitch is:	7.667971 degrees
+Current Roll is:	-1.652279 degrees
+Current Pitch is:	7.684457 degrees
+Current Roll is:	-1.661898 degrees
+Current Pitch is:	7.700953 degrees
+Current Roll is:	-1.672933 degrees
+Current Pitch is:	7.718805 degrees
+Current Roll is:	-1.683079 degrees
+Current Pitch is:	7.735464 degrees
+Current Roll is:	-1.693288 degrees
+Current Pitch is:	7.751974 degrees
+Current Roll is:	-1.703648 degrees
+Current Pitch is:	7.768646 degrees
+Current Roll is:	-1.713932 degrees
+Current Pitch is:	7.786470 degrees
+Current Roll is:	-1.724026 degrees
+Current Pitch is:	7.804707 degrees
+Current Roll is:	-1.733803 degrees
+Current Pitch is:	7.823114 degrees
+Current Roll is:	-1.744

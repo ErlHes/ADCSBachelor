@@ -34,6 +34,7 @@ int main(void)
 	
 	usart_init(MYUBRR);
 	spiInit();
+	timerInit();
 	_delay_ms(1000);	// Magic 1 second delay that can be removed later to speed up the program :-)
 	WhoAmICheck();		// Checks if the wires and SPI are correctly configured, if this check can't complete the program will not continue, this is to protect the IMU.
 	printf("Check complete, all systems are ready to go!\n");
@@ -43,8 +44,23 @@ int main(void)
 	calibrateMag(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateGyro(); // Calculates the median offset value the magnetometer measures.
 	
+	TCNT1 = 0x00; // Set the timer.
 
 	while(1){
+		
+		readGyro();
+		
+		angle_pitch += gx / 119; // Divide by the capture rate.
+		angle_roll += gy / 119; // --||--
+		
+		angle_pitch += angle_roll * sin(gz/119*PI/180); // Transfer roll to pitch in case of yaw
+		angle_roll -= angle_pitch * sin(gz/119*PI/180); // Transfer pitch to roll in case of yaw
+		
+		printf("Current Pitch is:	%f degrees\n", angle_pitch);
+		printf("Current Roll is:	%f degrees\n", angle_roll);
+		
+		while(TCNT1 < 16807); // We need to wait for 8.4 milliseconds to pass, this makes the program run at 119Hz to match the data capture rate of the gyroscope.
+		TCNT1 = 0x00;
 		
 		// TODO
 		// * Finish refactoring code

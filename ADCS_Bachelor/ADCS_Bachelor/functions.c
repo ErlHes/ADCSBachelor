@@ -4,7 +4,132 @@
 #include "header.h"
 #include "registers.h"
 
+	// USART
 
+void usart_init( uint16_t ubrr) {
+	// Set baud rate
+	UBRR0H = (uint8_t)(ubrr>>8);
+	UBRR0L = (uint8_t)ubrr;
+	// Enable receiver and transmitter
+	UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+	// Set frame format: 8data, 1stop bit
+	UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
+
+}
+
+void usart_putchar(char data) {
+	// Wait for empty transmit buffer
+	while ( !(UCSR0A & (_BV(UDRE0))) );
+	// Start transmission
+	UDR0 = data;
+}
+
+char usart_getchar(void) {
+	// Wait for incomming data
+	while ( !(UCSR0A & (_BV(RXC0))) );
+	// Return the data
+	return UDR0;
+}
+
+void usart_pstr(char *s) {
+	// loop through entire string
+	while (*s) {
+		usart_putchar(*s);
+		s++;
+	}
+}
+
+unsigned char kbhit(void) {
+	//return nonzero if char waiting  polled version
+	unsigned char b;
+	b=0;
+	if(UCSR0A & (1<<RXC0)) b=1;
+	return b;
+}
+
+//*********** required for printf *********//
+int usart_putchar_printf(char var, FILE *stream) {
+	if (var == '\n') usart_putchar('\r');
+	usart_putchar(var);
+	return 0;
+	
+}
+
+
+	// Timer
+
+void timerInit(void){
+	TCCR1A = 0x00;			// We don't need to set any bits, we will use normal mode.
+	TCCR1B = (1<<CS11);		// Clock Divide 8 on pre-scaler
+}
+	
+
+	// SPI
+ 
+ void spiInit(void){
+	 DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1)|(1<<DDB0);			// MOSI, SCK, CS_M and CS_AG output ||DDB0 is for testing
+	 PORTB = (1<<PORTB2)|(1<<PORTB1)|(1<<PORTB0);						// CS_M and CS_AG start HIGH || PORTB0 is for testing
+	 SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR0);			// * SPI enable, Master mode, MSB first, Clockdiv 8
+	 // * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3.
+ }
+
+uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
+{
+	uint8_t temp;
+	// Use the multiple read function to read 1 byte.
+	// Value is returned to `temp`.
+	SPIreadBytes(csPin, subAddress, &temp, 1);
+	return temp;
+}
+
+uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress, uint8_t * dest, uint8_t count)
+{
+	// To indicate a read, set bit 0 (msb) of first byte to 1
+	uint8_t rAddress = 0x80 | (subAddress & 0x3F);
+	// Mag SPI port is different. If we're reading multiple bytes,
+	// set bit 1 to 1. The remaining six bytes are the address to be read
+	if ((csPin == PIN_M) && count > 1)
+	rAddress |= 0x40;
+	
+	PORTB &= ~(1<<csPin);	// Initiate communication
+	spiTransfer(rAddress);
+	for (int i=0; i<count; i++)
+	{
+		dest[i] = spiTransfer(0x00); // Read into destination array
+	}
+	PORTB |= (1<<csPin); // Close communication
+	
+	return count;
+}
+
+uint8_t spiTransfer(uint8_t data) {
+    SPDR = data;
+    /*
+     * The following NOP introduces a small delay that can prevent the wait
+     * loop form iterating when running at the maximum speed. This gives
+     * about 10% more speed, even if it seems counter-intuitive. At lower
+     * speeds it is unnoticed.
+     */
+    asm volatile("nop");
+    while (!(SPSR & _BV(SPIF))) ; // wait
+    return SPDR;
+  }
+   
+void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data)
+   {
+	   PORTB &= ~(1<<csPin); // Initiate communication
+	   
+	   // If write, bit 0 (MSB) should be 0
+	   // If single write, bit 1 should be 0
+	   spiTransfer(subAddress & 0x3F); // Send Address
+	   spiTransfer(data); // Send data
+	   
+	   PORTB |= (1<<csPin); // Close communication
+   }
+
+
+	// General
+ 
 uint8_t getFIFOSamples(void){
 	return (SPIreadByte(PIN_XG, FIFO_SRC) & 0x3F);
 }
@@ -23,11 +148,97 @@ void enableFIFO(uint8_t enable){
 	SPIwriteByte(PIN_XG, CTRL_REG9, temp);
 }
 
+uint8_t getInactivity(void){
+	uint8_t temp = SPIreadByte(PIN_XG, STATUS_REG_0);
+	temp &= (0x10);
+	return temp;
+}
+
+void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn){
+	uint8_t temp = 0;
+	
+	temp = threshold & 0x7F;
+	if (sleepOn) temp |= (1<<7);
+	SPIwriteByte(PIN_XG, ACT_THS, temp);
+	
+	SPIwriteByte(PIN_XG, ACT_DUR, duration);
+}
+
+void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull){
+	// Write to INT1_CTRL or INT2_CTRL. [interrupt] should already be one of
+	// those two values.
+	// [generator] should be an OR'd list of values from the interrupt_generators enum
+	SPIwriteByte(PIN_XG, interrupt_select, generator);
+	
+	// Configure CTRL_REG8
+	uint8_t temp;
+	temp = SPIreadByte(PIN_XG, CTRL_REG8);
+	
+	if (activeLow) temp |= (1<<5);
+	else temp &= ~(1<<5);
+	
+	if (pushPull) temp &= ~(1<<4);
+	else temp |= (1<<4);
+	
+	SPIwriteByte(PIN_XG, CTRL_REG8, temp);
+}
+
+void WhoAmICheck(void){
+	  uint8_t testM = 0x00;
+	  uint8_t testXG = 0x00;
+	  uint16_t whoAmICombined = 0x0000;
+	  //spiWrite(PIN_M, CTRL_REG3_M, 0b00000111);		//Needed to read from the Magnetometer registers.
+	  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
+	  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
+	  printf("Conducting WHO_AM_I check, please wait...\n");
+	  whoAmICombined = (testXG << 8) | testM;
+	  printf("WHO_AM_I reads 0x%X, expected 0x683D\n", whoAmICombined);
+	  if(whoAmICombined != ((WHO_AM_I_AG_RSP << 8) | WHO_AM_I_M_RSP)){
+		  printf("test failed. \n");
+		  printf("double-check wiring and retry, program will not run as long as the check fails.\n");
+		  while(1);
+	  }
+  }
+
+
+	// Gyroscope
+
 void sleepGyro(uint8_t enable){
 	uint8_t temp = SPIreadByte(PIN_XG, CTRL_REG9);
 	if (enable) temp |= (1<<6);
 	else temp &= ~(1<<6);
 	SPIwriteByte(PIN_XG, CTRL_REG9, temp);
+}
+
+void readGyro(void){
+	uint8_t temp[6];
+	SPIreadBytes(PIN_XG, OUT_X_L_G, temp, 6);
+	gx = (temp[1] << 8) | temp[0]; // Store x-axis values into gx
+	gy = (temp[3] << 8) | temp[2]; // Store y-axis values into gy
+	gz = (temp[5] << 8) | temp[4]; // Store z-axis values into gz
+	
+	if(autocalc){
+		gx -= gBiasRawX;
+		gy -= gBiasRawY;
+		gz -= gBiasRawZ;
+		switch(gyroScale){
+			case 0:
+			gx = gx * SENSITIVITY_GYROSCOPE_245;
+			gy = gy * SENSITIVITY_GYROSCOPE_245;
+			gz = gz * SENSITIVITY_GYROSCOPE_245;
+			break;
+			case 1:
+			gx = gx * SENSITIVITY_GYROSCOPE_500;
+			gy = gy * SENSITIVITY_GYROSCOPE_500;
+			gz = gz * SENSITIVITY_GYROSCOPE_500;
+			break;
+			case 3:
+			gx = gx *  SENSITIVITY_GYROSCOPE_2000;
+			gy = gy *  SENSITIVITY_GYROSCOPE_2000;
+			gz = gz *  SENSITIVITY_GYROSCOPE_2000;
+			break;
+		}
+	}
 }
 
 uint8_t getGyroIntSrc(void){
@@ -67,6 +278,14 @@ void configGyroThs(int16_t threshold, uint8_t axis, uint8_t duration, uint8_t wa
 	SPIwriteByte(PIN_XG, INT_GEN_DUR_G, temp);
 }
 
+uint8_t availableGyro(void){
+	uint8_t status = SPIreadByte(PIN_XG, STATUS_REG_1);
+	return ((status & 0b00000010) >> 1);
+}
+
+	
+	// Magnetometer
+
 uint8_t getMagIntSrc(void){
 	uint8_t intSrc = SPIreadByte(PIN_M, INT_SRC_M);
 	
@@ -96,73 +315,6 @@ void configMagInt(uint8_t generator, uint8_t activeLow, uint8_t latch){
 	if (generator != 0) config |= (1<<0);
 	
 	SPIwriteByte(PIN_M, INT_CFG_M, config);
-}
-
-
-uint8_t getInactivity(void){
-	uint8_t temp = SPIreadByte(PIN_XG, STATUS_REG_0);
-	temp &= (0x10);
-	return temp;
-}
-
-void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn){
-	uint8_t temp = 0;
-	
-	temp = threshold & 0x7F;
-	if (sleepOn) temp |= (1<<7);
-	SPIwriteByte(PIN_XG, ACT_THS, temp);
-	
-	SPIwriteByte(PIN_XG, ACT_DUR, duration);
-}
-
-void configInt(uint8_t interrupt_select, uint8_t generator, uint8_t activeLow, uint8_t pushPull){
-	// Write to INT1_CTRL or INT2_CTRL. [interrupt] should already be one of
-	// those two values.
-	// [generator] should be an OR'd list of values from the interrupt_generators enum
-	SPIwriteByte(PIN_XG, interrupt_select, generator);
-	
-	// Configure CTRL_REG8
-	uint8_t temp;
-	temp = SPIreadByte(PIN_XG, CTRL_REG8);
-	
-	if (activeLow) temp |= (1<<5);
-	else temp &= ~(1<<5);
-	
-	if (pushPull) temp &= ~(1<<4);
-	else temp |= (1<<4);
-	
-	SPIwriteByte(PIN_XG, CTRL_REG8, temp);
-}
-
-void readGyro(void){
-	uint8_t temp[6];
-	SPIreadBytes(PIN_XG, OUT_X_L_G, temp, 6);
-	gx = (temp[1] << 8) | temp[0]; // Store x-axis values into gx
-	gy = (temp[3] << 8) | temp[2]; // Store y-axis values into gy
-	gz = (temp[5] << 8) | temp[4]; // Store z-axis values into gz
-	
-	if(autocalc){
-		gx -= gBiasRawX;
-		gy -= gBiasRawY;
-		gz -= gBiasRawZ;
-		switch(gyroScale){
-			case 0:
-			gx = gx * SENSITIVITY_GYROSCOPE_245;
-			gy = gy * SENSITIVITY_GYROSCOPE_245;
-			gz = gz * SENSITIVITY_GYROSCOPE_245;
-			break;
-			case 1:
-			gx = gx * SENSITIVITY_GYROSCOPE_500;
-			gy = gy * SENSITIVITY_GYROSCOPE_500;
-			gz = gz * SENSITIVITY_GYROSCOPE_500;
-			break;
-			case 3:
-			gx = gx *  SENSITIVITY_GYROSCOPE_2000;
-			gy = gy *  SENSITIVITY_GYROSCOPE_2000;
-			gz = gz *  SENSITIVITY_GYROSCOPE_2000;
-			break;
-		}
-	}
 }
 
 void readMag(void){
@@ -196,11 +348,6 @@ void readMag(void){
 			break;
 		}	
 	}
-}
-
-uint8_t availableGyro(void){
-	uint8_t status = SPIreadByte(PIN_XG, STATUS_REG_1);
-	return ((status & 0b00000010) >> 1);
 }
 
 uint8_t availableMag(uint8_t axis){
