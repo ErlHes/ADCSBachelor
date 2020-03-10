@@ -5,7 +5,7 @@
 #include "registers.h"
 
 
-uint8_t getFIFOSamples(){
+uint8_t getFIFOSamples(void){
 	return (SPIreadByte(PIN_XG, FIFO_SRC) & 0x3F);
 }
 
@@ -30,38 +30,7 @@ void sleepGyro(uint8_t enable){
 	SPIwriteByte(PIN_XG, CTRL_REG9, temp);
 }
 
-uint8_t getMagIntSrc(){
-	uint8_t intSrc = SPIreadByte(PIN_M, INT_SRC_M);
-	
-	// Check if the INT (interrupt active) bit is set
-	if (intSrc & (1<<0)){
-		return (intSrc & 0xFE);
-	}
-	
-	return 0;
-}
-
-void configMagThs(uint16_t threshold){
-	// Write high eight bits of [threshold] to INT_THS_H_M
-	SPIwriteByte(PIN_M, INT_THS_H_M, ((threshold & 0x7F00) >> 8));
-	// Write low eight bits of [threshold] to INT_THS_L_M
-	SPIwriteByte(PIN_M, INT_THS_L_M, (threshold & 0x00FF));
-}
-
-void configMagInt(uint8_t generator, uint8_t activeLow, uint8_t latch){
-	// Mask out non-generator bits (0-4)
-	uint8_t config = (generator & 0xE0);
-	// IEA bit is 0 for active-low, 1 for active-high.
-	if (activeLow == 0) config |= (1<<2);
-	// IEL bit is 0 for latched, 1 for not-latched
-	if (!latch) config |= (1<<1);
-	// As long as we have at least 1 generator, enable the interrupt
-	if (generator != 0) config |= (1<<0);
-	
-	SPIwriteByte(PIN_M, INT_CFG_M, config);
-}
-
-uint8_t getGyroIntSrc(){
+uint8_t getGyroIntSrc(void){
 	uint8_t intSrc = SPIreadByte(PIN_XG, INT_GEN_SRC_G);
 	
 	// Check if the IA_G (interrupt active) bit is set
@@ -98,7 +67,39 @@ void configGyroThs(int16_t threshold, uint8_t axis, uint8_t duration, uint8_t wa
 	SPIwriteByte(PIN_XG, INT_GEN_DUR_G, temp);
 }
 
-uint8_t getInactivity(){
+uint8_t getMagIntSrc(void){
+	uint8_t intSrc = SPIreadByte(PIN_M, INT_SRC_M);
+	
+	// Check if the INT (interrupt active) bit is set
+	if (intSrc & (1<<0)){
+		return (intSrc & 0xFE);
+	}
+	
+	return 0;
+}
+
+void configMagThs(uint16_t threshold){
+	// Write high eight bits of [threshold] to INT_THS_H_M
+	SPIwriteByte(PIN_M, INT_THS_H_M, ((threshold & 0x7F00) >> 8));
+	// Write low eight bits of [threshold] to INT_THS_L_M
+	SPIwriteByte(PIN_M, INT_THS_L_M, (threshold & 0x00FF));
+}
+
+void configMagInt(uint8_t generator, uint8_t activeLow, uint8_t latch){
+	// Mask out non-generator bits (0-4)
+	uint8_t config = (generator & 0xE0);
+	// IEA bit is 0 for active-low, 1 for active-high.
+	if (activeLow == 0) config |= (1<<2);
+	// IEL bit is 0 for latched, 1 for not-latched
+	if (!latch) config |= (1<<1);
+	// As long as we have at least 1 generator, enable the interrupt
+	if (generator != 0) config |= (1<<0);
+	
+	SPIwriteByte(PIN_M, INT_CFG_M, config);
+}
+
+
+uint8_t getInactivity(void){
 	uint8_t temp = SPIreadByte(PIN_XG, STATUS_REG_0);
 	temp &= (0x10);
 	return temp;
@@ -197,7 +198,7 @@ void readMag(void){
 	}
 }
 
-uint8_t availableGyro(){
+uint8_t availableGyro(void){
 	uint8_t status = SPIreadByte(PIN_XG, STATUS_REG_1);
 	return ((status & 0b00000010) >> 1);
 }

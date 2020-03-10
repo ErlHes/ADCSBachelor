@@ -4,12 +4,6 @@
 #include "header.h"
 #include "registers.h"
 
-/*Defines*/
-#define USART_BAUDRATE 9600
-#define MYUBRR F_CPU/16/BAUD-1
-#define PI 3.141592
-
-
 //************* DECLINATION MIGHT NOT MATTER AFTER ALL.********************************//
 
 // Gotta consider declination
@@ -30,28 +24,27 @@ int main(void)
 {
 	stdout = &mystdout; // related to printf
 	
+	// mag scale can be 4, 8, 12, or 16
+	magScale = 4;
+	
+	// Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
+	gyroScale = 1;
+	
+	autocalc = 1; // Set autocalc enable -- This should always be on
+	
 	usart_init(MYUBRR);
 	spiInit();
-	_delay_ms(1000);
-	WhoAmICheck();
+	_delay_ms(1000);	// Magic 1 second delay that can be removed later to speed up the program :-)
+	WhoAmICheck();		// Checks if the wires and SPI are correctly configured, if this check can't complete the program will not continue, this is to protect the IMU.
 	printf("Check complete, all systems are ready to go!\n");
 	
-	initMag();
-	initGyro();
-	calibrateMag(); 
-	calibrateGyro();
+	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
+	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
+	calibrateMag(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
+	calibrateGyro(); // Calculates the median offset value the magnetometer measures.
 	
-	
+
 	while(1){
-			
-		readGyro();
-		readMag();
-		
-		angle_pitch += gx * 0.00007;
-		angle_roll += gy * 0.00007;
-		
-		angle_pitch += angle_roll * sin(gz * 0.00007*PI/180);
-		angle_roll -= angle_pitch * sin(gz * 0.00007*PI/180);
 		
 		// TODO
 		// * Finish refactoring code
