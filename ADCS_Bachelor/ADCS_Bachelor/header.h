@@ -1,23 +1,40 @@
 /* Global Variables */
 
 //Raw values from Gyroscope
-float gx;
-float gy;
-float gz;
+int16_t gx;
+int16_t gy;
+int16_t gz;
+
+//Raw values from Accelerometer
+int16_t ax;
+int16_t ay;
+int16_t az;
+
+long long a_total_vector;
+
+float angle_pitch_acc;
+float angle_roll_acc;
 
 //Raw values from Magnetometer
-float mx;
-float my;
-float mz;
+int16_t mx;
+int16_t my;
+int16_t mz;
+
 
 float angle_pitch;
 float angle_roll;
 
 uint8_t autocalc;
+uint8_t set_gyro_angles;
 
 int16_t gBiasRawX;
 int16_t gBiasRawY;
 int16_t gBiasRawZ;
+
+int16_t aBiasRawX;
+int16_t aBiasRawY;
+int16_t aBiasRawZ;
+
 
 // mag scale can be 4, 8, 12, or 16
 uint8_t magScale;
@@ -242,6 +259,24 @@ uint8_t availableGyro(void);
 
 */
 void calibrateGyro(void);
+
+
+	// Accelerometer functions
+
+/* initAccl - Initializes the accelerometer control registers.
+
+*/
+void initAccel(void);
+
+/* readAccel - reads the XYZ output from the accelerometer.
+
+*/
+void readAccel(void);
+
+/* calibrateAccel - Finds and stores the offset on the Accelerometer.
+
+*/
+void calibrateAccel(void);
 
 
 	// Magnetometer functions 
