@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
+#include <math.h>
+#include <stdint.h>
 #include "header.h"
 #include "registers.h"
 
@@ -211,34 +213,9 @@ void sleepGyro(uint8_t enable){
 }
 
 void readGyro(void){
-	uint8_t temp[6];
-	SPIreadBytes(PIN_XG, OUT_X_L_G, temp, 6);
-	gx = (temp[1] << 8) | temp[0]; // Store x-axis values into gx
-	gy = (temp[3] << 8) | temp[2]; // Store y-axis values into gy
-	gz = (temp[5] << 8) | temp[4]; // Store z-axis values into gz
-	
-	if(autocalc){
-		gx -= gBiasRawX;
-		gy -= gBiasRawY;
-		gz -= gBiasRawZ;
-		switch(gyroScale){
-			case 0:
-			gx = gx * SENSITIVITY_GYROSCOPE_245;
-			gy = gy * SENSITIVITY_GYROSCOPE_245;
-			gz = gz * SENSITIVITY_GYROSCOPE_245;
-			break;
-			case 1:
-			gx = gx * SENSITIVITY_GYROSCOPE_500;
-			gy = gy * SENSITIVITY_GYROSCOPE_500;
-			gz = gz * SENSITIVITY_GYROSCOPE_500;
-			break;
-			case 3:
-			gx = gx *  SENSITIVITY_GYROSCOPE_2000;
-			gy = gy *  SENSITIVITY_GYROSCOPE_2000;
-			gz = gz *  SENSITIVITY_GYROSCOPE_2000;
-			break;
-		}
-	}
+	gx = (SPIreadByte(PIN_XG, OUT_X_H_G) << 8 | SPIreadByte(PIN_XG, OUT_X_L_G));
+	gy = (SPIreadByte(PIN_XG, OUT_Y_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_G));
+	gz = (SPIreadByte(PIN_XG, OUT_Z_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_G));
 }
 
 uint8_t getGyroIntSrc(void){
@@ -283,6 +260,13 @@ uint8_t availableGyro(void){
 	return ((status & 0b00000010) >> 1);
 }
 
+	// Accelerometer
+
+void readAccel(void){
+	ax = (SPIreadByte(PIN_XG, OUT_X_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_X_L_XL));
+	ay = (SPIreadByte(PIN_XG, OUT_Y_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_XL));
+	az = (SPIreadByte(PIN_XG, OUT_Z_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_XL));
+}
 	
 	// Magnetometer
 
@@ -323,31 +307,6 @@ void readMag(void){
 	mx = (temp[1] << 8 | temp[0]);
 	my = (temp[3] << 8 | temp[2]);
 	mz = (temp[5] << 8 | temp[4]);
-	
-	if(autocalc){
-		switch (magScale){
-			case 4:
-			mx = mx * SENSITIVITY_MAGNETOMETER_4;
-			my = my * SENSITIVITY_MAGNETOMETER_4;
-			mz = mz * SENSITIVITY_MAGNETOMETER_4;
-			break;
-			case 8:
-			mx = mx * SENSITIVITY_MAGNETOMETER_8;
-			my = my * SENSITIVITY_MAGNETOMETER_8;
-			mz = mz * SENSITIVITY_MAGNETOMETER_8;
-			break;
-			case 12:
-			mx = mx * SENSITIVITY_MAGNETOMETER_12;
-			my = my * SENSITIVITY_MAGNETOMETER_12;
-			mz = mz * SENSITIVITY_MAGNETOMETER_12;
-			break;
-			case 16:
-			mx = mx * SENSITIVITY_MAGNETOMETER_16;
-			my = my * SENSITIVITY_MAGNETOMETER_16;
-			mz = mz * SENSITIVITY_MAGNETOMETER_16;
-			break;
-		}	
-	}
 }
 
 uint8_t availableMag(uint8_t axis){

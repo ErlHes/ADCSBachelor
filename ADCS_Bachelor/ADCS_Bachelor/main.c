@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
+#include <math.h>
+#include <stdint.h>
 #include "header.h"
 #include "registers.h"
 
@@ -41,20 +43,53 @@ int main(void)
 	
 	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
 	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
-	calibrateMag(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
-	calibrateGyro(); // Calculates the median offset value the magnetometer measures.
+	initAccel();
+	calibrateMag(); // Calculates the median offset value the magnetometer measures.
+	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
+	calibrateAccel();
 	
 	TCNT1 = 0x00; // Set the timer.
 
 	while(1){
 		
 		readGyro();
+		readAccel();
+		ax -= aBiasRawX;
+		ay -= aBiasRawY;
+		az -= aBiasRawZ;		
+		gx -= gBiasRawX;
+		gy -= gBiasRawY;
+		gz -= gBiasRawZ;
 		
-		angle_pitch += gx / 119; // Divide by the capture rate.
-		angle_roll += gy / 119; // --||--
+		// 0.00007352 = (1/ 238) * 0.0175
+		angle_pitch += gy * 0.0007352; 
+		angle_roll += gx * 0.0007352;
 		
-		angle_pitch += angle_roll * sin((gz / 119) * PI / 180); // Transfer roll to pitch in case of yaw
-		angle_roll -= angle_pitch * sin((gz / 119) * PI / 180); // Transfer pitch to roll in case of yaw
+		angle_pitch -= angle_roll * sin(gz * 0.00007352 * M_PI / 180); // Transfer roll to pitch in case of yaw
+		angle_roll += angle_pitch * sin(gz * 0.00007352 * M_PI / 180); // Transfer pitch to roll in case of yaw
+		
+		//Accelerometer angle calculations
+		//a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
+	//	printf("a_total_vector = %u\n", a_total_vector);
+		
+
+		
+		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
+		angle_roll_acc = asin((float)ax/4096) * -57.296; // --||--
+		
+		angle_pitch_acc -= -0; // todo
+		angle_roll_acc -= -0; // todo
+		
+		if(set_gyro_angles == 1){
+		    angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
+		    angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
+		}
+		else{
+		   angle_pitch = angle_pitch_acc;                                     //Set the gyro pitch angle equal to the accelerometer pitch angle
+		   angle_roll = angle_roll_acc;                                       //Set the gyro roll angle equal to the accelerometer roll angle
+		   set_gyro_angles = 1;                                          
+		}
+		
 
 		printf("Pitch:	%f\n", angle_pitch);
 		printf("Roll:	%f\n", angle_roll);
@@ -67,7 +102,7 @@ int main(void)
 		*/
 
 		
-		while(TCNT1 < 16807); // We need to wait for 8.4 milliseconds to pass, this makes the program run at 119Hz to match the data capture rate of the gyroscope.
+		while(TCNT1 < 8404);
 		
 		/*
 		temp = TCNT1;

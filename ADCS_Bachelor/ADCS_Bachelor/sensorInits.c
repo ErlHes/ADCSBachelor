@@ -1,6 +1,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdio.h>
+#include <math.h>
+#include <stdint.h>
 #include "header.h"
 #include "registers.h"
 
@@ -19,7 +21,7 @@ void initGyro(void){
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
 	// 3 = 119     6 = 952
-	uint8_t gyroSampleRate = 3;
+	uint8_t gyroSampleRate = 4;
 	// bandwith is dependent on scaling, choose value between 0-3
 	uint8_t gyroBandwidth = 0;
 	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
@@ -96,36 +98,23 @@ void initGyro(void){
 }
 
 void calibrateGyro(void){
-	uint8_t samples = 0;
-	int i;
 	// int32_t aBiasRawTemp[3] = {0, 0, 0};	 //Not yet implemented
 	int32_t gBiasRawTemp[3] = {0, 0, 0};
-	
-	enableFIFO(1);
-	setFIFO(1, 31);
-	while(samples<0x1F){
-		samples = (SPIreadByte(PIN_XG, FIFO_SRC)) & 0x3F;
-	}
-	for(i=0; i<samples; i++){
+		
+	printf("Calibrating gyroscope, hold the device still\n");
+	for(int i = 0; i<2000; i++){
+		if(i % 125 == 0)printf(".");
 		readGyro();
 		gBiasRawTemp[0] += gx;
 		gBiasRawTemp[1] += gy;
-		gBiasRawTemp[2] += gz;
-	//	readAccel();				// XL not yet implemented
-	//	aBiasRawTemp[0] += ax;
-	//	aBiasRawTemp[1] += ay;
-	//	aBiasRawTemp[2] += az - (int16_t)(1./aRes); // Assumes sensor facing up!
+		gBiasRawTemp[3] += gz;
+		_delay_ms(3);	// Wait for guaranteed new data.
 	}
-	
-		gBiasRawX = gBiasRawTemp[0] / samples;
-		gBiasRawY = gBiasRawTemp[1] / samples;
-		gBiasRawZ = gBiasRawTemp[2] / samples;
-	//	aBiasRaw[i] = aBiasRawTemp[i] / samples;
-	//	aBias[i] = calcAccel(aBiasRaw[i]);
-	
-		
-	enableFIFO(0);
-	setFIFO(0,0);
+	printf("\n");
+	gBiasRawX = gBiasRawTemp[0] / 2000;
+	gBiasRawY = gBiasRawTemp[1] / 2000;
+	gBiasRawZ = gBiasRawTemp[2] / 2000;
+
 }
 
 /* --------------------- MAGNETOMETER -------------------- */
@@ -262,4 +251,26 @@ void offsetMag(uint8_t axis, int16_t offset){
 
 /* --------------------- ACCELEROMETER -------------------- */
 
-// This page is intentionally left empty :)
+void initAccel(void){
+	//test code only for debugging, fix this later.
+	SPIwriteByte(PIN_XG, CTRL_REG6_XL, 0b00011000); // set Accel scale to +-8 g.
+}
+
+void calibrateAccel(void){
+	int32_t aBiasRawTemp[3] = {0, 0, 0};
+	
+	printf("Calibrating Accelerometer, please put the device on a stable, level surface.\n");
+	for(int i = 0; i<2000; i++){
+		if(i % 125 == 0)printf(".");
+		readAccel();
+		aBiasRawTemp[0] += ax;
+		aBiasRawTemp[1] += ay;
+		aBiasRawTemp[3] += az - (int16_t)(1./SENSITIVITY_ACCELEROMETER_8);
+		_delay_ms(3);	// Wait for guaranteed new data.
+	}
+	printf("\n");
+	aBiasRawX = aBiasRawTemp[0] / 2000;
+	aBiasRawY = aBiasRawTemp[1] / 2000;
+	aBiasRawZ = aBiasRawTemp[2] / 2000;
+
+}
