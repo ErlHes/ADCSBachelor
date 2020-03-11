@@ -21,7 +21,7 @@ void initGyro(void){
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
 	// 3 = 119     6 = 952
-	uint8_t gyroSampleRate = 4;
+	uint8_t gyroSampleRate = 3;
 	// bandwith is dependent on scaling, choose value between 0-3
 	uint8_t gyroBandwidth = 0;
 	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
@@ -102,18 +102,18 @@ void calibrateGyro(void){
 	int32_t gBiasRawTemp[3] = {0, 0, 0};
 		
 	printf("Calibrating gyroscope, hold the device still\n");
-	for(int i = 0; i<2000; i++){
-		if(i % 125 == 0)printf(".");
+	for(int i = 0; i<1000; i++){
+		if(i % 100 == 0)printf(".");
 		readGyro();
 		gBiasRawTemp[0] += gx;
 		gBiasRawTemp[1] += gy;
-		gBiasRawTemp[3] += gz;
-		_delay_ms(3);	// Wait for guaranteed new data.
+		gBiasRawTemp[2] += gz;
+		_delay_ms(9);	// Wait for guaranteed new data.
 	}
 	printf("\n");
-	gBiasRawX = gBiasRawTemp[0] / 2000;
-	gBiasRawY = gBiasRawTemp[1] / 2000;
-	gBiasRawZ = gBiasRawTemp[2] / 2000;
+	gBiasRawX = gBiasRawTemp[0] / 1000;
+	gBiasRawY = gBiasRawTemp[1] / 1000;
+	gBiasRawZ = gBiasRawTemp[2] / 1000;
 
 }
 
@@ -260,17 +260,17 @@ void calibrateAccel(void){
 	int32_t aBiasRawTemp[3] = {0, 0, 0};
 	
 	printf("Calibrating Accelerometer, please put the device on a stable, level surface.\n");
-	for(int i = 0; i<2000; i++){
-		if(i % 125 == 0)printf(".");
+	for(int i = 0; i<1000; i++){
+		if(i % 100 == 0)printf(".");
 		readAccel();
 		aBiasRawTemp[0] += ax;
 		aBiasRawTemp[1] += ay;
-		aBiasRawTemp[3] += az - (int16_t)(1./SENSITIVITY_ACCELEROMETER_8);
-		_delay_ms(3);	// Wait for guaranteed new data.
+		aBiasRawTemp[2] += az - (int16_t)(1./SENSITIVITY_ACCELEROMETER_8);
+		_delay_ms(9);	// Wait for guaranteed new data.
 	}
 	printf("\n");
-	aBiasRawX = aBiasRawTemp[0] / 2000;
-	aBiasRawY = aBiasRawTemp[1] / 2000;
-	aBiasRawZ = aBiasRawTemp[2] / 2000;
+	aBiasRawX = aBiasRawTemp[0] / 1000;
+	aBiasRawY = aBiasRawTemp[1] / 1000;
+	aBiasRawZ = aBiasRawTemp[2] / 1000;
 
 }

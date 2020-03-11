@@ -65,8 +65,8 @@ int main(void)
 		angle_pitch += gy * 0.0007352; 
 		angle_roll += gx * 0.0007352;
 		
-		angle_pitch -= angle_roll * sin(gz * 0.00007352 * M_PI / 180); // Transfer roll to pitch in case of yaw
-		angle_roll += angle_pitch * sin(gz * 0.00007352 * M_PI / 180); // Transfer pitch to roll in case of yaw
+		angle_pitch -= angle_roll * sin(gz * 0.0007352 * M_PI / 180); // Transfer roll to pitch in case of yaw
+		angle_roll += angle_pitch * sin(gz * 0.0007352 * M_PI / 180); // Transfer pitch to roll in case of yaw
 		
 		//Accelerometer angle calculations
 		//a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
@@ -77,18 +77,8 @@ int main(void)
 		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
 		angle_roll_acc = asin((float)ax/4096) * -57.296; // --||--
 		
-		angle_pitch_acc -= -0; // todo
-		angle_roll_acc -= -0; // todo
-		
-		if(set_gyro_angles == 1){
-		    angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
-		    angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
-		}
-		else{
-		   angle_pitch = angle_pitch_acc;                                     //Set the gyro pitch angle equal to the accelerometer pitch angle
-		   angle_roll = angle_roll_acc;                                       //Set the gyro roll angle equal to the accelerometer roll angle
-		   set_gyro_angles = 1;                                          
-		}
+		angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
+		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
 
 		printf("Pitch:	%f\n", angle_pitch);
@@ -101,8 +91,11 @@ int main(void)
 		printf("\n");
 		*/
 
-		
-		while(TCNT1 < 8404);
+		if(TCNT1 > 16807){
+			printf("Game over! you were too slow!\n");
+			while(1);
+		}
+		while(TCNT1 < 16807);
 		
 		/*
 		temp = TCNT1;
