@@ -62,7 +62,7 @@ int usart_putchar_printf(char var, FILE *stream) {
 
 void timerInit(void){
 	TCCR1A = 0x00;			// We don't need to set any bits, we will use normal mode.
-	TCCR1B = (1<<CS11);		// Clock Divide 8 on pre-scaler
+	TCCR1B = (1<<CS11)|(1<<CS10);		// Clock Divide 64 on pre-scaler
 }
 	
 

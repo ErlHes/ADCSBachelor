@@ -21,7 +21,7 @@ void initGyro(void){
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
 	// 3 = 119     6 = 952
-	uint8_t gyroSampleRate = 3;
+	uint8_t gyroSampleRate = 1;
 	// bandwidth is dependent on scaling, choose value between 0-3
 	uint8_t gyroBandwidth = 0;
 	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
