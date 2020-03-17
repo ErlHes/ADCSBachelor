@@ -52,6 +52,9 @@ int main(void)
 	TCNT1 = 0x00; // Set the timer.
 
 	while(1){
+		readMag();
+		mag_x = mx * 0.00014;
+		printf("magdata x:	%f\n", mag_x);
 		
 		readGyro();
 		readAccel();
@@ -82,7 +85,7 @@ int main(void)
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
 
-		printf("Pitch:	%f\n", angle_pitch);	
+//		printf("Pitch:	%f\n", angle_pitch);	
 //		printf("Roll:	%f\n", angle_roll);
 		
 	

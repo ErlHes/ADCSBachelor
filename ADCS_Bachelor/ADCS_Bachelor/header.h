@@ -20,6 +20,9 @@ int16_t mx;
 int16_t my;
 int16_t mz;
 
+float mag_x;
+float mag_y;
+float mag_z;
 
 float angle_pitch;
 float angle_roll;

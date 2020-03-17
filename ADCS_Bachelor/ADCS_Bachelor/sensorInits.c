@@ -212,6 +212,7 @@ void initMag(void){
 
 
 void calibrateMag(void){
+	// hard iron distortion:
 	int i, j;
 	int16_t magMin[3] = {0,0,0};
 	int16_t magMax[3] = {0,0,0}; 
@@ -234,6 +235,9 @@ void calibrateMag(void){
 		// mBias[j] = calcMag(mBiasRaw[j]);
 		offsetMag(j, mBiasRaw[j]);
 	}
+	
+	// soft iron distortion:
+	
 }
 
 
