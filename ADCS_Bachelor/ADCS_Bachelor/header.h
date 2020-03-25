@@ -10,7 +10,7 @@ int16_t ax;
 int16_t ay;
 int16_t az;
 
-long long a_total_vector;
+int32_t a_total_vector;
 
 float angle_pitch_acc;
 float angle_roll_acc;

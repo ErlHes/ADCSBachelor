@@ -54,7 +54,11 @@ int main(void)
 	while(1){
 		readMag();
 		mag_x = mx * 0.00014;
-		printf("magdata x:	%f\n", mag_x);
+		mag_y = my * 0.00014;
+		mag_z = mz * 0.00014;		
+		printf("magdata x:	%f   ", mag_x);
+		printf(" y:	%f   ", mag_y);
+		printf(" z:	%f\n", mag_z);
 		
 		readGyro();
 		readAccel();
@@ -75,8 +79,8 @@ int main(void)
 		// Accelerometer angle calculations
 		// a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
 		// printf("a_total_vector = %u\n", a_total_vector); 
-		
 
+		
 		
 //		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
 //		angle_roll_acc = asin((float)ax/4096) * -57.296; // --||--
@@ -95,16 +99,16 @@ int main(void)
 //		printf("\n");
 		
 		// should be 16779 (67,1 milliseconds)
-		if(TCNT1 > 16779){ 
+/*		if(TCNT1 > 16779){ 
 			temp = TCNT1;
 			printf("Game over! you were too slow! ");
 			printf("Clock cycles lapsed: %u\n", temp);
 			while(1);
 		}
 		while(TCNT1 < 16779);
-		
+*/		
 		TCNT1 = 0x0000;
-		
+		_delay_ms(10);
 		
 		/*
 		temp = TCNT1;
