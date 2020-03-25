@@ -24,8 +24,12 @@ float mag_x;
 float mag_y;
 float mag_z;
 
+// quaternion of sensor frame relative to auxiliary frame
+float q0, q1, q2, q3;	
+
 float angle_pitch;
 float angle_roll;
+float angle_yaw;
 
 uint8_t autocalc;
 uint8_t set_gyro_angles;
@@ -338,3 +342,21 @@ void calibrateMag(void);
 	INPUTS:		inputs are selected in another function, should not be touched.
 */
 void offsetMag(uint8_t axis, int16_t offset);
+
+	// Madgwick filter
+
+/*	MadgwickAHRSupdate - updates orientation in quarternions (q0, q1, q2, q3)
+	INPUTS:		gyroscope, accelerometer and magnetometer data (float)
+				gyroscope data needs to be in rad/s, rest is your choice 
+*/	
+void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
+
+/*	MadgwickAHRSupdateIMU - called in MadgwickAHRSupdate if no magnetometer data is available
+	INPUTS:		gyroscope and accelerometer data (float)
+*/
+void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
+
+/*	QuaternionsToEuler - converts quaternions to Euler angles
+	INPUTS:		quaternions (q0, q1, q2, q3)
+*/
+void QuaternionsToEuler(float q0, float q1, float q2, float q3);

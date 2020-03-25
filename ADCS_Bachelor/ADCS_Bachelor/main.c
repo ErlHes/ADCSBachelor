@@ -56,9 +56,9 @@ int main(void)
 		mag_x = mx * 0.00014;
 		mag_y = my * 0.00014;
 		mag_z = mz * 0.00014;		
-		printf("magdata x:	%f   ", mag_x);
-		printf(" y:	%f   ", mag_y);
-		printf(" z:	%f\n", mag_z);
+//		printf("magdata x:	%f   ", mag_x);
+//		printf(" y:	%f   ", mag_y);
+//		printf(" z:	%f\n", mag_z);
 		
 		readGyro();
 		readAccel();
@@ -70,11 +70,11 @@ int main(void)
 		gz -= gBiasRawZ;
 				
 		// 0.00014706 = (1/ 14,9) * 0.0175
-		angle_pitch += gx * 0.0011744966; 
-		angle_roll += gy * 0.0011744966;
+//		angle_pitch += gx * 0.0011744966; 
+//		angle_roll += gy * 0.0011744966;
 		
-		angle_pitch -= angle_roll * sin(gz * 0.0011744966 * (PI / 180)); // Transfer roll to pitch in case of yaw
-		angle_roll += angle_pitch * sin(gz * 0.0011744966 * (PI / 180)); // Transfer pitch to roll in case of yaw
+//		angle_pitch -= angle_roll * sin(gz * 0.0011744966 * (PI / 180)); // Transfer roll to pitch in case of yaw
+//		angle_roll += angle_pitch * sin(gz * 0.0011744966 * (PI / 180)); // Transfer pitch to roll in case of yaw
 		
 		// Accelerometer angle calculations
 		// a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
@@ -99,14 +99,14 @@ int main(void)
 //		printf("\n");
 		
 		// should be 16779 (67,1 milliseconds)
-/*		if(TCNT1 > 16779){ 
+		if(TCNT1 > 16779){ 
 			temp = TCNT1;
 			printf("Game over! you were too slow! ");
 			printf("Clock cycles lapsed: %u\n", temp);
 			while(1);
 		}
 		while(TCNT1 < 16779);
-*/		
+		
 		TCNT1 = 0x0000;
 		_delay_ms(10);
 		
