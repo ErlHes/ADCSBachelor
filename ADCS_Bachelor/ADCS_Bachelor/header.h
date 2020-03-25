@@ -25,7 +25,7 @@ float mag_y;
 float mag_z;
 
 // quaternion of sensor frame relative to auxiliary frame
-float q0, q1, q2, q3;	
+//volatile float q0, q1, q2, q3;	
 
 float angle_pitch;
 float angle_roll;
@@ -359,4 +359,4 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 /*	QuaternionsToEuler - converts quaternions to Euler angles
 	INPUTS:		quaternions (q0, q1, q2, q3)
 */
-void QuaternionsToEuler(float q0, float q1, float q2, float q3);
+void QuaternionsToEuler(volatile float q0,volatile float q1,volatile float q2,volatile float q3);

@@ -14,11 +14,13 @@
 
 //---------------------------------------------------------------------------------------------------
 // Header files
-
-//#include "MadgwickAHRS.h"
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdio.h>
 #include <math.h>
+#include <stdint.h>
 #include "header.h"
-
+#include "registers.h"
 //---------------------------------------------------------------------------------------------------
 // Definitions
 

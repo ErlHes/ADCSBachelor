@@ -4,6 +4,8 @@
 
 functions.c
 
+madgwick.c
+
 main.c
 
 sensorInits.c
