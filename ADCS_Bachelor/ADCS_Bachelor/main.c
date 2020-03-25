@@ -56,10 +56,7 @@ int main(void)
 		mag_x = mx * 0.00014;
 		mag_y = my * 0.00014;
 		mag_z = mz * 0.00014;		
-//		printf("magdata x:	%f   ", mag_x);
-//		printf(" y:	%f   ", mag_y);
-//		printf(" z:	%f\n", mag_z);
-		
+				
 		readGyro();
 		readAccel();
 		ax -= aBiasRawX;
@@ -67,7 +64,11 @@ int main(void)
 		az -= aBiasRawZ;		
 		gx -= gBiasRawX;
 		gy -= gBiasRawY;
-		gz -= gBiasRawZ;
+		gz -= gBiasRawZ;	
+		// convert gyroscope data to rad/s:
+		gx *= (0.0175 * (PI / 180));
+		gy *= (0.0175 * (PI / 180));
+		gz *= (0.0175 * (PI / 180));
 				
 		// 0.00014706 = (1/ 14,9) * 0.0175
 //		angle_pitch += gx * 0.0011744966; 
@@ -79,7 +80,10 @@ int main(void)
 		// Accelerometer angle calculations
 		// a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
 		// printf("a_total_vector = %u\n", a_total_vector); 
-
+		
+		MadgwickAHRSupdate(gx, gy, gz, ax, ay, az, mx, my, mz);
+		QuaternionsToEuler(q0, q1, q2, q3);
+		
 		
 		
 //		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
@@ -88,16 +92,11 @@ int main(void)
 //		angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
-
-//		printf("Pitch:	%f\n", angle_pitch);	
+//		printf("q0:	%f\n", q0);
+		printf("Pitch:	%f\n", angle_pitch);	
 //		printf("Roll:	%f\n", angle_roll);
-		
-	
-//		uint16_t temp = TCNT1;
-//		printf("\n");
-//		printf("Clock cycles lapsed: %u\n", temp);
-//		printf("\n");
-		
+//		printf("yaw:	%f\n", angle_yaw);
+			
 		// should be 16779 (67,1 milliseconds)
 		if(TCNT1 > 16779){ 
 			temp = TCNT1;
@@ -108,7 +107,6 @@ int main(void)
 		while(TCNT1 < 16779);
 		
 		TCNT1 = 0x0000;
-		_delay_ms(10);
 		
 		/*
 		temp = TCNT1;

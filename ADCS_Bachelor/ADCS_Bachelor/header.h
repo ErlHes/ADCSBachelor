@@ -25,7 +25,7 @@ float mag_y;
 float mag_z;
 
 // quaternion of sensor frame relative to auxiliary frame
-//volatile float q0, q1, q2, q3;	
+float q0, q1, q2, q3;	
 
 float angle_pitch;
 float angle_roll;
