@@ -105,10 +105,10 @@ int main(void)
 			
 //		printf("q0:	%f\n", q0);
 //		printf("Pitch:	%f\n", angle_pitch);	
-		printf("Roll:	%f\n", angle_roll);
+//		printf("Roll:	%f\n", angle_roll);
 //		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-//		while(1);	
+		while(1);	
 		
 		// should be 16779 (67,1 milliseconds)
 		if(TCNT1 > 16779){ 
