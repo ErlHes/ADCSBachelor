@@ -106,18 +106,17 @@ int main(void)
 //		printf("q0:	%f\n", q0);
 //		printf("Pitch:	%f\n", angle_pitch);	
 //		printf("Roll:	%f\n", angle_roll);
-//		printf("yaw:	%f\n", angle_yaw);
+		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-		while(1);	
 		
-		// should be 16779 (67,1 milliseconds)
-		if(TCNT1 > 16779){ 
+		// should be 4202 (16,8 milliseconds)
+		if(TCNT1 > 4202){ 
 			temp = TCNT1;
 			printf("Game over! you were too slow! ");
 			printf("Clock cycles lapsed: %u\n", temp);
 			while(1);
 		}
-		while(TCNT1 < 16779);
+		while(TCNT1 < 4202);
 		
 		TCNT1 = 0x0000;
 		
