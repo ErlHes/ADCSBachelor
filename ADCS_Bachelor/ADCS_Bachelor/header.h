@@ -5,13 +5,20 @@ int16_t gx;
 int16_t gy;
 int16_t gz;
 
+float gyro_x;
+float gyro_y;
+float gyro_z;
+
 //Raw values from Accelerometer
 int16_t ax;
 int16_t ay;
 int16_t az;
 
-int32_t a_total_vector;
+float acc_x;
+float acc_y;
+float acc_z;
 
+int32_t a_total_vector;
 float angle_pitch_acc;
 float angle_roll_acc;
 
@@ -24,8 +31,9 @@ float mag_x;
 float mag_y;
 float mag_z;
 
-// quaternion of sensor frame relative to auxiliary frame
-float q0, q1, q2, q3;	
+//Madgwick
+extern volatile float beta;				// algorithm gain
+extern volatile float q0, q1, q2, q3;	// quaternion of sensor frame relative to auxiliary frame
 
 float angle_pitch;
 float angle_roll;
