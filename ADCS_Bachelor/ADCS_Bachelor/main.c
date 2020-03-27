@@ -26,6 +26,12 @@ int main(void)
 {
 	stdout = &mystdout; // related to printf
 	
+	// gyro sample rate [Hz]: choose value between 1-6
+	// 1 = 14.9    4 = 238
+	// 2 = 59.5    5 = 476
+	// 3 = 119     6 = 952
+	gyroSampleRate = 2;
+	
 	// mag scale can be 4, 8, 12, or 16
 	magScale = 4;
 	
@@ -50,6 +56,7 @@ int main(void)
 	uint16_t temp = 0;
 	
 	TCNT1 = 0x00; // Set the timer.
+	uint16_t timerticks = runTime(gyroSampleRate);	// Sets the runtime for the repeating loop
 
 	while(1){
 		readMag();
@@ -109,14 +116,15 @@ int main(void)
 		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
 		
-		// should be 4202 (16,8 milliseconds)
-		if(TCNT1 > 4202){ 
+
+		// makes sure the program runs at correct speed
+		if(TCNT1 > timerticks){ 
 			temp = TCNT1;
 			printf("Game over! you were too slow! ");
 			printf("Clock cycles lapsed: %u\n", temp);
 			while(1);
 		}
-		while(TCNT1 < 4202);
+		while(timerticks < 4202);
 		
 		TCNT1 = 0x0000;
 		

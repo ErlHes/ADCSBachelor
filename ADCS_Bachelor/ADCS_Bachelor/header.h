@@ -58,6 +58,9 @@ uint8_t magScale;
 // Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
 uint8_t gyroScale;
 
+// Gyroscope/accelerometer sample rate 
+// choose: 1=14,9Hz 2=59,5Hz 3=119Hz 4=238Hz 5=476Hz 6=952Hz
+uint8_t gyroSampleRate;
 
 // Sensor Sensitivity Constants
 // Values set according to the typical specifications provided in
@@ -104,6 +107,8 @@ int usart_putchar_printf(char var, FILE *stream);
 	//Timer functions
 
 void timerInit(void);
+
+uint16_t runTime(uint8_t gyroSampleRate);
 
 	// SPI functions
 
@@ -367,4 +372,4 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 /*	QuaternionsToEuler - converts quaternions to Euler angles
 	INPUTS:		quaternions (q0, q1, q2, q3)
 */
-void QuaternionsToEuler(volatile float q0,volatile float q1,volatile float q2,volatile float q3);
+void QuaternionsToEuler(volatile float q0, volatile float q1, volatile float q2, volatile float q3);
