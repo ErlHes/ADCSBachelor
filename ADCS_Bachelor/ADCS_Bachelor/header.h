@@ -110,6 +110,7 @@ void timerInit(void);
 
 uint16_t runTime(uint8_t gyroSampleRate);
 
+
 	// SPI functions
 
 /* spiInit - Initializes the SPI.

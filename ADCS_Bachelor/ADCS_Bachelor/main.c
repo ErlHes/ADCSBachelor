@@ -30,7 +30,7 @@ int main(void)
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
 	// 3 = 119     6 = 952
-	gyroSampleRate = 2;
+	gyroSampleRate = 2;	// remember to set in madgwick.c as well!
 	
 	// mag scale can be 4, 8, 12, or 16
 	magScale = 4;
@@ -53,17 +53,17 @@ int main(void)
 	calibrateMag(); // Calculates the median offset value the magnetometer measures.
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
-	uint16_t temp = 0;
 	
-	TCNT1 = 0x00; // Set the timer.
-	uint16_t timerticks = runTime(gyroSampleRate);	// Sets the runtime for the repeating loop
-
+	uint16_t timerticks = runTime(gyroSampleRate);	// Sets the runtime for the repeating loop.
+	uint16_t temp = 0;
+	TCNT1 = 0x0000; // Set the timer.
+	
 	while(1){
 		readMag();
 		// convert magnetometer data to Gauss:
-		mag_x = mx * SENSITIVITY_MAGNETOMETER_4;
-		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
-		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;		
+		mag_x = 0; //mx * SENSITIVITY_MAGNETOMETER_4;
+		mag_y = 0; //my * SENSITIVITY_MAGNETOMETER_4;
+		mag_z = 0; //mz * SENSITIVITY_MAGNETOMETER_4;		
 				
 		readGyro();
 		gx -= gBiasRawX;
@@ -82,10 +82,7 @@ int main(void)
 		acc_x = ax * SENSITIVITY_ACCELEROMETER_8;	
 		acc_y = ay * SENSITIVITY_ACCELEROMETER_8;	
 		acc_z = az * SENSITIVITY_ACCELEROMETER_8;	
-				
-		// 0.00014706 = (1/ 14,9) * 0.0175
-//		angle_pitch += gx * 0.0011744966; 
-//		angle_roll += gy * 0.0011744966;
+
 		
 //		angle_pitch -= angle_roll * sin(gz * 0.0011744966 * (PI / 180)); // Transfer roll to pitch in case of yaw
 //		angle_roll += angle_pitch * sin(gz * 0.0011744966 * (PI / 180)); // Transfer pitch to roll in case of yaw
@@ -110,10 +107,10 @@ int main(void)
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
 			
-//		printf("q0:	%f\n", q0);
-//		printf("Pitch:	%f\n", angle_pitch);	
+//		printf("q:	%f\n", q1);
+		printf("Pitch:	%f\n", angle_pitch);	 
 //		printf("Roll:	%f\n", angle_roll);
-		printf("yaw:	%f\n", angle_yaw);
+//		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
 		
 

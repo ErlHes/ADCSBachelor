@@ -24,29 +24,8 @@
 //---------------------------------------------------------------------------------------------------
 // Definitions
 
-float sampleF = 0.0;
-switch (gyroSampleRate) {		
-	case 1:
-	sampleF	= 14.9f;
-	break;
-	case 2:
-	sampleF	= 59.5f;
-	break;
-	case 3: 
-	sampleF	= 119.0f;
-	break;
-	case 4:
-	sampleF	= 238.0f;
-	break;
-	case 5:
-	sampleF	= 476.0f;
-	break;
-	case 6:
-	sampleF	= 952.0f;
-	break;
-}
-#define sampleFreq	 sampleF	// sample frequency in Hz
-#define betaDef		0.1f		// 2 * proportional gain
+#define sampleFreq	 59.5f	// sample frequency in Hz
+#define betaDef		0.1f	// 2 * proportional gain
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions
@@ -262,7 +241,7 @@ void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	
 	// pitch:
 	double sinp = 2*(q0*q2 - q3*q1);
-	if (sinp >= 1)
+	if ((sinp >= 1)|(sinp <= -1))
 		angle_pitch = copysign(PI/2, sinp);	// use 90 degrees if out of range
 	else
 		angle_pitch = asin(sinp);

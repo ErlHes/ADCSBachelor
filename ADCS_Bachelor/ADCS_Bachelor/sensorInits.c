@@ -15,14 +15,7 @@ void initGyro(void){
 	uint8_t gyroEnableX = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableZ = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableY = 1;	// 0 for off, 1 for on
-	
-	
-	// gyro sample rate [Hz]: choose value between 1-6
-	// 1 = 14.9    4 = 238
-	// 2 = 59.5    5 = 476
-	// 3 = 119     6 = 952
-	// uint8_t gyroSampleRate = 2;
-	
+		
 	// bandwidth is dependent on scaling, choose value between 0-3
 	uint8_t gyroBandwidth = 0;
 	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
