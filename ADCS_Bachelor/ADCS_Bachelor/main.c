@@ -110,9 +110,11 @@ int main(void)
 //		printf("q:	%f\n", q1);
 //		printf("Pitch:	%f\n", angle_pitch);	 
 //		printf("Roll:	%f\n", angle_roll);
-		printf("yaw:	%f\n", angle_yaw);
+//		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-		
+		printf("gx:	%f\t", gyro_x);
+		printf("gy:	%f\t", gyro_y);
+		printf("gz:	%f\n", gyro_z);
 
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 

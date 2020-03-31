@@ -77,12 +77,12 @@ uint8_t gyroSampleRate;
 #define SENSITIVITY_MAGNETOMETER_12  0.00043
 #define SENSITIVITY_MAGNETOMETER_16  0.00058
 
-#define USART_BAUDRATE 76800
+#define BAUD 76800
 #define MYUBRR F_CPU/16/BAUD-1
 #define PI 3.141592
 
 #ifndef BAUD                          /* if not defined in Makefile... */
-#define BAUD  76800                   /* set a safe default baud rate */
+#define BAUD  9600                   /* set a safe default baud rate */
 #endif
 
 #define PIN_XG PB1

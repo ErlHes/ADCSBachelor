@@ -233,6 +233,7 @@ float invSqrt(float x) {
 
 // Quaternions to Euler angles conversion:
 
+// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	// roll:
 	double sinr_cosp = 2*(q0*q1 + q2*q3);
