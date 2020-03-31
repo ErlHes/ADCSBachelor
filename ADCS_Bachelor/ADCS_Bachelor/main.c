@@ -108,9 +108,9 @@ int main(void)
 		
 			
 //		printf("q:	%f\n", q1);
-		printf("Pitch:	%f\n", angle_pitch);	 
+//		printf("Pitch:	%f\n", angle_pitch);	 
 //		printf("Roll:	%f\n", angle_roll);
-//		printf("yaw:	%f\n", angle_yaw);
+		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
 		
 
