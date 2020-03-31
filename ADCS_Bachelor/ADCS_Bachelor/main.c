@@ -121,7 +121,7 @@ int main(void)
 			printf("Clock cycles lapsed: %u\n", temp);
 			while(1);
 		}
-		while(timerticks < 4202);
+		while(TCNT1 < timerticks);
 		
 		TCNT1 = 0x0000;
 		
