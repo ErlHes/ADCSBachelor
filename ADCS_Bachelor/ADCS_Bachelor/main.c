@@ -61,9 +61,9 @@ int main(void)
 	while(1){
 		readMag();
 		// convert magnetometer data to Gauss:
-		mag_x = 0; //mx * SENSITIVITY_MAGNETOMETER_4;
-		mag_y = 0; //my * SENSITIVITY_MAGNETOMETER_4;
-		mag_z = 0; //mz * SENSITIVITY_MAGNETOMETER_4;		
+		mag_x = mx * SENSITIVITY_MAGNETOMETER_4;
+		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
+		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;		
 				
 		readGyro();
 		gx -= gBiasRawX;
