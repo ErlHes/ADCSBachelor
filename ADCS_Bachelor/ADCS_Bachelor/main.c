@@ -112,9 +112,9 @@ int main(void)
 //		printf("Roll:	%f\n", angle_roll);
 //		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-		printf("mx:	%f\t", mag_x);
-		printf("my:	%f\t", mag_y);
-		printf("mz:	%f\n", mag_z);
+		printf("mx:%f\t", mag_x);
+		printf("my:%f\t", mag_y);
+		printf("mz:%f\n", mag_z);
 
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 
