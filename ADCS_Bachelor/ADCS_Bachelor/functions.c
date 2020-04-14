@@ -27,7 +27,7 @@ void usart_putchar(char data) {
 }
 
 char usart_getchar(void) {
-	// Wait for incomming data
+	// Wait for incoming data
 	while ( !(UCSR0A & (_BV(RXC0))) );
 	// Return the data
 	return UDR0;
@@ -61,10 +61,35 @@ int usart_putchar_printf(char var, FILE *stream) {
 	// Timer
 
 void timerInit(void){
-	TCCR1A = 0x00;			// We don't need to set any bits, we will use normal mode.
-	TCCR1B = (1<<CS11);		// Clock Divide 8 on pre-scaler
+	TCCR1A = 0x00;					// We don't need to set any bits, we will use normal mode.
+	TCCR1B = (1<<CS11)|(1<<CS10);	// Clock Divide 64 on pre-scaler
 }
-	
+
+uint16_t runTime(uint8_t gyroSampleRate){
+	// Values need to get adjusted if the Clock Divide pre-scaler is changed 
+	uint16_t temp = 0;
+	switch (gyroSampleRate){
+		case 1:
+		temp = 16779;
+		break;
+		case 2:
+		temp = 4202;
+		break;
+		case 3:
+		temp = 2101;
+		break;
+		case 4:
+		temp = 1051;
+		break;
+		case 5:
+		temp = 526;
+		break;
+		case 6:
+		temp = 263;
+		break;
+	}
+	return temp;
+}
 
 	// SPI
  
