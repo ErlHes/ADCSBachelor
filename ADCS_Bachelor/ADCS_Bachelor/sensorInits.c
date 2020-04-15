@@ -226,10 +226,10 @@ void offsetMag(uint8_t axis, int16_t offset){
 
 
 void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3){
-	// A = [xx,xy,xz ; yx,yy,yz ; zx,zy,zz]		order does not matter (xy = yx)
+	// A = [xx,yx,zx ; xy,yy,zy ; xz,yz,zz]		order does not matter (xy = yx)
 	// b = [b1,b2,b3]
 	// MagCalib = (Mag - b) * A
-	float m_x = mag_x - b1;
+	float m_x = mag_x - b1;			// subtracts remaining offset error
 	float m_y = mag_y - b2;
 	float m_z = mag_z - b3;
 	mag_x = m_x*xx + m_y*xy + m_z*xz;
