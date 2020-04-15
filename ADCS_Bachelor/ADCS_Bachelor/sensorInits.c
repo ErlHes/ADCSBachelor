@@ -205,35 +205,14 @@ void initMag(void){
 }
 
 
-void calibrateMag(void){
+void calibrateOffsetMag(int16_t offsetX, int16_t offsetY, int16_t offsetZ){
 	// hard iron distortion:
-	int i, j;
-	int16_t magMin[3] = {0,0,0};
-	int16_t magMax[3] = {0,0,0}; 
-	int16_t mBiasRaw[3] = {0,0,0};
-		
-	for (i=0; i<128; i++){
-		while(!availableMag(3));
-		readMag();
-		int16_t magTemp[3] = {0, 0, 0};
-		magTemp[0] = mx;
-		magTemp[1] = my;
-		magTemp[2] = mz;
-		for (j=0; j<3; j++){
-			if (magTemp[j] > magMax[j]) magMax[j] = magTemp[j];
-			if (magTemp[j] < magMin[j]) magMin[j] = magTemp[j];
-		}
-	}
+	int16_t mBiasRaw[3] = {offsetX, offsetY, offsetZ};
+	int j;
 	for (j=0; j<3; j++){
-		mBiasRaw[j] = (magMax[j] + magMin[j]) / 2;
-		// mBias[j] = calcMag(mBiasRaw[j]);
 		offsetMag(j, mBiasRaw[j]);
-	}
-	
-	// soft iron distortion:
-	
+	} 
 }
-
 
 void offsetMag(uint8_t axis, int16_t offset){
 	/*	Offset values. This values acts on the magnetic output data values 
@@ -245,6 +224,18 @@ void offsetMag(uint8_t axis, int16_t offset){
 	SPIwriteByte(PIN_M, OFFSET_X_REG_H_M + (2 * axis), msb);
 }
 
+
+void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3){
+	// A = [xx,xy,xz ; yx,yy,yz ; zx,zy,zz]		order does not matter (xy = yx)
+	// b = [b1,b2,b3]
+	// MagCalib = (Mag - b) * A
+	float m_x = mag_x - b1;
+	float m_y = mag_y - b2;
+	float m_z = mag_z - b3;
+	mag_x = m_x*xx + m_y*xy + m_z*xz;
+	mag_y = m_x*xy + m_y*yy + m_z*yz;
+	mag_z = m_x*xz + m_y*yz + m_z*zz;
+}
 
 
 /* --------------------- ACCELEROMETER -------------------- */

@@ -347,15 +347,21 @@ void readMag(void);
 */
 uint8_t availableMag(uint8_t axis);
 
-/* calibrateMag - Calibrates the magnetometer by finding the offset and storing it in the offset registers present on the IMU.
-
+/* calibrateMag - Calibrates the magnetometer by storing the offset in the registers present on the IMU.
+	INPUTS:		raw offset found by calmag() function in Matlab
 */
-void calibrateMag(void);
+void calibrateOffsetMag(int16_t offsetX, int16_t offsetY, int16_t offsetZ);
 
 /*	OffsetMag - set the offset of the magnetometer, this function is called in calibrateMag
 	INPUTS:		inputs are selected in another function, should not be touched.
 */
 void offsetMag(uint8_t axis, int16_t offset);
+
+/*	softIronMag - compensates for soft iron distortion using values calculated in Matlab function
+	INPUTS:		A: 3x3 matrix consisting of x-, y- and z-values
+				b: 3x1 matrix consisting of b-values
+*/
+void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3)
 
 	// Madgwick filter
 

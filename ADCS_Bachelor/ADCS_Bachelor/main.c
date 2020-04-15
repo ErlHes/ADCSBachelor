@@ -50,7 +50,7 @@ int main(void)
 	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
 	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
 	initAccel();
-	calibrateMag(); // Calculates the median offset value the magnetometer measures.
+	calibrateOffsetMag(-1026, 1808, -1073); // Sets offset calculated in Matlab function.
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
@@ -63,7 +63,9 @@ int main(void)
 		// convert magnetometer data to Gauss:
 		mag_x = mx * SENSITIVITY_MAGNETOMETER_4;
 		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
-		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;		
+		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
+		// compensate for soft iron distortion using values from Matlab: 
+		softIronMag(0.9999, 0.9917, 1.0106, 0.0403, -0.0195, -0.0052, -0.0072, -0.0055, 0.0025);
 				
 		readGyro();
 		gx -= gBiasRawX;
@@ -112,9 +114,9 @@ int main(void)
 //		printf("Roll:	%f\n", angle_roll);
 //		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-		printf("mx:%f\t", mag_x);
-		printf("my:%f\t", mag_y);
-		printf("mz:%f\n", mag_z);
+		printf("mx: %f\t", mag_x);
+		printf("my: %f\t", mag_y);
+		printf("mz: %f\n", mag_z);
 
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 
