@@ -361,7 +361,7 @@ void offsetMag(uint8_t axis, int16_t offset);
 	INPUTS:		A: 3x3 matrix consisting of x-, y- and z-values
 				b: 3x1 matrix consisting of b-values
 */
-void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3)
+void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3);
 
 	// Madgwick filter
 
