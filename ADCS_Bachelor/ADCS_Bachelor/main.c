@@ -31,7 +31,7 @@ int main(void)
 	// 1 = 14.9    4 = 238
 	// 2 = 59.5    5 = 476
 	// 3 = 119     6 = 952
-	gyroSampleRate = 2;	// remember to set in madgwick.c as well!
+	gyroSampleRate = 3;	// remember to set in madgwick.c as well!
 	
 	// mag scale can be 4, 8, 12, or 16
 	magScale = 4;
@@ -67,7 +67,7 @@ int main(void)
 		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
 		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
 		// compensate for soft iron distortion using values from Matlab: 
-		softIronMag(0.9999, 0.9917, 1.0106, 0.0403, -0.0195, -0.0052, -0.0072, -0.0055, 0.0025);
+		softIronMag(0.9874, 1.007, 1.0077, 0.0442, 0.0016, 0.0045, -0.0026, 0.0229, -0.0269);
 				
 		readGyro();
 		gx -= gBiasRawX;
@@ -110,11 +110,11 @@ int main(void)
 //		angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
-		if(counter == 10){
+		if(counter == 5){
 //			printf("q:	%f\n", q1);
-//			printf("Pitch:	%f\n", angle_pitch);	 
-			printf("Roll:	%f\n", angle_roll);
-//			printf("yaw:	%f\n", angle_yaw);
+			printf("Pitch:	%f\t", angle_pitch);	 
+			printf("Roll:	%f\t", angle_roll);
+			printf("yaw:	%f\n", angle_yaw);
 //			printf("clockticks:	%u\n", temp);
 //			printf("mx: %f\t", mag_x);
 //			printf("my: %f\t", mag_y);
