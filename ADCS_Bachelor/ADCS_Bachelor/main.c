@@ -24,6 +24,7 @@ static FILE mystdout = FDEV_SETUP_STREAM(usart_putchar_printf, NULL, _FDEV_SETUP
 
 int main(void)
 {
+	uint8_t counter = 0;
 	stdout = &mystdout; // related to printf
 	
 	// gyro sample rate [Hz]: choose value between 1-6
@@ -59,6 +60,7 @@ int main(void)
 	TCNT1 = 0x0000; // Set the timer.
 	
 	while(1){
+		counter += 1;
 		readMag();
 		// convert magnetometer data to Gauss:
 		mag_x = mx * SENSITIVITY_MAGNETOMETER_4;
@@ -108,15 +110,17 @@ int main(void)
 //		angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
-			
-//		printf("q:	%f\n", q1);
-//		printf("Pitch:	%f\n", angle_pitch);	 
-		printf("Roll:	%f\n", angle_roll);
-//		printf("yaw:	%f\n", angle_yaw);
-//		printf("clockticks:	%u\n", temp);
-//		printf("mx: %f\t", mag_x);
-//		printf("my: %f\t", mag_y);
-//		printf("mz: %f\n", mag_z);
+		if(counter == 10){
+//			printf("q:	%f\n", q1);
+//			printf("Pitch:	%f\n", angle_pitch);	 
+			printf("Roll:	%f\n", angle_roll);
+//			printf("yaw:	%f\n", angle_yaw);
+//			printf("clockticks:	%u\n", temp);
+//			printf("mx: %f\t", mag_x);
+//			printf("my: %f\t", mag_y);
+//			printf("mz: %f\n", mag_z);
+			counter = 0;
+		} 
 
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 
