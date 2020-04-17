@@ -50,7 +50,7 @@ int main(void)
 	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
 	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
 	initAccel();
-	calibrateOffsetMag(-1026, 1808, -1073); // Sets offset calculated in Matlab function.
+	calibrateOffsetMag(-1026, 1808, -1073); // Sets offset, calculated in Matlab function.
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
@@ -111,12 +111,12 @@ int main(void)
 			
 //		printf("q:	%f\n", q1);
 //		printf("Pitch:	%f\n", angle_pitch);	 
-//		printf("Roll:	%f\n", angle_roll);
+		printf("Roll:	%f\n", angle_roll);
 //		printf("yaw:	%f\n", angle_yaw);
 //		printf("clockticks:	%u\n", temp);
-		printf("mx: %f\t", mag_x);
-		printf("my: %f\t", mag_y);
-		printf("mz: %f\n", mag_z);
+//		printf("mx: %f\t", mag_x);
+//		printf("my: %f\t", mag_y);
+//		printf("mz: %f\n", mag_z);
 
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 
