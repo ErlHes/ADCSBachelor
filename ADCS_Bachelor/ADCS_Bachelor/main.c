@@ -94,7 +94,6 @@ int main(void)
 		// Accelerometer angle calculations
 		// a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
 		// printf("a_total_vector = %u\n", a_total_vector); 
-		
 		MadgwickAHRSupdate(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);	
 		QuaternionsToEuler(q0, q1, q2, q3);
 		
@@ -103,6 +102,7 @@ int main(void)
 		angle_roll *= (180/PI);
 		angle_yaw *= (180/PI);
 		
+
 		
 //		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
 //		angle_roll_acc = asin((float)ax/4096) * -57.296; // --||--
@@ -112,21 +112,22 @@ int main(void)
 		
 		if(counter == 1){
 //			printf("q:	%f\n", q1);
-			printf("Pitch:	%f\t", angle_pitch);	 
-			printf("Roll:	%f\t", angle_roll);
-			printf("yaw:	%f\n", angle_yaw);
+			printf("Pitch:	%f\n", angle_pitch);	 
+//			printf("Roll:	%f\t", angle_roll);
+//			printf("yaw:	%f\n", angle_yaw);
 //			printf("clockticks:	%u\n", temp);
 //			printf("mx: %f\t", mag_x);
 //			printf("my: %f\t", mag_y);
 //			printf("mz: %f\n", mag_z);
 			counter = 0;
 		} 
-
+		
 		// makes sure the program runs at correct speed
 		if(TCNT1 > timerticks){ 
 			temp = TCNT1;
-			printf("Game over! you were too slow! ");
+			printf("Game over! You were too slow! \n");
 			printf("Clock cycles lapsed: %u\n", temp);
+			printf("Clock cycles limit: %u\n", timerticks);
 			while(1);
 		}
 		while(TCNT1 < timerticks);

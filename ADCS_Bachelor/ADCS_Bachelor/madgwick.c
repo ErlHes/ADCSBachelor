@@ -25,7 +25,7 @@
 // Definitions
 
 #define sampleFreq	 59.5f	// sample frequency in Hz
-#define betaDef		0.4f	// 2 * proportional gain
+#define betaDef		0.7f	// 2 * proportional gain
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions
@@ -233,7 +233,7 @@ float invSqrt(float x) {
 
 // Quaternions to Euler angles conversion:
 
-// https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
+// See: https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	// roll:
 	double sinr_cosp = 2*(q0*q1 + q2*q3);
@@ -242,11 +242,12 @@ void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	
 	// pitch:
 	double sinp = 2*(q0*q2 - q3*q1);
-	if ((sinp >= 1)|(sinp <= -1))
+	if (fabs(sinp) >= 1) 
 		angle_pitch = copysign(PI/2, sinp);	// use 90 degrees if out of range
-	else
+	
+	else // only works to +-pi/2
 		angle_pitch = asin(sinp);
-		
+
 	// yaw:
 	double siny_cosp = 2*(q0*q3 + q1*q2);
 	double cosy_cosp = 1 - 2*(q2*q2 + q3*q3);
