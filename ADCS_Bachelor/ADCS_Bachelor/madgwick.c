@@ -25,7 +25,7 @@
 // Definitions
 
 #define sampleFreq	 59.5f	// sample frequency in Hz
-#define betaDef		0.7f	// 2 * proportional gain
+#define betaDef		0.8f	// 2 * proportional gain
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions
@@ -241,7 +241,6 @@ void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	angle_roll = atan2(sinr_cosp, cosr_cosp);
 	
 	// pitch:
-	
 	double sinp = 2*(q0*q2 - q3*q1);
 	if (fabs(sinp) >= 1) 
 		angle_pitch = copysign(PI/2, sinp);	// use 90 degrees if out of range
@@ -249,9 +248,6 @@ void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 	else // only works to +-pi/2
 		angle_pitch = asin(sinp);
 
-
-	
-	
 	// yaw:
 	double siny_cosp = 2*(q0*q3 + q1*q2);
 	double cosy_cosp = 1 - 2*(q2*q2 + q3*q3);

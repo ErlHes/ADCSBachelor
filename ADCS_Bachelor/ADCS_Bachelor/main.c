@@ -37,7 +37,7 @@ int main(void)
 	magScale = 4;
 	
 	// Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
-	gyroScale = 3;
+	gyroScale = 1;
 	
 	autocalc = 1; // Set autocalc enable -- This should always be on
 	
@@ -74,9 +74,9 @@ int main(void)
 		gy -= gBiasRawY;
 		gz -= gBiasRawZ;	
 		// convert gyroscope data to rad/s:
-		gyro_x = gx * (SENSITIVITY_GYROSCOPE_2000 * (PI / 180));
-		gyro_y = gy * (SENSITIVITY_GYROSCOPE_2000 * (PI / 180));
-		gyro_z = gz * (SENSITIVITY_GYROSCOPE_2000 * (PI / 180));
+		gyro_x = gx * (SENSITIVITY_GYROSCOPE_500 * (PI / 180));
+		gyro_y = gy * (SENSITIVITY_GYROSCOPE_500 * (PI / 180));
+		gyro_z = gz * (SENSITIVITY_GYROSCOPE_500 * (PI / 180));
 		
 		readAccel();
 		ax -= aBiasRawX;
@@ -111,7 +111,10 @@ int main(void)
 //		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
 		
 		if(counter == 1){
-//			printf("q:	%f\n", q1);
+//			printf("q0:	%f\t", q0);
+//			printf("q1:	%f\t", q1);
+//			printf("q2:	%f\t", q2);
+//			printf("q3:	%f\n", q3);
 			printf("Pitch:	%f\t", angle_pitch);	 
 			printf("Roll:	%f\t", angle_roll);
 			printf("yaw:	%f\n", angle_yaw);
