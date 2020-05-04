@@ -44,14 +44,14 @@ int main(void)
 	usart_init(MYUBRR);
 	spiInit();
 	timerInit();
-//	_delay_ms(1000);	// Magic 1 second delay that can be removed later to speed up the program :-)
+	_delay_ms(1000);	// Magic 1 second delay that can be removed later to speed up the program :-)
 	WhoAmICheck();		// Checks if the wires and SPI are correctly configured, if this check can't complete the program will not continue, this is to protect the IMU.
 	printf("Check complete, all systems are ready to go!\n");
 	
 	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
 	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
 	initAccel();
-	calibrateOffsetMag(-1026, 1808, -1073); // Sets offset, calculated in Matlab function.
+	calibrateOffsetMag(-947, 3720, 175); // Sets offset, calculated in Matlab function.
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
@@ -67,7 +67,8 @@ int main(void)
 		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
 		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
 		// compensate for soft iron distortion using values from Matlab: 
-		softIronMag(0.9874, 1.007, 1.0077, 0.0442, 0.0016, 0.0045, -0.0026, 0.0229, -0.0269);
+		softIronMag(0.99847, 0.98362, 1.01898, 0.02723, 0.00005, 0.00311, -0.00084, -0.00821, -0.00468);
+//		mag_x = 0;	mag_y = 0;	mag_z = 0;		// for using madgwick without magnetometer
 				
 		readGyro();
 		gx -= gBiasRawX;
@@ -88,12 +89,6 @@ int main(void)
 		acc_z = az * SENSITIVITY_ACCELEROMETER_8;	
 
 		
-//		angle_pitch -= angle_roll * sin(gz * 0.0011744966 * (PI / 180)); // Transfer roll to pitch in case of yaw
-//		angle_roll += angle_pitch * sin(gz * 0.0011744966 * (PI / 180)); // Transfer pitch to roll in case of yaw
-		
-		// Accelerometer angle calculations
-		// a_total_vector = sqrt((ax*ax)+(ay*ay)+(az*az));
-		// printf("a_total_vector = %u\n", a_total_vector); 
 		MadgwickAHRSupdate(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);	
 		QuaternionsToEuler(q0, q1, q2, q3);
 		
@@ -102,14 +97,7 @@ int main(void)
 		angle_roll *= (180/PI);
 		angle_yaw *= (180/PI);
 		
-
-		
-//		angle_pitch_acc = asin((float)ay/4096) * 57.296; //4096 is an approximation
-//		angle_roll_acc = asin((float)ax/4096) * -57.296; // --||--
-		
-//		angle_pitch = angle_pitch * 0.9996 + angle_pitch_acc * 0.0004;     //Correct the drift of the gyro pitch angle with the accelerometer pitch angle
-//		angle_roll = angle_roll * 0.9996 + angle_roll_acc * 0.0004;        //Correct the drift of the gyro roll angle with the accelerometer roll angle
-		
+				
 		if(counter == 1){
 //			printf("q0:	%f\t", q0);
 //			printf("q1:	%f\t", q1);
@@ -117,11 +105,16 @@ int main(void)
 //			printf("q3:	%f\n", q3);
 			printf("Pitch:	%f\t", angle_pitch);	 
 			printf("Roll:	%f\t", angle_roll);
-			printf("yaw:	%f\n", angle_yaw);
-//			printf("clockticks:	%u\n", temp);
+			printf("Yaw:	%f\n", angle_yaw);
 //			printf("mx: %f\t", mag_x);
 //			printf("my: %f\t", mag_y);
 //			printf("mz: %f\n", mag_z);
+//			printf("gx: %f\t", gyro_x);
+//			printf("gy: %f\t", gyro_y);
+//			printf("gz: %f\n", gyro_z);
+//			printf("ax: %f\t", acc_x);
+//			printf("ay: %f\t", acc_y);
+//			printf("az: %f\n", acc_z);
 			counter = 0;
 		} 
 		
@@ -137,20 +130,9 @@ int main(void)
 		
 		TCNT1 = 0x0000;
 		
-		/*
-		temp = TCNT1;
-		printf("\n");
-		printf("Waited %u clock cycles\n", temp);
-		printf("\n");
-		*/
-		
-		
-		/*
-		temp = TCNT1;
-		printf("\n");
-		printf("Clock cycles after reset: %u\n", temp);
-		printf("\n");		
-		*/
+
+
+
 		
 		
 		// TODO
