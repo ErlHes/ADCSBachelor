@@ -111,7 +111,7 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
 
 uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress, uint8_t * dest, uint8_t count)
 {
-	// To indicate a read, set bit 0 (msb) of first byte to 1
+	// To indicate a read, set bit 0 (MSB) of first byte to 1
 	uint8_t rAddress = 0x80 | (subAddress & 0x3F);
 	// Mag SPI port is different. If we're reading multiple bytes,
 	// set bit 1 to 1. The remaining six bytes are the address to be read
