@@ -135,10 +135,10 @@ uint8_t spiTransfer(uint8_t data) {
      * The following NOP introduces a small delay that can prevent the wait
      * loop form iterating when running at the maximum speed. This gives
      * about 10% more speed, even if it seems counter-intuitive. At lower
-     * speeds it is unnoticed.
+     * speeds it is unnoticed.  // Ref. Arduino SPI.C
      */
     asm volatile("nop");
-    while (!(SPSR & _BV(SPIF))) ; // wait
+    while (!(SPSR & (1>>SPIF))) ; // wait
     return SPDR;
   }
    
