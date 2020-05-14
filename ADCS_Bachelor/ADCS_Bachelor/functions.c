@@ -138,7 +138,7 @@ uint8_t spiTransfer(uint8_t data) {
      * speeds it is unnoticed.  // Ref. Arduino SPI.C
      */
     asm volatile("nop");
-    while (!(SPSR & (1>>SPIF))) ; // wait
+    while (!(SPSR & (1<<SPIF))) ; // wait
     return SPDR;
   }
    
