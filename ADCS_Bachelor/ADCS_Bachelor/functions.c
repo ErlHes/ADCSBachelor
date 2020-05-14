@@ -147,7 +147,6 @@ void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data)
 	   PORTB &= ~(1<<csPin); // Initiate communication
 	   
 	   // If write, bit 0 (MSB) should be 0
-	   // If single write, bit 1 should be 0
 	   spiTransfer(subAddress & 0x3F); // Send Address
 	   spiTransfer(data); // Send data
 	   
