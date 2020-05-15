@@ -35,6 +35,9 @@ float mag_z;
 extern volatile float beta;				// algorithm gain
 extern volatile float q0, q1, q2, q3;	// quaternion of sensor frame relative to auxiliary frame
 
+extern volatile float beta2;
+extern volatile float q00, q01, q02, q03;
+
 float angle_pitch;
 float angle_roll;
 float angle_yaw;
@@ -370,6 +373,9 @@ void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, flo
 				gyroscope data needs to be in rad/s, rest is your choice 
 */	
 void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
+
+//test function.
+void MadgwickAHRSupdate2(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
 
 /*	MadgwickAHRSupdateIMU - called in MadgwickAHRSupdate if no magnetometer data is available
 	INPUTS:		gyroscope and accelerometer data (float)

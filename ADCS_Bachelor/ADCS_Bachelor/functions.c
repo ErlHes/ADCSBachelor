@@ -28,7 +28,7 @@ void usart_putchar(char data) {
 
 char usart_getchar(void) {
 	// Wait for incoming data
-	while ( !(UCSR0A & (_BV(RXC0))) );
+	while ( !(UCSR0A & (1<<RXC0)) );
 	// Return the data
 	return UDR0;
 }
@@ -113,10 +113,12 @@ uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress, uint8_t * dest, uint8_t 
 {
 	// To indicate a read, set bit 0 (MSB) of first byte to 1
 	uint8_t rAddress = 0x80 | (subAddress & 0x3F);
-	// Mag SPI port is different. If we're reading multiple bytes,
+	// Mag SPI is different. If we're reading multiple bytes,
 	// set bit 1 to 1. The remaining six bytes are the address to be read
-	if ((csPin == PIN_M) && count > 1)
-	rAddress |= 0x40;
+	if ((csPin == PIN_M) && count > 1){
+		rAddress |= 0x40;
+	}
+
 	
 	PORTB &= ~(1<<csPin);	// Initiate communication
 	spiTransfer(rAddress);
@@ -237,9 +239,11 @@ void sleepGyro(uint8_t enable){
 }
 
 void readGyro(void){
-	gx = (SPIreadByte(PIN_XG, OUT_X_H_G) << 8 | SPIreadByte(PIN_XG, OUT_X_L_G));
-	gy = (SPIreadByte(PIN_XG, OUT_Y_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_G));
-	gz = (SPIreadByte(PIN_XG, OUT_Z_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_G));
+	uint8_t temp[6]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_XG, OUT_X_L_G, temp, 6);
+	gx = (temp[1] << 8 | temp[0]);
+	gy = (temp[3] << 8 | temp[2]);
+	gz = (temp[5] << 8 | temp[4]);
 }
 
 uint8_t getGyroIntSrc(void){
@@ -287,9 +291,11 @@ uint8_t availableGyro(void){
 	// Accelerometer
 
 void readAccel(void){
-	ax = (SPIreadByte(PIN_XG, OUT_X_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_X_L_XL));
-	ay = (SPIreadByte(PIN_XG, OUT_Y_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_XL));
-	az = (SPIreadByte(PIN_XG, OUT_Z_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_XL));
+	uint8_t temp[6]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_XG, OUT_X_L_XL, temp, 6);
+	ax = (temp[1] << 8 | temp[0]);
+	ay = (temp[3] << 8 | temp[2]);
+	az = (temp[5] << 8 | temp[4]);
 }
 	
 	// Magnetometer

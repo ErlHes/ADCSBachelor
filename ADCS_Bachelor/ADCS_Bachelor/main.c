@@ -92,6 +92,16 @@ int main(void)
 		MadgwickAHRSupdate(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);	
 		QuaternionsToEuler(q0, q1, q2, q3);
 		
+		//TEST STUFF
+		//PRINTING AV FORRIGE FØRSTE VINKEL MÅ SKJE FØR NESTE RUNDE MED QUATERNIONS TO EULER
+		
+		//PRINT HER
+		
+		MadgwickAHRSupdate2(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);
+		QuaternionsToEuler(q00, q01, q02, q03);
+		
+		//PRINT "SAMME" VINKEL PÅ NYTT HER.
+		
 		// convert angles from radians to degrees:
 		angle_pitch *= (180/PI);
 		angle_roll *= (180/PI);
