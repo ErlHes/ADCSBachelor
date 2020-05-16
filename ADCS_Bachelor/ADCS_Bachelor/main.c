@@ -134,11 +134,11 @@ int main(void)
 			printf("Game over! You were too slow! \n");
 			printf("Clock cycles lapsed: %u\n", temp);
 			printf("Clock cycles limit: %u\n", timerticks);
-			while(1);
+			while(1); // stop the porgram.
 		}
-		while(TCNT1 < timerticks);
-		
-		TCNT1 = 0x0000;
+		while(TCNT1 < timerticks);	
+		// Wait for the next gyro sample to be ready
+		TCNT1 = 0x0000; // Reset the timer
 		
 
 
