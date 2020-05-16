@@ -92,7 +92,6 @@ void initGyro(void){
 }
 
 void calibrateGyro(void){
-	// int32_t aBiasRawTemp[3] = {0, 0, 0};	 //Not yet implemented
 	int32_t gBiasRawTemp[3] = {0, 0, 0};
 		
 	printf("Calibrating gyroscope, hold the device still\n");
