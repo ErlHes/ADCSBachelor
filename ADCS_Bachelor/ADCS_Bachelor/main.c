@@ -129,7 +129,7 @@ int main(void)
 		} 
 		
 		// makes sure the program runs at correct speed
-		if(TCNT1 > timerticks){ 
+		if((TCNT1 > timerticks) | (TIFR1 & (1<<TOV1))) { 
 			temp = TCNT1;
 			printf("Game over! You were too slow! \n");
 			printf("Clock cycles lapsed: %u\n", temp);
