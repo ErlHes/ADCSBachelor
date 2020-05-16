@@ -93,7 +93,6 @@ void initGyro(void){
 
 void calibrateGyro(void){
 	int32_t gBiasRawTemp[3] = {0, 0, 0};
-		
 	printf("Calibrating gyroscope, hold the device still\n");
 	for(int i = 0; i<1000; i++){
 		if(i % 100 == 0)printf(".");
@@ -253,8 +252,8 @@ void calibrateAccel(void){
 		readAccel();
 		aBiasRawTemp[0] += ax;
 		aBiasRawTemp[1] += ay;
-		aBiasRawTemp[2] += az - (int16_t)(1./SENSITIVITY_ACCELEROMETER_8);
-		_delay_ms(9);	// Wait for guaranteed new data.
+		aBiasRawTemp[2] += az - (int16_t)(1/SENSITIVITY_ACCELEROMETER_8);
+		_delay_ms(20);	// Wait for guaranteed new data.
 	}
 	printf("\n");
 	aBiasRawX = aBiasRawTemp[0] / 1000;
