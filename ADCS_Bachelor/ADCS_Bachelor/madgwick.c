@@ -28,7 +28,7 @@
 #define betaDef		0.1f	// 2 * proportional gain
 
 // TEST STUFF
-#define betaDef2	1.0f    
+#define betaDef2	10.0f    
 
 //---------------------------------------------------------------------------------------------------
 // Variable definitions

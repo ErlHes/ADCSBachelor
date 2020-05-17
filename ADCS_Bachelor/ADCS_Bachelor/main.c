@@ -43,18 +43,19 @@ int main(void)
 	
 	usart_init(MYUBRR);
 	spiInit();
-	timerInit();
+	
 	_delay_ms(1000);	// Magic 1 second delay that can be removed later to speed up the program :-)
 	WhoAmICheck();		// Checks if the wires and SPI are correctly configured, if this check can't complete the program will not continue, this is to protect the IMU.
-	printf("Check complete, all systems are ready to go!\n");
-	
+	printf("Check complete, all systems are ready to go!\n");	
 	initMag();  // Sets the magnetometer control registers, settings can be changed in sensorInits.c
 	initGyro(); // Sets the gyroscope control registers, settings can be changed in sensorInits.c
 	initAccel();
-	calibrateOffsetMag(-947, 3720, 175); // Sets offset, calculated in Matlab function.
+	calibrateOffsetMag(-1158, 3935, 224); // Sets offset, calculated in Matlab function.
+//	calibrateOffsetMag(0, 0, 0); // Reset offset
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
+	timerInit();
 	uint16_t timerticks = runTime(gyroSampleRate);	// Sets the runtime for the repeating loop.
 	uint16_t temp = 0;
 	TCNT1 = 0x0000; // Set the timer.
@@ -67,7 +68,7 @@ int main(void)
 		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
 		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
 		// compensate for soft iron distortion using values from Matlab: 
-		softIronMag(0.99847, 0.98362, 1.01898, 0.02723, 0.00005, 0.00311, -0.00084, -0.00821, -0.00468);
+		softIronMag(0.98589, 1.00022, 1.01526, 0.03315, 0.00162, 0.00605, -0.0062, 0.0025, 0.0028);
 //		mag_x = 0;	mag_y = 0;	mag_z = 0;		// for using madgwick without magnetometer
 				
 		readGyro();
@@ -95,27 +96,34 @@ int main(void)
 		//TEST STUFF
 		//PRINTING AV FORRIGE FØRSTE VINKEL MÅ SKJE FØR NESTE RUNDE MED QUATERNIONS TO EULER
 		
+		// convert angles from radians to degrees:
+		angle_pitch *= (180/PI);
+		angle_roll *= (180/PI);
+		angle_yaw *= (180/PI);
+				
 		//PRINT HER
+		printf("Roll0.1:	%f\t", angle_roll);
+		
 		
 		MadgwickAHRSupdate2(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);
 		QuaternionsToEuler(q00, q01, q02, q03);
-		
-		//PRINT "SAMME" VINKEL PÅ NYTT HER.
-		
+				
 		// convert angles from radians to degrees:
 		angle_pitch *= (180/PI);
 		angle_roll *= (180/PI);
 		angle_yaw *= (180/PI);
 		
+		//PRINT "SAMME" VINKEL PÅ NYTT HER.	
+		printf("roll_1:	%f\n", angle_roll);
 				
 		if(counter == 1){
 //			printf("q0:	%f\t", q0);
 //			printf("q1:	%f\t", q1);
 //			printf("q2:	%f\t", q2);
 //			printf("q3:	%f\n", q3);
-			printf("Pitch:	%f\t", angle_pitch);	 
-			printf("Roll:	%f\t", angle_roll);
-			printf("Yaw:	%f\n", angle_yaw);
+//			printf("Pitch:	%f\t", angle_pitch);	 
+//			printf("Roll:	%f\t", angle_roll);
+//			printf("Yaw:	%f\n", angle_yaw);
 //			printf("mx: %f\t", mag_x);
 //			printf("my: %f\t", mag_y);
 //			printf("mz: %f\n", mag_z);
@@ -134,7 +142,7 @@ int main(void)
 			printf("Game over! You were too slow! \n");
 			printf("Clock cycles lapsed: %u\n", temp);
 			printf("Clock cycles limit: %u\n", timerticks);
-			while(1); // stop the porgram.
+			while(1); // stop the program.
 		}
 		while(TCNT1 < timerticks);	
 		// Wait for the next gyro sample to be ready
