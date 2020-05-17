@@ -339,14 +339,14 @@ float invSqrt(float x) {
 // Quaternions to Euler angles conversion:
 
 // See: https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
-void QuaternionsToEuler(float q0, float q1, float q2, float q3){
+void QuaternionsToEuler(float a, float b, float c, float d){
 	// roll:
-	double sinr_cosp = 2*(q0*q1 + q2*q3);
-	double cosr_cosp = 1 - 2*(q1*q1 + q2*q2);
+	double sinr_cosp = 2*(a*b + c*d);
+	double cosr_cosp = 1 - 2*(b*b + c*c);
 	angle_roll = atan2(sinr_cosp, cosr_cosp);
 	
 	// pitch:
-	double sinp = 2*(q0*q2 - q3*q1);
+	double sinp = 2*(a*c - d*b);
 	if (fabs(sinp) >= 1) 
 		angle_pitch = copysign(PI/2, sinp);	// use 90 degrees if out of range
 	
@@ -354,7 +354,7 @@ void QuaternionsToEuler(float q0, float q1, float q2, float q3){
 		angle_pitch = asin(sinp);
 
 	// yaw:
-	double siny_cosp = 2*(q0*q3 + q1*q2);
-	double cosy_cosp = 1 - 2*(q2*q2 + q3*q3);
+	double siny_cosp = 2*(a*d + b*c);
+	double cosy_cosp = 1 - 2*(c*c + d*d);
 	angle_yaw = atan2(siny_cosp, cosy_cosp);
 }

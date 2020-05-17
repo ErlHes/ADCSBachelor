@@ -55,10 +55,11 @@ int main(void)
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
-	timerInit();
 	uint16_t timerticks = runTime(gyroSampleRate);	// Sets the runtime for the repeating loop.
 	uint16_t temp = 0;
-	TCNT1 = 0x0000; // Set the timer.
+	
+	timerInit(); // Start the clock
+	TCNT1 = 0x0000; // Make it start at 0.... this is pointless now.
 	
 	while(1){
 		counter += 1;
