@@ -321,7 +321,7 @@ void configMagThs(uint16_t threshold);
 /* configMagInt - configures the magnetometer interrupt register
 	INPUTS:
 		- generator = Interrupt axis/high-low events
-			Any OR'd combination of ZIEN, YIEN, XIEN    // What the fuck does this mean?
+			Any OR'd combination of ZIEN, YIEN, XIEN 
 		- activeLow = Interrupt active configuration
 			Can be either 0 for Active LOW or 1 for active HIGH
 		- latch: latch gyroscope interrupt request.
