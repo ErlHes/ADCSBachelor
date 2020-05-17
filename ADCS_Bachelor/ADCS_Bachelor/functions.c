@@ -28,7 +28,7 @@ void usart_putchar(char putchar) {
 
 char usart_getchar(void) {
 	// Wait for incoming data
-	while ( !(UCSR0A & (_BV(RXC0))) );
+	while ( !(UCSR0A & (1<<RXC0)));
 	// Return the data
 	return UDR0;
 }
