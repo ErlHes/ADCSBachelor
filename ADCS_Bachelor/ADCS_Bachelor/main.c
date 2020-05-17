@@ -42,7 +42,7 @@ int main(void)
 	initAccel();
 	
 	// Sensor Calibration:
-	calibrateOffsetMag(-947, 3720, 175); // Sets offset, calculated in Matlab function, see readme
+	calibrateOffsetMag(-947, 3720, 175); // Sets offset, calculated in MATLAB function, see readme
 	calibrateGyro(); // Calculates the average offset value the gyro measures. IMU must be held still during this.
 	calibrateAccel();
 	
@@ -58,7 +58,7 @@ int main(void)
 		mag_x = mx * SENSITIVITY_MAGNETOMETER_4;	// Be sure to use the correct sensitivity factor.
 		mag_y = my * SENSITIVITY_MAGNETOMETER_4;
 		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
-		// compensate for soft iron distortion using values from Matlab: 
+		// compensate for soft iron distortion using values from MATLAB: 
 		softIronMag(0.99847, 0.98362, 1.01898, 0.02723, 0.00005, 0.00311, -0.00084, -0.00821, -0.00468);
 //		mag_x = 0;	mag_y = 0;	mag_z = 0;		// For using madgwick without magnetometer.
 				

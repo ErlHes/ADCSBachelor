@@ -59,7 +59,7 @@ int16_t aBiasRawZ;
 
 // Sensor Sensitivity Constants
 // Values set according to the typical specifications provided in
-// table 3 of the LSM9DS1 datasheet. (pg 12)
+// table 3 of the LSM9DS1 data sheet. (pg 12)
 #define SENSITIVITY_ACCELEROMETER_2  0.000061
 #define SENSITIVITY_ACCELEROMETER_4  0.000122
 #define SENSITIVITY_ACCELEROMETER_8  0.000244
@@ -84,7 +84,7 @@ int16_t aBiasRawZ;
 #define PIN_M PB2
 
 
-	//Usart functions
+	//USART functions
 
 void usart_init(uint16_t ubrr);
 
@@ -168,8 +168,8 @@ uint8_t getFIFOSamples();
 		-fifoMode = 3 bit value to set desired mode:
 			0 = Bypass mode. FIFO is turned off.	1 = FIFO mode. Stops collecting data when FIFO is full
 			2 = reserved.							3 = Continuous mode until trigger is deasserted, then FIFO mode.
-			4 = Bypass mode until trigger is deasserted, then countinous mode.
-			5 = Continous mode. If the FIFO is full, the new sample over-writes the older sample.
+			4 = Bypass mode until trigger is deasserted, then Continuous mode.
+			5 = Continuous mode. If the FIFO is full, the new sample over-writes the older sample.
 		-Threshold = ??? FIFO threshold, max value = 31.
 */
 void setFIFO(uint8_t fifoMode, uint8_t fifoThs);
@@ -195,7 +195,7 @@ uint8_t getInactivity(void);
 */
 void configInactivity(uint8_t duration, uint8_t threshold, uint8_t sleepOn);
 
-/* configInt - Configure INT1 or INT2 (Gyro and Accel Interrupts only)
+/* configInt - Configure INT1 or INT2 (Gyro and Accelerometer Interrupts only)
 	Input:
 		- interrupt = Select INT1_CTRL or INT2_CTRL
 		  Possible values: INT1_CTRL or INT2_CTRL
@@ -249,7 +249,7 @@ void configGyroThs(int16_t threshold, uint8_t axis, uint8_t duration, uint8_t wa
 /*	configGyroInt() -- Configure Gyroscope Interrupt Generator
 	Input:
 		- generator = Interrupt axis/high-low events
-			Any OR'd combination of ZHIE_G, ZLIE_G, YHIE_G, YLIE_G, XHIE_G, XLIE_G  - ??? wats dis.
+			Any OR'd combination of ZHIE_G, ZLIE_G, YHIE_G, YLIE_G, XHIE_G, XLIE_G
 		- aoi = AND/OR combination of interrupt events
 			1: AND combination
 			0: OR combination
@@ -321,7 +321,7 @@ void configMagThs(uint16_t threshold);
 /* configMagInt - configures the magnetometer interrupt register
 	INPUTS:
 		- generator = Interrupt axis/high-low events
-			Any OR'd combination of ZIEN, YIEN, XIEN    --- What the fuck does this mean?
+			Any OR'd combination of ZIEN, YIEN, XIEN    // What the fuck does this mean?
 		- activeLow = Interrupt active configuration
 			Can be either 0 for Active LOW or 1 for active HIGH
 		- latch: latch gyroscope interrupt request.
@@ -352,7 +352,7 @@ void calibrateOffsetMag(int16_t offsetX, int16_t offsetY, int16_t offsetZ);
 */
 void offsetMag(uint8_t axis, int16_t offset);
 
-/*	softIronMag - compensates for soft iron distortion using values calculated in Matlab function
+/*	softIronMag - compensates for soft iron distortion using values calculated in MATLAB function
 	INPUTS:		A: 3x3 matrix consisting of x-, y- and z-values
 				b: 3x1 matrix consisting of b-values
 */
@@ -360,7 +360,7 @@ void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, flo
 
 	// Madgwick filter
 
-/*	MadgwickAHRSupdate - updates orientation in quarternions (q0, q1, q2, q3)
+/*	MadgwickAHRSupdate - updates orientation in quaternions (q0, q1, q2, q3)
 	INPUTS:		gyroscope, accelerometer and magnetometer data (float)
 				gyroscope data needs to be in rad/s, rest is your choice 
 */	

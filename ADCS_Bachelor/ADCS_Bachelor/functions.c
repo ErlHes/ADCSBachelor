@@ -19,11 +19,11 @@ void usart_init( uint16_t ubrr) {
 
 }
 
-void usart_putchar(char data) {
+void usart_putchar(char putchar) {
 	// Wait for empty transmit buffer
-	while ( !(UCSR0A & (_BV(UDRE0))) );
+	while ( !(UCSR0A & (1<<UDRE0)));
 	// Start transmission
-	UDR0 = data;
+	UDR0 = putchar;
 }
 
 char usart_getchar(void) {
@@ -62,11 +62,11 @@ int usart_putchar_printf(char var, FILE *stream) {
 
 void timerInit(void){
 	TCCR1A = 0x00;					// We don't need to set any bits, we will use normal mode.
-	TCCR1B = (1<<CS11)|(1<<CS10);	// Clock Divide 64 on pre-scaler
+	TCCR1B = (1<<CS11)|(1<<CS10);	// Clock Divide 64 on prescaler
 }
 
 uint16_t runTime(uint8_t gyroSampleRate){
-	// Values need to get adjusted if the Clock Divide pre-scaler is changed 
+	// Values need to get adjusted if the Clock Divide prescaler is changed 
 	uint16_t temp = 0;
 	switch (gyroSampleRate){
 		case 1:
@@ -96,8 +96,8 @@ uint16_t runTime(uint8_t gyroSampleRate){
  void spiInit(void){		
 	 DDRB = (1<<DDB5)|(1<<DDB3)|(1<<DDB2)|(1<<DDB1);							// MOSI, SCK, CS_M and CS_AG output
 	 PORTB = (1<<PORTB2)|(1<<PORTB1);											// CS_M and CS_AG start HIGH
-	 SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR1)|(1<<SPR0);			// * SPI enable, Master mode, MSB first, Clockdiv 128.
-	 // * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3.
+	 SPCR = (1<<SPE)|(1<<MSTR)|(1<<CPOL)|(1<<CPHA)|(1<<SPR1)|(1<<SPR0);			// * SPI enable, Master mode, MSB first, Clock div 128.
+	 // * Clock idle HIGH, Data Captured on Rising edge. SPI mode 3. 
  }
 
 uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
@@ -213,7 +213,6 @@ void WhoAmICheck(void){
 	  uint8_t testM = 0x00;
 	  uint8_t testXG = 0x00;
 	  uint16_t whoAmICombined = 0x0000;
-	  //spiWrite(PIN_M, CTRL_REG3_M, 0b00000111);		//Needed to read from the Magnetometer registers.
 	  testXG = SPIreadByte(PIN_XG, WHO_AM_I_XG);
 	  testM = SPIreadByte(PIN_M, WHO_AM_I_M);
 	  printf("Conducting WHO_AM_I check, please wait...\n");
@@ -237,9 +236,11 @@ void sleepGyro(uint8_t enable){
 }
 
 void readGyro(void){
-	gx = (SPIreadByte(PIN_XG, OUT_X_H_G) << 8 | SPIreadByte(PIN_XG, OUT_X_L_G));
-	gy = (SPIreadByte(PIN_XG, OUT_Y_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_G));
-	gz = (SPIreadByte(PIN_XG, OUT_Z_H_G) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_G));
+	uint8_t temp[6]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_XG, OUT_X_L_G, temp, 6);
+	gx = (temp[1] << 8 | temp[0]);
+	gy = (temp[3] << 8 | temp[2]);
+	gz = (temp[5] << 8 | temp[4]);
 }
 
 uint8_t getGyroIntSrc(void){
@@ -287,9 +288,11 @@ uint8_t availableGyro(void){
 	// Accelerometer
 
 void readAccel(void){
-	ax = (SPIreadByte(PIN_XG, OUT_X_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_X_L_XL));
-	ay = (SPIreadByte(PIN_XG, OUT_Y_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Y_L_XL));
-	az = (SPIreadByte(PIN_XG, OUT_Z_H_XL) << 8 | SPIreadByte(PIN_XG, OUT_Z_L_XL));
+	uint8_t temp[6]; // We'll read six bytes from the mag into temp
+	SPIreadBytes(PIN_XG, OUT_X_L_XL, temp, 6);
+	ax = (temp[1] << 8 | temp[0]);
+	ay = (temp[3] << 8 | temp[2]);
+	az = (temp[5] << 8 | temp[4]);
 }
 	
 	// Magnetometer

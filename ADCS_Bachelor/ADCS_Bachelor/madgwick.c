@@ -7,8 +7,8 @@
 //
 // Date			Author          Notes
 // 29/09/2011	SOH Madgwick    Initial release
-// 02/10/2011	SOH Madgwick	Optimised for reduced CPU load
-// 19/02/2012	SOH Madgwick	Magnetometer measurement is normalised
+// 02/10/2011	SOH Madgwick	Optimized for reduced CPU load
+// 19/02/2012	SOH Madgwick	Magnetometer measurement is normalized
 //
 //=====================================================================================================
 
@@ -52,7 +52,7 @@ void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float 
 	float hx, hy;
 	float _2q0mx, _2q0my, _2q0mz, _2q1mx, _2bx, _2bz, _4bx, _4bz, _2q0, _2q1, _2q2, _2q3, _2q0q2, _2q2q3, q0q0, q0q1, q0q2, q0q3, q1q1, q1q2, q1q3, q2q2, q2q3, q3q3;
 
-	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
+	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalization)
 	if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
 		MadgwickAHRSupdateIMU(gx, gy, gz, ax, ay, az);
 		return;
@@ -64,16 +64,16 @@ void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float 
 	qDot3 = 0.5f * (q0 * gy - q1 * gz + q3 * gx);
 	qDot4 = 0.5f * (q0 * gz + q1 * gy - q2 * gx);
 
-	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalization)
 	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-		// Normalise accelerometer measurement
+		// Normalize accelerometer measurement
 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
 		ax *= recipNorm;
 		ay *= recipNorm;
 		az *= recipNorm;
 
-		// Normalise magnetometer measurement
+		// Normalize magnetometer measurement
 		recipNorm = invSqrt(mx * mx + my * my + mz * mz);
 		mx *= recipNorm;
 		my *= recipNorm;
@@ -114,7 +114,7 @@ void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float 
 		s1 = _2q3 * (2.0f * q1q3 - _2q0q2 - ax) + _2q0 * (2.0f * q0q1 + _2q2q3 - ay) - 4.0f * q1 * (1 - 2.0f * q1q1 - 2.0f * q2q2 - az) + _2bz * q3 * (_2bx * (0.5f - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - mx) + (_2bx * q2 + _2bz * q0) * (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - my) + (_2bx * q3 - _4bz * q1) * (_2bx * (q0q2 + q1q3) + _2bz * (0.5f - q1q1 - q2q2) - mz);
 		s2 = -_2q0 * (2.0f * q1q3 - _2q0q2 - ax) + _2q3 * (2.0f * q0q1 + _2q2q3 - ay) - 4.0f * q2 * (1 - 2.0f * q1q1 - 2.0f * q2q2 - az) + (-_4bx * q2 - _2bz * q0) * (_2bx * (0.5f - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - mx) + (_2bx * q1 + _2bz * q3) * (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - my) + (_2bx * q0 - _4bz * q2) * (_2bx * (q0q2 + q1q3) + _2bz * (0.5f - q1q1 - q2q2) - mz);
 		s3 = _2q1 * (2.0f * q1q3 - _2q0q2 - ax) + _2q2 * (2.0f * q0q1 + _2q2q3 - ay) + (-_4bx * q3 + _2bz * q1) * (_2bx * (0.5f - q2q2 - q3q3) + _2bz * (q1q3 - q0q2) - mx) + (-_2bx * q0 + _2bz * q2) * (_2bx * (q1q2 - q0q3) + _2bz * (q0q1 + q2q3) - my) + _2bx * q1 * (_2bx * (q0q2 + q1q3) + _2bz * (0.5f - q1q1 - q2q2) - mz);
-		recipNorm = invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalise step magnitude
+		recipNorm = invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalize step magnitude
 		s0 *= recipNorm;
 		s1 *= recipNorm;
 		s2 *= recipNorm;
@@ -156,10 +156,10 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 	qDot3 = 0.5f * (q0 * gy - q1 * gz + q3 * gx);
 	qDot4 = 0.5f * (q0 * gz + q1 * gy - q2 * gx);
 
-	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalisation)
+	// Compute feedback only if accelerometer measurement valid (avoids NaN in accelerometer normalization)
 	if(!((ax == 0.0f) && (ay == 0.0f) && (az == 0.0f))) {
 
-		// Normalise accelerometer measurement
+		// Normalize accelerometer measurement
 		recipNorm = invSqrt(ax * ax + ay * ay + az * az);
 		ax *= recipNorm;
 		ay *= recipNorm;
@@ -185,7 +185,7 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 		s1 = _4q1 * q3q3 - _2q3 * ax + 4.0f * q0q0 * q1 - _2q0 * ay - _4q1 + _8q1 * q1q1 + _8q1 * q2q2 + _4q1 * az;
 		s2 = 4.0f * q0q0 * q2 + _2q0 * ax + _4q2 * q3q3 - _2q3 * ay - _4q2 + _8q2 * q1q1 + _8q2 * q2q2 + _4q2 * az;
 		s3 = 4.0f * q1q1 * q3 - _2q1 * ax + 4.0f * q2q2 * q3 - _2q2 * ay;
-		recipNorm = invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalise step magnitude
+		recipNorm = invSqrt(s0 * s0 + s1 * s1 + s2 * s2 + s3 * s3); // normalize step magnitude
 		s0 *= recipNorm;
 		s1 *= recipNorm;
 		s2 *= recipNorm;
@@ -204,7 +204,7 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 	q2 += qDot3 * (1.0f / sampleFreq);
 	q3 += qDot4 * (1.0f / sampleFreq);
 
-	// Normalise quaternion
+	// Normalize quaternion
 	recipNorm = invSqrt(q0 * q0 + q1 * q1 + q2 * q2 + q3 * q3);
 	q0 *= recipNorm;
 	q1 *= recipNorm;
