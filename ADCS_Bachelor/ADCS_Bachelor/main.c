@@ -111,11 +111,11 @@ int main(void)
 				
 		// convert angles from radians to degrees:
 		angle_pitch *= (180/PI);
-		angle_roll *= (180/PI);
+		angle_roll2 *= (180/PI);
 		angle_yaw *= (180/PI);
 		
 		//PRINT "SAMME" VINKEL PÅ NYTT HER.	
-		printf("roll_1:	%f\n", angle_roll);
+		printf("roll_1:	%f\n", angle_roll2);
 				
 		if(counter == 1){
 //			printf("q0:	%f\t", q0);
