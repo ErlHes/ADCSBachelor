@@ -27,7 +27,7 @@ void usart_putchar(char data) {
 }
 
 char usart_getchar(void) {
-	// Wait for incomming data
+	// Wait for incoming data
 	while ( !(UCSR0A & (_BV(RXC0))) );
 	// Return the data
 	return UDR0;
@@ -61,10 +61,35 @@ int usart_putchar_printf(char var, FILE *stream) {
 	// Timer
 
 void timerInit(void){
-	TCCR1A = 0x00;			// We don't need to set any bits, we will use normal mode.
-	TCCR1B = (1<<CS11);		// Clock Divide 8 on pre-scaler
+	TCCR1A = 0x00;					// We don't need to set any bits, we will use normal mode.
+	TCCR1B = (1<<CS11)|(1<<CS10);	// Clock Divide 64 on pre-scaler
 }
-	
+
+uint16_t runTime(uint8_t gyroSampleRate){
+	// Values need to get adjusted if the Clock Divide pre-scaler is changed 
+	uint16_t temp = 0;
+	switch (gyroSampleRate){
+		case 1:
+		temp = 16779;
+		break;
+		case 2:
+		temp = 4202;
+		break;
+		case 3:
+		temp = 2101;
+		break;
+		case 4:
+		temp = 1051;
+		break;
+		case 5:
+		temp = 526;
+		break;
+		case 6:
+		temp = 263;
+		break;
+	}
+	return temp;
+}
 
 	// SPI
  
@@ -86,7 +111,7 @@ uint8_t SPIreadByte(uint8_t csPin, uint8_t subAddress)
 
 uint8_t SPIreadBytes(uint8_t csPin, uint8_t subAddress, uint8_t * dest, uint8_t count)
 {
-	// To indicate a read, set bit 0 (msb) of first byte to 1
+	// To indicate a read, set bit 0 (MSB) of first byte to 1
 	uint8_t rAddress = 0x80 | (subAddress & 0x3F);
 	// Mag SPI port is different. If we're reading multiple bytes,
 	// set bit 1 to 1. The remaining six bytes are the address to be read
@@ -110,10 +135,10 @@ uint8_t spiTransfer(uint8_t data) {
      * The following NOP introduces a small delay that can prevent the wait
      * loop form iterating when running at the maximum speed. This gives
      * about 10% more speed, even if it seems counter-intuitive. At lower
-     * speeds it is unnoticed.
+     * speeds it is unnoticed.  // Ref. Arduino SPI.C
      */
     asm volatile("nop");
-    while (!(SPSR & _BV(SPIF))) ; // wait
+    while (!(SPSR & (1<<SPIF))) ; // wait
     return SPDR;
   }
    
@@ -122,7 +147,6 @@ void SPIwriteByte(uint8_t csPin, uint8_t subAddress, uint8_t data)
 	   PORTB &= ~(1<<csPin); // Initiate communication
 	   
 	   // If write, bit 0 (MSB) should be 0
-	   // If single write, bit 1 should be 0
 	   spiTransfer(subAddress & 0x3F); // Send Address
 	   spiTransfer(data); // Send data
 	   

@@ -5,13 +5,20 @@ int16_t gx;
 int16_t gy;
 int16_t gz;
 
+float gyro_x;
+float gyro_y;
+float gyro_z;
+
 //Raw values from Accelerometer
 int16_t ax;
 int16_t ay;
 int16_t az;
 
-long long a_total_vector;
+float acc_x;
+float acc_y;
+float acc_z;
 
+int32_t a_total_vector;
 float angle_pitch_acc;
 float angle_roll_acc;
 
@@ -20,9 +27,17 @@ int16_t mx;
 int16_t my;
 int16_t mz;
 
+float mag_x;
+float mag_y;
+float mag_z;
+
+//Madgwick
+extern volatile float beta;				// algorithm gain
+extern volatile float q0, q1, q2, q3;	// quaternion of sensor frame relative to auxiliary frame
 
 float angle_pitch;
 float angle_roll;
+float angle_yaw;
 
 uint8_t autocalc;
 uint8_t set_gyro_angles;
@@ -43,6 +58,9 @@ uint8_t magScale;
 // Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
 uint8_t gyroScale;
 
+// Gyroscope/accelerometer sample rate 
+// choose: 1=14,9Hz 2=59,5Hz 3=119Hz 4=238Hz 5=476Hz 6=952Hz
+uint8_t gyroSampleRate;
 
 // Sensor Sensitivity Constants
 // Values set according to the typical specifications provided in
@@ -59,12 +77,12 @@ uint8_t gyroScale;
 #define SENSITIVITY_MAGNETOMETER_12  0.00043
 #define SENSITIVITY_MAGNETOMETER_16  0.00058
 
-#define USART_BAUDRATE 9600
+#define BAUD 76800
 #define MYUBRR F_CPU/16/BAUD-1
 #define PI 3.141592
 
 #ifndef BAUD                          /* if not defined in Makefile... */
-#define BAUD  9600                     /* set a safe default baud rate */
+#define BAUD  9600                   /* set a safe default baud rate */
 #endif
 
 #define PIN_XG PB1
@@ -89,6 +107,9 @@ int usart_putchar_printf(char var, FILE *stream);
 	//Timer functions
 
 void timerInit(void);
+
+uint16_t runTime(uint8_t gyroSampleRate);
+
 
 	// SPI functions
 
@@ -326,12 +347,36 @@ void readMag(void);
 */
 uint8_t availableMag(uint8_t axis);
 
-/* calibrateMag - Calibrates the magnetometer by finding the offset and storing it in the offset registers present on the IMU.
-
+/* calibrateMag - Calibrates the magnetometer by storing the offset in the registers present on the IMU.
+	INPUTS:		raw offset found by calmag() function in Matlab
 */
-void calibrateMag(void);
+void calibrateOffsetMag(int16_t offsetX, int16_t offsetY, int16_t offsetZ);
 
 /*	OffsetMag - set the offset of the magnetometer, this function is called in calibrateMag
 	INPUTS:		inputs are selected in another function, should not be touched.
 */
 void offsetMag(uint8_t axis, int16_t offset);
+
+/*	softIronMag - compensates for soft iron distortion using values calculated in Matlab function
+	INPUTS:		A: 3x3 matrix consisting of x-, y- and z-values
+				b: 3x1 matrix consisting of b-values
+*/
+void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3);
+
+	// Madgwick filter
+
+/*	MadgwickAHRSupdate - updates orientation in quarternions (q0, q1, q2, q3)
+	INPUTS:		gyroscope, accelerometer and magnetometer data (float)
+				gyroscope data needs to be in rad/s, rest is your choice 
+*/	
+void MadgwickAHRSupdate(float gx, float gy, float gz, float ax, float ay, float az, float mx, float my, float mz);
+
+/*	MadgwickAHRSupdateIMU - called in MadgwickAHRSupdate if no magnetometer data is available
+	INPUTS:		gyroscope and accelerometer data (float)
+*/
+void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, float az);
+
+/*	QuaternionsToEuler - converts quaternions to Euler angles
+	INPUTS:		quaternions (q0, q1, q2, q3)
+*/
+void QuaternionsToEuler(volatile float q0, volatile float q1, volatile float q2, volatile float q3);

@@ -127,6 +127,9 @@
     <Compile Include="functions.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="madgwick.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="main.c">
       <SubType>compile</SubType>
     </Compile>

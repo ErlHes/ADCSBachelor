@@ -15,14 +15,8 @@ void initGyro(void){
 	uint8_t gyroEnableX = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableZ = 1;	// 0 for off, 1 for on
 	uint8_t gyroEnableY = 1;	// 0 for off, 1 for on
-	
-	
-	// gyro sample rate [Hz]: choose value between 1-6
-	// 1 = 14.9    4 = 238
-	// 2 = 59.5    5 = 476
-	// 3 = 119     6 = 952
-	uint8_t gyroSampleRate = 3;
-	// bandwith is dependent on scaling, choose value between 0-3
+		
+	// bandwidth is dependent on scaling, choose value between 0-3
 	uint8_t gyroBandwidth = 0;
 	uint8_t gyroLowPowerEnable = 0;	// 0 for off, 1 for on
 	uint8_t gyroHPFEnable = 0;	// 0 for off, 1 for on
@@ -71,7 +65,7 @@ void initGyro(void){
 		bit 5:		yaw axis (Z) output enable
 		bit 4:		roll axis (Y) output enable
 		bit 3:		pitch axis (X) output enable
-		bit 1:		lached interrupt
+		bit 1:		latched interrupt
 		bit 0:		4D option on interrupt
 		rest:		always 0 */
 	//	Default: CTRL_REG4 = 0x00;
@@ -211,31 +205,14 @@ void initMag(void){
 }
 
 
-void calibrateMag(void){
-	int i, j;
-	int16_t magMin[3] = {0,0,0};
-	int16_t magMax[3] = {0,0,0}; 
-	int16_t mBiasRaw[3] = {0,0,0};
-		
-	for (i=0; i<128; i++){
-		while(!availableMag(3));
-		readMag();
-		int16_t magTemp[3] = {0, 0, 0};
-		magTemp[0] = mx;
-		magTemp[1] = my;
-		magTemp[2] = mz;
-		for (j=0; j<3; j++){
-			if (magTemp[j] > magMax[j]) magMax[j] = magTemp[j];
-			if (magTemp[j] < magMin[j]) magMin[j] = magTemp[j];
-		}
-	}
+void calibrateOffsetMag(int16_t offsetX, int16_t offsetY, int16_t offsetZ){
+	// hard iron distortion:
+	int16_t mBiasRaw[3] = {offsetX, offsetY, offsetZ};
+	int j;
 	for (j=0; j<3; j++){
-		mBiasRaw[j] = (magMax[j] + magMin[j]) / 2;
-		// mBias[j] = calcMag(mBiasRaw[j]);
 		offsetMag(j, mBiasRaw[j]);
-	}
+	} 
 }
-
 
 void offsetMag(uint8_t axis, int16_t offset){
 	/*	Offset values. This values acts on the magnetic output data values 
@@ -247,6 +224,18 @@ void offsetMag(uint8_t axis, int16_t offset){
 	SPIwriteByte(PIN_M, OFFSET_X_REG_H_M + (2 * axis), msb);
 }
 
+
+void softIronMag(float xx, float yy, float zz, float xy, float xz, float yz, float b1, float b2, float b3){
+	// A = [xx,yx,zx ; xy,yy,zy ; xz,yz,zz]		order does not matter (xy = yx)
+	// b = [b1,b2,b3]
+	// MagCalib = (Mag - b) * A
+	float m_x = mag_x - b1;			// subtracts remaining offset error
+	float m_y = mag_y - b2;
+	float m_z = mag_z - b3;
+	mag_x = m_x*xx + m_y*xy + m_z*xz;
+	mag_y = m_x*xy + m_y*yy + m_z*yz;
+	mag_z = m_x*xz + m_y*yz + m_z*zz;
+}
 
 
 /* --------------------- ACCELEROMETER -------------------- */
