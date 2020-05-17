@@ -159,7 +159,8 @@ void MadgwickAHRSupdate2(float gx, float gy, float gz, float ax, float ay, float
 
 	// Use IMU algorithm if magnetometer measurement invalid (avoids NaN in magnetometer normalisation)
 	if((mx == 0.0f) && (my == 0.0f) && (mz == 0.0f)) {
-		MadgwickAHRSupdateIMU(gx, gy, gz, ax, ay, az);
+		printf("your magnetometer is fucked bro \r\n");
+		while(1);
 		return;
 	}
 
