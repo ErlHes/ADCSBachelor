@@ -107,7 +107,7 @@ int main(void)
 		
 		
 		MadgwickAHRSupdate2(gyro_x, gyro_y, gyro_z, acc_x, acc_y, acc_z, mag_x, mag_y, mag_z);
-		QuaternionsToEuler(q00, q01, q02, q03);
+		QuaternionsToEuler2(q00, q01, q02, q03);
 				
 		// convert angles from radians to degrees:
 		angle_pitch *= (180/PI);

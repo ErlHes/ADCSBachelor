@@ -42,6 +42,8 @@ float angle_pitch;
 float angle_roll;
 float angle_yaw;
 
+float angle_roll2;
+
 uint8_t autocalc;
 uint8_t set_gyro_angles;
 
@@ -385,4 +387,6 @@ void MadgwickAHRSupdateIMU(float gx, float gy, float gz, float ax, float ay, flo
 /*	QuaternionsToEuler - converts quaternions to Euler angles
 	INPUTS:		quaternions (q0, q1, q2, q3)
 */
-void QuaternionsToEuler(volatile float q0, volatile float q1, volatile float q2, volatile float q3);
+void QuaternionsToEuler(float a, float b, float c, float d);
+
+void QuaternionsToEuler2(float a, float b, float c, float d);

@@ -359,3 +359,24 @@ void QuaternionsToEuler(float a, float b, float c, float d){
 	double cosy_cosp = 1 - 2*(c*c + d*d);
 	angle_yaw = atan2(siny_cosp, cosy_cosp);
 }
+
+void QuaternionsToEuler2(float a, float b, float c, float d){
+	// roll:
+	double sinr_cosp = 2*(a*b + c*d);
+	double cosr_cosp = 1 - 2*(b*b + c*c);
+	angle_roll2 = atan2(sinr_cosp, cosr_cosp);
+	
+	// pitch:
+	double sinp = 2*(a*c - d*b);
+	if (fabs(sinp) >= 1)
+	angle_pitch = copysign(PI/2, sinp);	// use 90 degrees if out of range
+	
+	else // only works to +-pi/2
+	angle_pitch = asin(sinp);
+
+	// yaw:
+	double siny_cosp = 2*(a*d + b*c);
+	double cosy_cosp = 1 - 2*(c*c + d*d);
+	angle_yaw = atan2(siny_cosp, cosy_cosp);
+}
+
