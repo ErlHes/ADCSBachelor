@@ -35,13 +35,19 @@ float mag_z;
 extern volatile float beta;				// algorithm gain
 extern volatile float q0, q1, q2, q3;	// quaternion of sensor frame relative to auxiliary frame
 
+//Euler Angles
 float angle_pitch;
 float angle_roll;
 float angle_yaw;
 
+//Config values
 uint8_t autocalc;
 uint8_t set_gyro_angles;
+uint8_t magScale;			// mag scale can be 4, 8, 12, or 16
+uint8_t gyroScale;			// Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
+uint8_t gyroSampleRate;		// choose: 1=14,9Hz 2=59,5Hz 3=119Hz 4=238Hz 5=476Hz 6=952Hz
 
+//Calibration Values
 int16_t gBiasRawX;
 int16_t gBiasRawY;
 int16_t gBiasRawZ;
@@ -50,17 +56,6 @@ int16_t aBiasRawX;
 int16_t aBiasRawY;
 int16_t aBiasRawZ;
 
-
-// mag scale can be 4, 8, 12, or 16
-uint8_t magScale;
-
-
-// Gyroscope scaling, choose: 0 = 245dps, 1 = 500dps, 3 = 2000dps
-uint8_t gyroScale;
-
-// Gyroscope/accelerometer sample rate 
-// choose: 1=14,9Hz 2=59,5Hz 3=119Hz 4=238Hz 5=476Hz 6=952Hz
-uint8_t gyroSampleRate;
 
 // Sensor Sensitivity Constants
 // Values set according to the typical specifications provided in

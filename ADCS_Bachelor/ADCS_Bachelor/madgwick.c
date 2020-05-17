@@ -31,7 +31,7 @@
 // Variable definitions
 
 // beta should be: sqrt(3/4) * estimated mean zero gyroscope measurement error 
-volatile float beta = betaDef;								// 2 * proportional gain (Kp)
+volatile float beta = betaDef;								// 2 * proportional gain
 volatile float q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;	// quaternion of sensor frame relative to auxiliary frame
 
 //---------------------------------------------------------------------------------------------------

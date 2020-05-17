@@ -6,20 +6,8 @@
 #include "header.h"
 #include "registers.h"
 
-//************* DECLINATION MIGHT NOT MATTER AFTER ALL.********************************//
-
-// Gotta consider declination
-// http://www.ngdc.noaa.gov/geomag-web/#declination
-#define DECLINATION -3.58 // Declination (degrees) Trondheim = 3° 52' E  ± 0° 29'  changing by  0° 14' E per year
-
-//************************************************************************************//
-
-
+// This line is needed to print floating point numbers using USART.
 static FILE mystdout = FDEV_SETUP_STREAM(usart_putchar_printf, NULL, _FDEV_SETUP_WRITE);
-
-
-// Global variables are made in the header //
-
 
 
 int main(void)
