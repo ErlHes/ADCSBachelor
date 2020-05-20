@@ -60,7 +60,7 @@ int main(void)
 		mag_z = mz * SENSITIVITY_MAGNETOMETER_4;
 		// compensate for soft iron distortion using values from MATLAB: 
 		softIronMag(0.99847, 0.98362, 1.01898, 0.02723, 0.00005, 0.00311, -0.00084, -0.00821, -0.00468);
-//		mag_x = 0;	mag_y = 0;	mag_z = 0;		// For using madgwick without magnetometer.
+		mag_x = 0;	mag_y = 0;	mag_z = 0;		// For using madgwick without magnetometer.
 				
 		readGyro();
 		// Subtract the Offset value.
@@ -92,10 +92,10 @@ int main(void)
 		angle_yaw *= (180/PI);
 		
 		//TEST CODE FOR PITCH
-		if(az < 0 && angle_pitch > 80){
+		if(az < 0 && angle_pitch > 84){
 			angle_pitch = 90 + (90 - angle_pitch);
 		}
-		if(az < 0 && angle_pitch < -80){
+		if(az < 0 && angle_pitch < -84){
 			angle_pitch = -90 - (90 + angle_pitch);
 		}
 		
