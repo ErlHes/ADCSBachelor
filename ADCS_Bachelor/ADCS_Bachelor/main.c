@@ -91,6 +91,14 @@ int main(void)
 		angle_roll *= (180/PI);
 		angle_yaw *= (180/PI);
 		
+		//TEST CODE FOR PITCH
+		if(az < 0 && angle_pitch > 0){
+			angle_pitch = 90 + (90 - angle_pitch);
+		}
+		if(az < 0 && angle_pitch < 0){
+			angle_pitch = -90 - (90 + angle_pitch);
+		}
+		
 				
 		if(counter == 1){				// Edit comparison value to set how often you want to print out data.
 			
