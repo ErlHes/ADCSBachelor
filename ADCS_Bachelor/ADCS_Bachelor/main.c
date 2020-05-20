@@ -92,10 +92,10 @@ int main(void)
 		angle_yaw *= (180/PI);
 		
 		//TEST CODE FOR PITCH
-		if(az < 0 && angle_pitch > 0){
+		if(az < 0 && angle_pitch > 80){
 			angle_pitch = 90 + (90 - angle_pitch);
 		}
-		if(az < 0 && angle_pitch < 0){
+		if(az < 0 && angle_pitch < -80){
 			angle_pitch = -90 - (90 + angle_pitch);
 		}
 		
